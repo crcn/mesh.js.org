@@ -21,6 +21,8 @@ module.exports = function(config) {
   function html(content) {
     return "<html>" +
       "<head>" +
+        "<link href=\"/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">" +
+        "<link href=\"/bundle.css\" rel=\"stylesheet\">" +
       "</head>" +
       "<body>" +
         "<div id=\"app\">" + content.body + "</div>" +
