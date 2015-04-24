@@ -21,6 +21,11 @@ function routes(bus) {
       pages: {
         body: "examples"
       }
+    })),
+    route("/docs", mesh.yields(void 0, {
+      pages: {
+        body: "docs"
+      }
     }))
   );
 }
