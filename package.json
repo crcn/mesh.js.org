@@ -7,6 +7,7 @@
     "application": "file:./server",
     "browserify-middleware": "^5.0.2",
     "caplet": "^1.0.1",
+    "classnames": "^1.2.1",
     "express": "^4.12.3",
     "glob": "^5.0.5",
     "jsx-require-extension": "^0.2.0",
