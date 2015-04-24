@@ -36,6 +36,7 @@ module.exports = React.createClass({
         </ul>
 
         <AceEditor
+          value={this.props.source}
           mode="java"
           theme="kuroir"
           height="100%"

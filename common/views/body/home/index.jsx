@@ -18,7 +18,7 @@ module.exports = React.createClass({
               <a href="/docs">Documentation</a>
               <a href="http://github.com/mojo-js/mesh.js">GitHub</a>
             </div>
-            <IDE {...this.props} />
+            <IDE {...this.props} source="var color='red';" />
           </div>
         </div>
 
