@@ -9,7 +9,7 @@
     "caplet": "^1.0.1",
     "express": "^4.12.3",
     "jsx-require-extension": "^0.2.0",
-    "mesh": "^1.0.43",
+    "mesh": "^1.0.x",
     "mesh-http": "^1.0.2",
     "mesh-local-storage": "^1.0.1",
     "react": "^0.13.2",
@@ -40,7 +40,7 @@
   },
   "scripts": {
     "test": "gulp lint test-coveralls",
-    "start": "node index.js"
+    "start": "node server/index.js"
   },
   "repository": {
     "type": "git",

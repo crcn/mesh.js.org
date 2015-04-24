@@ -1,0 +1,39 @@
+var mesh = require("mesh");
+
+module.exports = function(bus) {
+
+  var routesBus = routes(bus);
+
+  return mesh.fallback(
+    routesBus,
+    bus
+  );
+}
+
+function routes(bus) {
+  return mesh.race(
+    route("/", mesh.yields(void 0, {
+      pages: {
+        body: "home"
+      }
+    })),
+    route("/examples", mesh.yields(void 0, {
+      pages: {
+        body: "examples"
+      }
+    }))
+  );
+}
+
+function route(path, bus) {
+  var tester = new RegExp("^" + path + "$");
+  return mesh.accept(function(op) {
+    return tester.test(op.name);
+  }, mesh.attach(function(op) {
+
+  }, bus));
+}
+
+function pages(pages) {
+  return
+}

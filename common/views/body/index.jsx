@@ -1,7 +1,18 @@
-var React = require("react");
+var React    = require("react");
+var Examples = require("./examples");
+var Home     = require("./home");
 
 module.exports = React.createClass({
   render: function() {
-    return <div onClick={this.handleClick}>main</div>;
+    return (
+      <div className="container">
+        {
+          {
+            home     : <Home {...this.props} />,
+            examples : <Examples {...this.props} />
+          }[this.props.pages.body]
+        }
+      </div>
+    );
   }
 });

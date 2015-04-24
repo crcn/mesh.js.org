@@ -7,6 +7,6 @@ var http = require("./http");
 module.exports = Base.extend({
   initialize: function() {
     Base.prototype.initialize.call(this);
-    http(this.config);
+    http(this);
   }
 });

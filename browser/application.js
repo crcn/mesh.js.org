@@ -7,7 +7,7 @@ module.exports = Base.extend({
   initialize: function() {
     Base.prototype.initialize.call(this);
   },
-  load: function() {
-    React.render(React.createElement(Body), document.getElementById("app"));
+  load: function(attrs) {
+    React.render(React.createElement(Body, attrs), document.getElementById("app"));
   }
 });
