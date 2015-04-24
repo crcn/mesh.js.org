@@ -1,5 +1,7 @@
-var React = require("react");
+var React     = require("react");
+var AceEditor = require("react-ace");
 
+// tomorrow
 module.exports = React.createClass({
   render: function() {
     return (
@@ -9,6 +11,13 @@ module.exports = React.createClass({
           <li></li>
           <li></li>
         </ul>
+
+        <AceEditor
+          mode="java"
+          theme="kuroir"
+          height="100%"
+          width="100%"
+        />
       </div>
     );
   }
