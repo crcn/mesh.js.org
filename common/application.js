@@ -1,12 +1,12 @@
 var caplet  = require("caplet");
 var bus     = require("./bus");
 var routes  = require("./routes");
+var mesh    = require("mesh");
 
 module.exports = caplet.createModelClass({
   initialize: function() {
-    var b = bus(this.config);
-    b = routes(b);
-    this.bus = b;
+    this.bus = mesh.parallel();
+    routes(this);
   },
   load: function() {
 

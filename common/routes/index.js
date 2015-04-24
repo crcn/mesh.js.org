@@ -1,12 +1,12 @@
 var mesh = require("mesh");
 
-module.exports = function(bus) {
+module.exports = function(app) {
 
-  var routesBus = routes(bus);
+  var routesBus = routes(app.bus);
 
-  return mesh.fallback(
+  app.bus = mesh.fallback(
     routesBus,
-    bus
+    app.bus
   );
 }
 
