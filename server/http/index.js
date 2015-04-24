@@ -4,6 +4,7 @@ var browserify = require("browserify-middleware");
 var React      = require("react");
 var mesh       = require("mesh");
 var path       = require("path");
+var less       = require("./less");
 
 module.exports = function(app) {
 
@@ -20,6 +21,8 @@ module.exports = function(app) {
     debug: false,
     transform: "reactify"
   }));
+
+  less(app, server);
 
   function html(content) {
     return "<html>" +

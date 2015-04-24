@@ -5,7 +5,10 @@ var path        = require("path");
 var app = new Application({
   config: new caplet.Model({
     directories: {
-      static: path.join(__dirname, "../static")
+      static: path.join(__dirname, "../static"),
+      browser: path.join(__dirname, "../browser"),
+      server: path.join(__dirname, "../server"),
+      common: path.join(__dirname, "../common")
     },
     http: {
       port: process.env.PORT || 8081

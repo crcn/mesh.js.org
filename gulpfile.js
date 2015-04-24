@@ -1,17 +1,18 @@
-var gulp       = require("gulp");
-var istanbul   = require("gulp-istanbul");
-var mocha      = require("gulp-mocha");
-var plumber    = require("gulp-plumber");
-var jshint     = require("gulp-jshint");
-var browserify = require("browserify");
-var uglify     = require("gulp-uglify");
-var source     = require("vinyl-source-stream");
-var buffer     = require("vinyl-buffer");
-var jscs       = require("gulp-jscs");
-var coveralls  = require("gulp-coveralls");
-var rename     = require("gulp-rename");
-var karma      = require("karma").server;
-var options    = require("yargs").argv;
+var gulp        = require("gulp");
+var istanbul    = require("gulp-istanbul");
+var mocha       = require("gulp-mocha");
+var plumber     = require("gulp-plumber");
+var jshint      = require("gulp-jshint");
+var browserify  = require("browserify");
+var uglify      = require("gulp-uglify");
+var source      = require("vinyl-source-stream");
+var buffer      = require("vinyl-buffer");
+var jscs        = require("gulp-jscs");
+var coveralls   = require("gulp-coveralls");
+var rename      = require("gulp-rename");
+var browserSync = require("browser-sync");
+var karma       = require("karma").server;
+var options     = require("yargs").argv;
 
 var pkg = require("./package");
 process.env.PC_DEBUG = 1;
@@ -85,6 +86,13 @@ gulp.task("minify", ["bundle"], function() {
       path.basename += ".min";
   })).
   pipe(gulp.dest('./dist'));
+});
+
+gulp.task("browser-sync", function(next) {
+	browserSync({
+		proxy: "http://localhost:8081",
+		files: [__dirname + "/browser/**", __dirname + "/server/**", __dirname + "/common/**"]
+	})
 });
 
 /**
