@@ -38,7 +38,3 @@ function route(path, bus) {
 
   }, bus));
 }
-
-function pages(pages) {
-  return
-}
