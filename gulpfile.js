@@ -91,7 +91,7 @@ gulp.task("minify", ["bundle"], function() {
 gulp.task("browser-sync", function(next) {
 	browserSync({
 		proxy: "http://localhost:8081",
-		files: [__dirname + "/browser/**", __dirname + "/server/**", __dirname + "/common/**"]
+		files: [__dirname + "/browser/**", __dirname + "/server/**", __dirname + "/common/**", __dirname + "/examples/**"]
 	})
 });
 

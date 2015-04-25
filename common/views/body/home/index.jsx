@@ -1,5 +1,6 @@
 var React = require("react");
 var IDE   = require("../../ide");
+var StarFighter = require("../../../../examples/starfighter/components/map");
 
 module.exports = React.createClass({
   render: function() {
@@ -31,6 +32,8 @@ module.exports = React.createClass({
             </p>
           </div>
         </div>
+
+        <StarFighter />
       </div>
     );
   }

@@ -13,10 +13,11 @@ function initialize (app, server) {
 
     var files = sortLessFiles(
       [].
-      concat(glob.sync(app.config.directories.static  + "/**/*.less")).
-      concat(glob.sync(app.config.directories.browser + "/**/*.less")).
-      concat(glob.sync(app.config.directories.common  + "/**/*.less")).
-      concat(glob.sync(app.config.directories.server  + "/**/*.less"))
+      concat(glob.sync(app.config.directories.static    + "/**/*.less")).
+      concat(glob.sync(app.config.directories.browser   + "/**/*.less")).
+      concat(glob.sync(app.config.directories.common    + "/**/*.less")).
+      concat(glob.sync(app.config.directories.server    + "/**/*.less")).
+      concat(glob.sync(app.config.directories.examples  + "/**/*.less"))
     );
 
 
