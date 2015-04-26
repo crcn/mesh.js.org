@@ -1,10 +1,26 @@
-var Base = require("./entity");
-var extend = require("xtend/mutable");
+var Base    = require("./entity");
+var extend  = require("xtend/mutable");
+var mesh    = require("mesh");
+var caplet  = require("caplet");
+var Bullets = require("./bullets");
 
 module.exports = Base.extend({
   rotation: 0,
   vrotation: 0,
   velocity: 0,
+  fromData: function(data) {
+    return extend({}, data, {
+      bullets: caplet.recycle(this.bullets, Bullets, {
+        bus: mesh.accept(
+          "load",
+          mesh.attach({
+            query: { owner: data.cid }
+          }, this.bus),
+          this.bus
+        )
+      })
+    });
+  },
   rotate: function(amount) {
     this.set("rotation", (this.rotation + amount) % 360);
   },
@@ -13,12 +29,12 @@ module.exports = Base.extend({
     this.vrotation = this.rotation;
   },
   shootPhaser: function(onSave) {
-    return this.stage.entities.addEntity(extend({}, properties, {
-      type: "bullet",
+    return this.bullets.create({
+      owner: this,
       x: this.x,
       y: this.y,
       rotation: this.rotation
-    }), onSave);
+    }, onSave);
   },
   _updatePosition: function() {
 
@@ -30,9 +46,12 @@ module.exports = Base.extend({
 
     this.setProperties({ x: this.x + x, y: this.y + y });
   },
-  update: function() {
+  update: function(props) {
+    if (props.rotate) this.rotate(props.rotate);
+    if (props.move) this.move(props.move);
     this._updatePosition();
     this._keepInBounds();
+    this.bullets.update();
     this.save();
   },
   _keepInBounds: function() {

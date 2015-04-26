@@ -10,6 +10,8 @@ module.exports = caplet.createModelClass({
       cid      : this.cid,
       x        : this.x,
       y        : this.y,
+      ownerId  : this.owner ? this.owner.cid : void 0,
+      ts       : this.timestamp,
       rotation : this.rotation,
       type     : this.type
     }

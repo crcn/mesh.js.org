@@ -27,7 +27,8 @@ function attachModelData(bus) {
     var data = operation.model.toData();
 
     if (operation.name === "insert") {
-      data.cid = createId();
+      data.cid       = createId();
+      data.timestamp = Date.now();
     }
     return {
       data: data

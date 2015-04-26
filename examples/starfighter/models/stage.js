@@ -30,14 +30,5 @@ module.exports = caplet.createModelClass({
     return this.entities.addEntity(extend({}, properties, {
       type: "ship"
     }), onSave);
-  },
-
-  /**
-   */
-
-  update: function() {
-    for (var i = this.entities.length; i--;) {
-      this.entities.at(i).update();
-    }
   }
 });

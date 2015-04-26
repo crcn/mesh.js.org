@@ -44,30 +44,31 @@ module.exports = React.createClass({
     this._keys[event.keyCode] = false;
   },
   _tick: function() {
-    setTimeout(this._tick, 100);
+    setTimeout(this._tick, 1000/30);
     this._updateShipPosition();
     this._updateEntities();
   },
   _updateShipPosition: function() {
+
+    var props = {};
 
     for (var c in this._keys) {
       c = Number(c);
       var isDown = this._keys[c];
 
       if (isDown && c === 39) {
-        this._ship.rotate(2);
+        props.rotate = 6;
       } else if (isDown && c === 37) {
-        this._ship.rotate(-2);
+        props.rotate = -6;
       } else if (isDown && c === 38) {
-        this._ship.move(1);
+        props.move = 4;
       } else if (c === 32 && !isDown) {
         delete this._keys[c];
         this._ship.shootPhaser();
       }
-
-      this._ship.update();
-
     }
+
+    this._ship.update(props);
   },
   _updateEntities: function() {
     // this.state.map.update();
