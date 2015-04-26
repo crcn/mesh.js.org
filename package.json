@@ -6,7 +6,7 @@
   "dependencies": {
     "application": "file:./server",
     "browserify-middleware": "^5.0.2",
-    "caplet": "^0.0.x",
+    "caplet": "^2.0.x",
     "classnames": "^1.2.1",
     "express": "^4.12.3",
     "glob": "^5.0.5",

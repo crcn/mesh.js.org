@@ -8,6 +8,9 @@ module.exports = Base.extend({
   rotation: 0,
   vrotation: 0,
   velocity: 0,
+  initialize: function() {
+    Base.prototype.initialize.call(this);
+  },
   fromData: function(data) {
     return extend({}, data, {
       bullets: caplet.recycle(this.bullets, Bullets, {
@@ -48,6 +51,8 @@ module.exports = Base.extend({
 
     var x = Math.sin(r/180*Math.PI) * s;
     var y = Math.cos(r/180*Math.PI) * s;
+
+
 
     this.setProperties({ x: this.x + x, y: this.y + y });
   },

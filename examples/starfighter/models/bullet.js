@@ -13,7 +13,6 @@ module.exports = Base.extend({
     }
 
 
-
     var r = 180-this.rotation;
 
     if (r < 0) {
