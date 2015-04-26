@@ -12,7 +12,15 @@ module.exports = Base.extend({
       return this.remove();
     }
 
-    var r = 180-Math.abs(this.rotation);
+
+
+    var r = 180-this.rotation;
+
+    if (r < 0) {
+      r = 360 + r;
+    }
+
+
     var s = 10;
 
     var x = Math.sin(r/180*Math.PI) * s;

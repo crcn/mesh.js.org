@@ -38,7 +38,12 @@ module.exports = Base.extend({
   },
   _updatePosition: function() {
 
-    var r = 180-Math.abs(this.vrotation);
+    var r = 180-this.vrotation;
+
+    if (r < 0) {
+      r = 360 + r;
+    }
+
     var s = this.velocity = Math.max(this.velocity - 0.01, 0);
 
     var x = Math.sin(r/180*Math.PI) * s;
