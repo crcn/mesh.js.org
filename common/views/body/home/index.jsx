@@ -8,7 +8,7 @@ module.exports = React.createClass({
       <div className="row header">
         <div className="tagline">
           <h1><strong>Mesh</strong> it all up.</h1>
-          <p>A featherlight communication utility for building sophisticated features</p>
+          <p>A featherlight message bus for creating sophisticated features</p>
         </div>
 
         <StarFighter />

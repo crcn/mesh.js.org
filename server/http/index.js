@@ -29,6 +29,8 @@ module.exports = function(app) {
       "<head>" +
         "<link href=\"/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">" +
         "<link href=\"/bundle.css\" rel=\"stylesheet\">" +
+        "<script src=\"//use.typekit.net/fjj0nzz.js\"></script>" +
+        "<script>try{Typekit.load();}catch(e){}</script>" +
       "</head>" +
       "<body>" +
         "<div id=\"app\">" + content.body + "</div>" +
