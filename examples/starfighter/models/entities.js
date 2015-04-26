@@ -10,9 +10,9 @@ module.exports = caplet.createCollectionClass({
     require("./mixins/collection")
   ],
   createModel: function(properties) {
-    properties.bus = this.bus;
+    properties.bus   = this.bus;
     properties.stage = this.stage;
-    var clazz      = entityClasses[properties.type || properties.data.type];
+    var clazz        = entityClasses[properties.type || properties.data.type];
     return clazz(properties);
   },
   addEntity: function(properties, onSave) {

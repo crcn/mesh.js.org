@@ -12,9 +12,9 @@ module.exports = Base.extend({
     return extend({}, data, {
       bullets: caplet.recycle(this.bullets, Bullets, {
         bus: mesh.accept(
-          "load",
+          /load|tail/,
           mesh.attach({
-            query: { owner: data.cid }
+            query: { ownerId: data.cid }
           }, this.bus),
           this.bus
         )

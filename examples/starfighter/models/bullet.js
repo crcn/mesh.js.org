@@ -7,6 +7,7 @@ module.exports = Base.extend({
   ttl: 1000 * 5,
   update: function() {
 
+
     if (Date.now() > this.timestamp + this.ttl) {
       return this.remove();
     }

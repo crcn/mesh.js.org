@@ -1,24 +1,51 @@
 var mesh = require("mesh");
+var io   = require("mesh-socket.io");
+var sift = require("sift");
 
 module.exports = create();
-var _id = 0;
+
+/**
+ */
 
 function create() {
 
   var bus = mesh.wrap(function(operation, next) {
     next(void 0, operation.data);
   });
-  bus     = tailable(bus);
-  bus     = attachModelData(bus);
+
+  bus = tailable(bus);
+  bus = attachModelData(bus);
+
+  if (process.browser) {
+    bus = realtime(bus);
+  }
 
   return bus;
 }
 
+/**
+ */
+
 function tailable(bus) {
   return mesh.tailable(bus, function(a, b) {
-    return a.collection === b.collection;
+
+    var matches = !a.collection;
+    matches     = matches || (a.collection === b.collection);
+
+    if (a.query) {
+      if (a.query.ownerId) {
+        // console.log(b);
+      }
+      // console.log(a.query, b.data);
+      matches = matches && sift(a.query)(b.data || (b.model ? m.model.toData() : void 0));
+    }
+
+    return matches;
   });
 }
+
+/**
+ */
 
 function attachModelData(bus) {
   return mesh.attach(function(operation) {
@@ -36,6 +63,21 @@ function attachModelData(bus) {
   }, bus);
 }
 
+/**
+ */
+
+function realtime(bus) {
+
+  var rtBus = mesh.attach({ model: void 0 }, io("starfighter", bus));
+
+  bus(mesh.op("tail")).pipe(mesh.open(rtBus));
+  return bus;
+}
+
+/**
+ */
+
+var _id = 0;
 
 function createId() {
   return Date.now() + "." + (_id++);

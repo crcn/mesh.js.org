@@ -5,6 +5,7 @@ var React      = require("react");
 var mesh       = require("mesh");
 var path       = require("path");
 var less       = require("./less");
+var realtime   = require("./realtime");
 
 module.exports = function(app) {
 
@@ -53,5 +54,5 @@ module.exports = function(app) {
     });
   });
 
-  server.listen(port);
+  realtime(server.listen(port));
 }
