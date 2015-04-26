@@ -27,6 +27,14 @@ module.exports = React.createClass({
       x: Math.round(Math.random() * 100),
       y: Math.round(Math.random() * 100)
     });
+
+    return;
+    for (var i = 500; i--;) {
+      this.state.map.addShip({
+        x: Math.round(Math.random() * 100),
+        y: Math.round(Math.random() * 100)
+      });
+    }
   },
   _onKeyDown: function(event) {
     event.preventDefault();
