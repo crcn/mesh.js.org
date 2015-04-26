@@ -8,7 +8,8 @@ module.exports = React.createClass({
     var e = this.props.entity;
     var s = {
       top: e.y,
-      left: e.x
+      left: e.x,
+      transform: 'rotate(' + e.rotation + 'deg)'
     };
     return <div className="entity" style={s}>{{
       ship   : <Ship entity={e} />,

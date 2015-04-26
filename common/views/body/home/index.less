@@ -1,51 +1,26 @@
 .home {
   width: 100%;
-  padding: 0px;
 
   & .header {
-    overflow: hidden;
-    height: 400px;
-    color: @blue-light;
-    .background-image(linear-gradient(left, @blue, @blue-darker));
-
+    height: 100%;
+    background-color: @blue-light;
     & .tagline {
-      padding-top: 100px;
-      & h2 {
-        font-size: 52px;
-        color: @lime-green;
-      }
-      & span {
-        font-size: 16px;
-        color: @lime-green;
-        opacity: 0.8;
-        max-width: 360px;
-        display: block;
-      }
-    }
-
-    & .navigation {
-      text-align: right;
-      & a {
-        color: @blue-light;
-        padding-left: 30px;
-        font-size: 16px;
-      }
-    }
-
-    border-bottom: 20px solid @blue-darker;
-  }
-
-  .sub-header {
-    color: @blue-darker;
-    background-color: @blue-whitish;
-    & .inner {
-      margin: 0px auto;
-      text-align: center;
+      color: white;
       width: 600px;
+      opacity: 0.9;
+      margin: 0px auto;
+      position: relative;
+      text-align: center;
+      top: 50%;
+      transform: translateY(-50%);
+      & h1 {
+        font-size: 72px;
+        font-weight: light;
+      }
+      & p {
+        margin-top: 30px;
+        font-size: 28px;
+      }
     }
   }
-}
-
-.content {
-  padding: 15px 100px;
 }
