@@ -1,5 +1,6 @@
-var mesh = require("mesh");
+var mesh   = require("mesh");
 var extend = require("xtend/mutable");
+var diff   = require("object-diff");
 
 module.exports = {
 
@@ -45,6 +46,10 @@ module.exports = {
     if (!onRun) onRun = function() { };
 
     var data = extend({}, this.data);
+
+    if (operationName === "update") {
+      // if (!Object.keys(diff(this.data, this.toData())).length) return;
+    }
 
     this
     .bus(mesh.op(operationName, {

@@ -33,10 +33,6 @@ function tailable(bus) {
     matches     = matches || (a.collection === b.collection);
 
     if (a.query) {
-      if (a.query.ownerId) {
-        // console.log(b);
-      }
-      // console.log(a.query, b.data);
       matches = matches && sift(a.query)(b.data || (b.model ? m.model.toData() : void 0));
     }
 

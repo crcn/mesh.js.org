@@ -4,7 +4,6 @@ var Bullet = require("./bullet");
 var caplet = require("caplet");
 
 module.exports = React.createClass({
-  mixins: [caplet.watchModelsMixin],
   render: function() {
     var e = this.props.entity;
 

@@ -6,15 +6,19 @@ var caplet = require("caplet");
 module.exports = React.createClass({
   mixins: [caplet.watchModelsMixin],
   getInitialState: function() {
+
+    var stage = Stage({
+      getWidth: function() {
+        return this.getDOMNode().offsetWidth;
+      }.bind(this),
+      getHeight: function() {
+        return this.getDOMNode().offsetHeight;
+      }.bind(this)
+    });
+
     return {
-      map: Stage({
-        getWidth: function() {
-          return this.getDOMNode().offsetWidth;
-        }.bind(this),
-        getHeight: function() {
-          return this.getDOMNode().offsetHeight;
-        }.bind(this)
-      })
+      map: stage,
+      entities: stage.entities
     }
   },
   componentDidMount: function() {
