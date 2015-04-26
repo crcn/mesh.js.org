@@ -29,8 +29,8 @@ module.exports = Base.extend({
     this.vrotation = this.rotation;
   },
   shootPhaser: function(onSave) {
-    return this.bullets.create({
-      owner: this,
+    this.bullets.create({
+      ownerId: this.cid,
       x: this.x,
       y: this.y,
       rotation: this.rotation

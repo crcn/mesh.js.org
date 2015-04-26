@@ -44,22 +44,21 @@ module.exports = {
 
   _run: function(operationName, onRun) {
     if (!onRun) onRun = function() { };
-
     var data = extend({}, this.data);
 
-    if (operationName === "update") {
-      // if (!Object.keys(diff(this.data, this.toData())).length) return;
-    }
-
-    this
+    var stream = this
     .bus(mesh.op(operationName, {
       model: this
     }))
     .once("error", onRun)
 
-    // server just returns junl for now - just merge data
-    .on("data", extend.bind(void 0, data))
-    .once("end", this.set.bind(this, "data", data))
+    if (/load|insert/.test(operationName)) {
+      stream
+      .on("data", extend.bind(void 0, data))
+      .once("end", this.set.bind(this, "data", data))
+    }
+
+    stream
     .once("end", onRun);
   }
 }

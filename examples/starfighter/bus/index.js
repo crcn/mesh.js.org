@@ -33,7 +33,8 @@ function tailable(bus) {
     matches     = matches || (a.collection === b.collection);
 
     if (a.query) {
-      matches = matches && sift(a.query)(b.data || (b.model ? m.model.toData() : void 0));
+      var d = b.data || (b.model ? m.model.toData() : void 0);
+      matches = matches && sift(a.query)(d);
     }
 
     return matches;

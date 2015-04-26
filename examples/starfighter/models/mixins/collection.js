@@ -74,12 +74,17 @@ function _syncCollection(collection) {
 
   function _find(operation) {
     var query = operation.query;
+    var filter;
 
     if (!query && operation.data) {
-      query = { cid: operation.data.cid }
+      filter = function(model) {
+        return model.data.cid === operation.data.cid;
+      }
+    } else {
+      filter = sift({ data: query });
     }
 
-    var models = collection.filter(sift({ data: query }));
+    var models = collection.filter(filter);
     if (!operation.multi && !!models.length) models = [models[0]];
     return models;
   }

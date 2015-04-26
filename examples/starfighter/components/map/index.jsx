@@ -25,6 +25,11 @@ module.exports = React.createClass({
     this._addShip();
   },
   render: function() {
+
+    // this.state.map.entities.map(function(entity) {
+    //   return <Entity key={entity.cid} entity={entity} />
+    // })
+    //
     return <div id="map" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
       {
         this.state.map.entities.map(function(entity) {
