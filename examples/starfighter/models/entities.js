@@ -11,7 +11,12 @@ module.exports = caplet.createCollectionClass({
   ],
   createModel: function(properties) {
     properties.bus = this.bus;
+    properties.stage = this.stage;
     var clazz      = entityClasses[properties.type || properties.data.type];
     return clazz(properties);
+  },
+  addEntity: function(properties, onSave) {
+    var entity = this.createModel(properties).save(onSave);
+    return entity;
   }
 });

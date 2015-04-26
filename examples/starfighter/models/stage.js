@@ -14,20 +14,30 @@ module.exports = caplet.createModelClass({
   /**
    */
 
-  getInitialProperties: function() {
-    return {
+  initialize: function() {
+    this.setProperties({
       entities: Entities({
+        stage: this,
         bus: mesh.attach({ collection: "entities" }, this.bus)
       })
-    };
+    });
   },
 
   /**
    */
 
   addShip: function(properties, onSave) {
-    return this.entities.createModel(extend({}, properties, {
+    return this.entities.addEntity(extend({}, properties, {
       type: "ship"
-    })).save(onSave);
+    }), onSave);
+  },
+
+  /**
+   */
+
+  update: function() {
+    for (var i = this.entities.length; i--;) {
+      this.entities.at(i).update();
+    }
   }
 });

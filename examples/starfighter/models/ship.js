@@ -3,37 +3,44 @@ var extend = require("xtend/mutable");
 
 module.exports = Base.extend({
   rotation: 0,
-  speed: 0,
+  vrotation: 0,
+  velocity: 0,
   rotate: function(amount) {
-    console.log(this.rotation);
     this.set("rotation", (this.rotation + amount) % 360);
-    this.save();
   },
-  move: function(amount) {
-    this.speed = Math.min(this.speed + 0.2, 4);
-    this._updatePosition();
+  move: function(delta) {
+    this.velocity = Math.min(this.velocity + 0.2, 4);
+    this.vrotation = this.rotation;
   },
-  shootPhaser: function() {
-
+  shootPhaser: function(onSave) {
+    return this.stage.entities.addEntity(extend({}, properties, {
+      type: "bullet",
+      x: this.x,
+      y: this.y,
+      rotation: this.rotation
+    }), onSave);
   },
-  _updatePosition: function(force) {
-    if (!force && this._ticking) return;
+  _updatePosition: function() {
 
-    var r = 180-Math.abs(this.rotation);
-    var s = this.speed = Math.max(this.speed - 0.01, 0);
-
-    if (!s) {
-      this._ticking = false;
-      return;
-    }
+    var r = 180-Math.abs(this.vrotation);
+    var s = this.velocity = Math.max(this.velocity - 0.01, 0);
 
     var x = Math.sin(r/180*Math.PI) * s;
     var y = Math.cos(r/180*Math.PI) * s;
 
     this.setProperties({ x: this.x + x, y: this.y + y });
+  },
+  update: function() {
+    this._updatePosition();
+    this._keepInBounds();
     this.save();
-
-    this._ticking = true;
-    setTimeout(this._updatePosition.bind(this), 10, true);
+  },
+  _keepInBounds: function() {
+    var mw = this.stage.getWidth();
+    var mh = this.stage.getHeight();
+    if (this.x > mw) this.set("x", 0);
+    if (this.y > mh) this.set("y", 0);
+    if (this.x < 0) this.set("x", mw);
+    if (this.y < 0) this.set("y", mh);
   }
 });
