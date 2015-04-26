@@ -10,7 +10,7 @@ module.exports = Base.extend({
     this.save();
   },
   move: function(amount) {
-    this.speed = Math.min(this.speed + 0.5, 2);
+    this.speed = Math.min(this.speed + 0.2, 4);
     this._updatePosition();
   },
   shootPhaser: function() {
