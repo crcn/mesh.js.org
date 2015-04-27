@@ -2,7 +2,7 @@ var React  = require("react");
 var Stage  = require("../../models/stage");
 var Entity = require("./entity");
 var caplet = require("caplet");
-var Robot  = require("../../models/Robot");
+var Robot  = require("../../models/robot");
 
 module.exports = React.createClass({
   mixins: [caplet.watchModelsMixin],

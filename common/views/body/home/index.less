@@ -1,6 +1,20 @@
 .home {
   width: 100%;
 
+  & .navigation {
+    padding: 15px;
+    float: right;
+    position: relative;
+    z-index: 1024;
+    & a {
+      font-size: 16px;
+      text-decoration: none;
+      margin-right: 30px;
+      color: #FFF;
+      opacity: 0.9;
+    }
+  }
+
   & .header {
     height: 100%;
     .background-image(linear-gradient(left, @blue-light, @blue));
