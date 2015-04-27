@@ -4,12 +4,14 @@ var StarFighter = require("../../../../examples/starfighter/components/map");
 
 module.exports = React.createClass({
   render: function() {
+
+    // <div className="navigation">
+    //   <a href="//github.com/mojo-js/mesh.js">GitHub</a>
+    // </div>
+
     return (
       <div className="row header">
 
-        <div className="navigation">
-          <a href="//github.com/mojo-js/mesh.js">GitHub</a>
-        </div>
 
         <div className="tagline">
           <h1><strong>Mesh</strong> it all up.</h1>
