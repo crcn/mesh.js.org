@@ -46,6 +46,8 @@ module.exports = {
     if (!onRun) onRun = function() { };
     var data = extend({}, this.data);
 
+    // console.log(this.toData());;
+
     var stream = this
     .bus(mesh.op(operationName, {
       model: this

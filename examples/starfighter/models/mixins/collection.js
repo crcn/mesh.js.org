@@ -57,12 +57,14 @@ function _syncCollection(collection) {
   };
 
   function insert(operation) {
-    collection.unshift.apply(collection, _toArray(operation.data).map(_createModel));
+    // console.log(operation.data);
+    collection.push.apply(collection, _toArray(operation.data).map(_createModel));
   }
 
   function remove(operation) {
     _find(operation).forEach(function(model) {
       collection.splice(collection.indexOf(model), 1);
+      model.dispose();
     });
   }
 

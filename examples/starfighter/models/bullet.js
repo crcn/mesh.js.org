@@ -12,13 +12,11 @@ module.exports = Base.extend({
       return this.remove();
     }
 
-
     var r = 180-this.rotation;
 
     if (r < 0) {
       r = 360 + r;
     }
-
 
     var s = 10;
 

@@ -19,6 +19,8 @@ module.exports = React.createClass({
     var matrix = [r1, r2, -r2, r1, e.x, e.y];
 
     var s = {
+      width: e.width + 'px',
+      height: e.height + 'px',
       transform: 'matrix(' + matrix + ')'
     };
 

@@ -2,6 +2,7 @@ var React  = require("react");
 var Stage  = require("../../models/stage");
 var Entity = require("./entity");
 var caplet = require("caplet");
+var Robot  = require("../../models/Robot");
 
 module.exports = React.createClass({
   mixins: [caplet.watchModelsMixin],
@@ -22,7 +23,7 @@ module.exports = React.createClass({
     }
   },
   componentDidMount: function() {
-    this._addShip();
+    this._initShips();
   },
   render: function() {
 
@@ -30,6 +31,7 @@ module.exports = React.createClass({
     //   return <Entity key={entity.cid} entity={entity} />
     // })
     //
+
     return <div id="map" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
       {
         this.state.map.entities.map(function(entity) {
@@ -38,11 +40,32 @@ module.exports = React.createClass({
       }
     </div>
   },
-  _addShip: function() {
+  _initShips: function() {
+    this._robot = Robot();
+    this._addRobotShip();
+    this._addShip(this._tick);
+  },
+  _addRobotShip: function() {
+
+    this._robot.ship = this.state.map.addShip({
+     width: 30,
+     height: 30,
+     x: 100,
+     y: 100
+   });
+
+   this._robot.ship.once("die", this._addRobotShip);
+  },
+  _addShip: function(onAdd) {
+
     this._ship = this.state.map.addShip({
-      x: Math.round(Math.random() * 100),
-      y: Math.round(Math.random() * 100)
-    }, this._tick);
+      width: 30,
+      height: 30,
+      x: Math.round(Math.random() * 1000),
+      y: Math.round(Math.random() * 600)
+    }, onAdd);
+
+    this._ship.once("die", this._addShip);
   },
   _onKeyDown: function(event) {
     event.preventDefault();
@@ -55,7 +78,7 @@ module.exports = React.createClass({
   _tick: function() {
     setTimeout(this._tick, 1000/30);
     this._updateShipPosition();
-    this._updateEntities();
+    this._robot.update();
   },
   _updateShipPosition: function() {
 
@@ -78,8 +101,5 @@ module.exports = React.createClass({
     }
 
     this._ship.update(props);
-  },
-  _updateEntities: function() {
-    // this.state.map.update();
   }
-})
+});
