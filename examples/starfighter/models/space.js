@@ -108,6 +108,7 @@ module.exports = caplet.createModelClass({
       var e2ye = e2ys + e2.height;
 
       if (!(e1ys > e2ye || e1xe < e2xs || e1ye < e2ys || e1xs > e2xe)) {
+        // console.log(e1xs, e2xs, e1ys, e2ys, e1.width, e1.height, e2.width, e2.height);
         e1.explode();
         e2.explode();
         break;

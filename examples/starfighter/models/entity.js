@@ -1,11 +1,6 @@
 var caplet = require("caplet");
 var mesh   = require("mesh");
 
-var _i = 0;
-
-function createCID() {
-  return Date.now() + "." + (++_i);
-}
 
 module.exports = caplet.createModelClass({
   bus: mesh.noop,
@@ -18,6 +13,10 @@ module.exports = caplet.createModelClass({
   ],
   toData: function() {
     return {
+      x         : this.x,
+      y         : this.y,
+      width     : this.width,
+      height    : this.height,
       cid       : this.cid,
       timestamp : this.timestamp,
       rotation  : this.rotation,
@@ -25,10 +24,6 @@ module.exports = caplet.createModelClass({
       ownerId   : this.ownerId,
       type      : this.type
     };
-  },
-  initialize: function() {
-    this.timestamp = Date.now();
-    this.cid       = createCID();
   },
   explode: function() {
 

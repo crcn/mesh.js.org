@@ -17,9 +17,17 @@ module.exports = caplet.createCollectionClass({
     return clazz(properties);
   },
   add: function(properties, onSave) {
+    properties.cid = createCID();
+    properties.timestamp = Date.now();
     var e = this.createModel(properties);
-    e.save(onSave);
     this.push(e);
+    e._insert(onSave);
     return e;
   }
 });
+
+var _i = 0;
+
+function createCID() {
+  return Date.now() + "." + (++_i);
+}

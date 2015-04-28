@@ -14,6 +14,7 @@ function create() {
   });
 
   bus = tailable(bus);
+  bus = attachModelData(bus);
 
   if (process.browser) {
     bus = realtime(bus);
@@ -38,6 +39,21 @@ function tailable(bus) {
 
     return matches;
   });
+}
+
+/**
+ */
+
+function attachModelData(bus) {
+  return mesh.attach(function(operation) {
+    if (!operation.model) return;
+
+    var data = operation.model.toData();
+
+    return {
+      data: data
+    }
+  }, bus);
 }
 
 /**

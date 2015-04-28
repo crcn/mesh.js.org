@@ -9,12 +9,10 @@ module.exports = Entity.extend({
   width: 30,
   height: 30,
   move: function(delta) {
-    this.set("velocity", Math.min(this.maxVelocity, this.velocity + delta));
-    this._changed = true;
+    this._changed = this.set("velocity", Math.min(this.maxVelocity, Math.max(0, this.velocity + delta))) || this._changed;
   },
   rotate: function(delta) {
-    this.set("rotation", (this.rotation + delta) % 360);
-    this._changed = true;
+    this._changed = this.set("rotation", (this.rotation + delta) % 360) || this._changed;
   },
   shootPhaser: function() {
 
@@ -37,9 +35,9 @@ module.exports = Entity.extend({
     });
   },
   update: function() {
-    this.set("velocity", Math.max(this.velocity - this.slowdown, 0));
+    this.move(-this.slowdown);
     if (this._changed) {
-      this.save();
+      this._update();
     }
   }
 });

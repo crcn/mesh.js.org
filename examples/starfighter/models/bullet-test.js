@@ -6,7 +6,7 @@ var sinon  = require("sinon");
 describe(__filename + "#", function() {
 
   it("explodes the bullet after ttl", function(next) {
-    var b = Bullet({ ttl: 5 });
+    var b = Bullet({ ttl: 5, timestamp: Date.now() });
     setTimeout(function() {
       var s = sinon.stub(b, "explode");
       b.update();

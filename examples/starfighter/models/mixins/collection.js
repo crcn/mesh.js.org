@@ -57,7 +57,10 @@ function _syncCollection(collection) {
   };
 
   function insert(operation) {
-    // console.log(operation.data);
+    if (_find(operation).length) {
+      return;
+    }
+
     collection.push.apply(collection, _toArray(operation.data).map(_createModel));
   }
 
@@ -80,10 +83,10 @@ function _syncCollection(collection) {
 
     if (!query && operation.data) {
       filter = function(model) {
-        return model.data.cid === operation.data.cid;
+        return model.cid === operation.data.cid;
       }
     } else {
-      filter = sift({ data: query });
+      filter = sift(query);
     }
 
     var models = collection.filter(filter);

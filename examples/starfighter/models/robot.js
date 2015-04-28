@@ -6,7 +6,6 @@ var extend   = require("xtend/mutable");
 
 module.exports = caplet.createModelClass({
   update: function() {
-    // console.log(this.ship);
 
     var props = {};
 

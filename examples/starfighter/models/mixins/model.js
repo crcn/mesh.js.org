@@ -15,11 +15,27 @@ module.exports = {
     }
   },
 
+
   /**
    */
 
   save: function(onSave) {
-    this._run(this.isNew() ? "insert" : "update", onSave);
+    return this.isNew() ? this._insert(onSave) : this._update(onSave);
+  },
+
+  /**
+   */
+
+   _insert: function(onSave) {
+    this._run("insert", onSave);
+    return this;
+  },
+
+  /**
+   */
+
+  _update: function(onSave) {
+    this._run("update", onSave);
     return this;
   },
 

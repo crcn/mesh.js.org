@@ -73,17 +73,17 @@ describe(__filename + "#", function() {
 
   it("saves the ship if moved", function() {
     var ship = Ship();
-    var stub = sinon.stub(ship, "save");
+    var stub = sinon.stub(ship, "_update");
     ship.update();
     expect(stub.callCount).to.be(0);
-    ship.move(1);
+    ship.move(10);
     ship.update();
     expect(stub.callCount).to.be(1);
   });
 
   it("saves the ship if rotated", function() {
     var ship = Ship();
-    var stub = sinon.stub(ship, "save");
+    var stub = sinon.stub(ship, "_update");
     ship.update();
     expect(stub.callCount).to.be(0);
     ship.rotate(1);
