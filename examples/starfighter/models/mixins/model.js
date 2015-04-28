@@ -20,13 +20,13 @@ module.exports = {
    */
 
   save: function(onSave) {
-    return this.isNew() ? this._insert(onSave) : this._update(onSave);
+    return this.isNew() ? this.insert(onSave) : this.update(onSave);
   },
 
   /**
    */
 
-   _insert: function(onSave) {
+   insert: function(onSave) {
     this._run("insert", onSave);
     return this;
   },
@@ -34,7 +34,7 @@ module.exports = {
   /**
    */
 
-  _update: function(onSave) {
+   update: function(onSave) {
     this._run("update", onSave);
     return this;
   },

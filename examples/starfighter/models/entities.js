@@ -21,7 +21,7 @@ module.exports = caplet.createCollectionClass({
     properties.timestamp = Date.now();
     var e = this.createModel(properties);
     this.push(e);
-    e._insert(onSave);
+    e.insert(onSave);
     return e;
   }
 });

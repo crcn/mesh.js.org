@@ -9,7 +9,7 @@ describe(__filename + "#", function() {
     var b = Bullet({ ttl: 5, timestamp: Date.now() });
     setTimeout(function() {
       var s = sinon.stub(b, "explode");
-      b.update();
+      b.tick();
       expect(s.callCount).to.be(1);
       next();
     }, 10);

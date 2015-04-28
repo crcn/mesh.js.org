@@ -5,7 +5,7 @@ var mesh     = require("mesh");
 var extend   = require("xtend/mutable");
 
 module.exports = caplet.createModelClass({
-  update: function() {
+  tick: function() {
 
     var props = {};
 

@@ -4,7 +4,7 @@ module.exports = Entity.extend({
   ttl: 1000 * 5,
   width: 2,
   height: 5,
-  update: function() {
+  tick: function() {
     if (Date.now() > this.timestamp + this.ttl) {
       return this.explode();
     }

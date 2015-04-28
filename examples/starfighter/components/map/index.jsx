@@ -1,5 +1,6 @@
 var React  = require("react");
 var Space  = require("../../models/space");
+var Viewport = require("../../models/viewport");
 var Entity = require("./entity");
 var caplet = require("caplet");
 var bus    = require("../../bus");
@@ -13,7 +14,12 @@ module.exports = React.createClass({
       bus: bus
     });
 
+    var viewport = Viewport({
+      space: space
+    });
+
     return {
+      viewport : viewport,
       space    : space,
       entities : space.entities
     }
@@ -22,7 +28,12 @@ module.exports = React.createClass({
     this._initShips();
   },
   render: function() {
-    return <div id="map" ref="space" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
+
+    var s = {
+      transform: 'matrix(' + [0, 0, 0, 0, this.state.space.x, this.state.space.y] + ')'
+    }
+
+    return <div id="map" ref="space" tabIndex="0" style={s className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
       {
         this.state.space.entities.map(function(entity) {
           return <Entity key={entity.cid} entity={entity} />
@@ -49,7 +60,7 @@ module.exports = React.createClass({
   },
   _addShip: function(onAdd) {
 
-    this._ship = this.state.space.addEntity({
+    this._ship = this.state.viewport.focus = this.state.space.addEntity({
       type: "ship",
       x: Math.round(Math.random() * 1000),
       y: Math.round(Math.random() * 600)
@@ -92,10 +103,12 @@ module.exports = React.createClass({
   },
   _updateSpace: function() {
     var spaceNode = this.refs.space.getDOMNode();
-    var space = this.state.space;
-    space.width = spaceNode.offsetWidth;
-    space.height = spaceNode.offsetHeight;
-    this._robot.update();
-    this.state.space.update();
+    var viewport = this.state.viewport;
+    viewport.width = spaceNode.offsetWidth;
+    viewport.height = spaceNode.offsetHeight;
+
+    this._viewport.tick();
+    this._robot.tick();
+    this.state.space.tick();
   }
 });

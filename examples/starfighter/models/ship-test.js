@@ -20,10 +20,10 @@ describe(__filename + "#", function() {
   it("decrements velocity whenever update() is called", function() {
     var s = Ship();
     s.move(1);
-    s.update();
+    s.tick();
     expect(s.velocity).to.be(0.5);
     s.move(1);
-    s.update();
+    s.tick();
     expect(s.velocity).to.be(1);
   });
 
@@ -32,7 +32,7 @@ describe(__filename + "#", function() {
     var ship = space.addEntity({ type: "ship", velocity: 10, slowdown: 0.5 });
 
     setTimeout(function() {
-      for (var i = 1000; i--;) space.update();
+      for (var i = 100; i--;) space.tick();
       expect(ship.y).to.be(-100);
       next();
     }, 10);
@@ -53,7 +53,7 @@ describe(__filename + "#", function() {
     expect(bullet.x).to.be(115);
     expect(bullet.y).to.be(100);
 
-    for (var i = 100; i--;) space.update();
+    for (var i = 100; i--;) space.tick();
     expect(bullet.x).to.be(115);
     expect(bullet.y).to.be(-900);
   });
@@ -66,34 +66,34 @@ describe(__filename + "#", function() {
     expect(bullet.x).to.be(126);
     expect(bullet.y).to.be(104);
 
-    for (var i = 100; i--;) space.update();
+    for (var i = 100; i--;) space.tick();
     expect(bullet.x).to.be(826);
     expect(bullet.y).to.be(-596);
   });
 
   it("saves the ship if moved", function() {
     var ship = Ship();
-    var stub = sinon.stub(ship, "_update");
-    ship.update();
+    var stub = sinon.stub(ship, "update");
+    ship.tick();
     expect(stub.callCount).to.be(0);
     ship.move(10);
-    ship.update();
+    ship.tick();
     expect(stub.callCount).to.be(1);
   });
 
   it("saves the ship if rotated", function() {
     var ship = Ship();
-    var stub = sinon.stub(ship, "_update");
-    ship.update();
+    var stub = sinon.stub(ship, "update");
+    ship.tick();
     expect(stub.callCount).to.be(0);
     ship.rotate(1);
-    ship.update();
+    ship.tick();
     expect(stub.callCount).to.be(1);
   });
 
   it("doesn't exceed max velocity", function() {
     var ship = Ship({ maxVelocity: 10 });
-    for (var i = 1000; i--;) ship.move(1);
+    for (var i = 100; i--;) ship.move(1);
     expect(ship.velocity).to.be(10);
   });
 });

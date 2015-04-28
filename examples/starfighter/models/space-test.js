@@ -23,10 +23,10 @@ describe(__filename + "#", function() {
       }
     });
 
-    for (var i = 1000; i--;) s.update();
+    for (var i = 100; i--;) s.tick();
 
     expect(ship.x).to.be(0);
-    expect(ship.y).to.be(-25);
+    expect(ship.y).to.be(-15);
 
   });
 
@@ -40,15 +40,15 @@ describe(__filename + "#", function() {
       }
     });
 
-    for (var i = 1000; i--;) s.update();
+    for (var i = 100; i--;) s.tick();
 
-    expect(ship.x).to.be(30);
+    expect(ship.x).to.be(15);
     expect(ship.y).to.be(0);
   });
 
   it("properly removes two entities that collide with one another", function(next) {
     var s = Space();
-    var e1 = s.addEntity({ cid: 0, ype: "ship", width: 10, height: 10, x: 0, y: 0 });
+    var e1 = s.addEntity({ cid: 0, type: "ship", width: 10, height: 10, x: 0, y: 0 });
     var e2 = s.addEntity({ cid: 0, type: "bullet", width: 10, height: 10, x: 10, y: 10 });
 
     var r1stub = sinon.spy(e1, "explode");
@@ -56,7 +56,7 @@ describe(__filename + "#", function() {
 
     e2.setProperties({ x: 0, y: 0 });
 
-    s.update();
+    s.tick();
 
     expect(r1stub.callCount).to.be(1);
     expect(r2stub.callCount).to.be(1);
@@ -68,12 +68,16 @@ describe(__filename + "#", function() {
     var ship  = space.addEntity({ type: "ship", x: 0, y: 0 });
 
     ship.setProperties({ x: 51, y: 101 });
-    space.update();
+    space.tick();
     expect(ship.x).to.be(0);
     expect(ship.y).to.be(0);
     ship.setProperties({ x: -1, y: -1 });
-    space.update();
+    space.tick();
     expect(ship.x).to.be(50);
     expect(ship.y).to.be(100);
+  });
+
+  it("ensures the same entity in two different spaces maintains the same relative position", function() {
+
   });
 });

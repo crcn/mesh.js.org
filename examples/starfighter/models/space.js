@@ -8,6 +8,8 @@ module.exports = caplet.createModelClass({
   /**
    */
 
+  x: 0,
+  y: 0,
   width: Infinity,
   height: Infinity,
 
@@ -39,7 +41,7 @@ module.exports = caplet.createModelClass({
   /**
    */
 
-  update: function() {
+   tick: function() {
     for (var i = this.entities.length; i--;) {
       var entity = this.entities.at(i);
 
@@ -50,7 +52,7 @@ module.exports = caplet.createModelClass({
       this._moveInBounds(entity);
       this._checkCollisions(entity);
 
-      entity.update();
+      entity.tick();
     }
   },
 
@@ -93,6 +95,7 @@ module.exports = caplet.createModelClass({
 
   _checkCollisions: function(e1) {
 
+
     if (e1.type !== "ship") return;
 
     var e1xs = e1.x;
@@ -110,7 +113,6 @@ module.exports = caplet.createModelClass({
       var e2ye = e2ys + e2.height;
 
       if (!(e1ys > e2ye || e1xe < e2xs || e1ye < e2ys || e1xs > e2xe)) {
-        // console.log(e1xs, e2xs, e1ys, e2ys, e1.width, e1.height, e2.width, e2.height);
         e1.explode();
         e2.explode();
         break;

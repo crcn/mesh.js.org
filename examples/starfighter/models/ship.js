@@ -34,10 +34,11 @@ module.exports = Entity.extend({
       y: Math.round(y)
     });
   },
-  update: function() {
+  tick: function() {
     this.move(-this.slowdown);
     if (this._changed) {
-      this._update();
+      this._changed = false;
+      this.update();
     }
   }
 });

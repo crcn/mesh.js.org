@@ -33,7 +33,5 @@ module.exports = caplet.createModelClass({
     // remove the entity immediately
     this.dispose();
   },
-  update: function() {
-
-  }
+  tick: function() { }
 });
