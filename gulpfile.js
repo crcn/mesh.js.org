@@ -21,9 +21,9 @@ process.env.PC_DEBUG = 1;
  */
 
 var paths = {
-  testFiles  : ["test/**/*-test.js"],
+  testFiles  : ["test/**/*-test.js", "examples/**/*-test.js"],
   appFiles   : ["lib/**/*.js"],
-  allFiles   : ["test/**", "lib/**"]
+  allFiles   : ["test/**", "lib/**", "examples/**"]
 };
 
 /**
