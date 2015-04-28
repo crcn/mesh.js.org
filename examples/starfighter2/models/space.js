@@ -1,8 +1,15 @@
 var caplet   = require("caplet");
 var Entities = require("./entities");
 var mesh     = require("mesh");
+var grp      = require("./utils/getRotationPoint");
 
 module.exports = caplet.createModelClass({
+
+  /**
+   */
+
+  width: Infinity,
+  height: Infinity,
 
   /**
    */
@@ -20,11 +27,6 @@ module.exports = caplet.createModelClass({
         collection: "entities"
       }, this.bus)
     });
-
-    // wait for entities to change, then update
-    this.entities.watch(function() {
-      this.update();
-    }.bind(this));
   },
 
   /**
@@ -44,9 +46,10 @@ module.exports = caplet.createModelClass({
       // entity might have been exploded
       if (!entity) continue;
 
-      entity.update();
       this._moveEntity(entity);
       this._checkCollisions(entity);
+
+      entity.update();
     }
   },
 
@@ -64,8 +67,10 @@ module.exports = caplet.createModelClass({
       rotation = 360 + rotation;
     }
 
-    var x = Math.round(Math.sin(rotation / 180 * Math.PI) * entity.velocity);
-    var y = Math.round(Math.cos(rotation / 180 * Math.PI) * entity.velocity);
+    var p = grp(entity);
+
+    var x = Math.round(p.x * entity.velocity);
+    var y = Math.round(p.y * entity.velocity);
 
     entity.setProperties({
       x: entity.x + x,

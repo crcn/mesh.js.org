@@ -13,17 +13,7 @@ describe(__filename + "#", function() {
     s.addEntity({ type: "ship" });
   });
 
-  it("updates the space when an entity property changes", function(next) {
-    var s = Space();
-    var update = sinon.stub(s, "update");
-    var ship = s.addEntity({ type: "ship" });
-    setTimeout(function() {
-      expect(update.callCount).not.to.be(0);
-      next();
-    }, 2);
-  });
-
-  it("properly moves the entity on a Y plane based on the velocity", function(next) {
+  it("properly moves the entity on a Y plane based on the velocity", function() {
     var s = Space();
     var ship = s.addEntity({
       type: "ship",
@@ -32,14 +22,14 @@ describe(__filename + "#", function() {
         this.velocity -= 0.5;
       } });
 
-    setTimeout(function() {
-      expect(ship.x).to.be(0);
-      expect(ship.y).to.be(25);
-      next();
-    }, 2);
+    for (var i = 1000; i--;) s.update();
+
+    expect(ship.x).to.be(0);
+    expect(ship.y).to.be(30);
+
   });
 
-  it("properly moves the entity on a X plane based on the velocity", function(next) {
+  it("properly moves the entity on a X plane based on the velocity", function() {
     var s = Space();
     var ship = s.addEntity({
       type: "ship",
@@ -48,11 +38,10 @@ describe(__filename + "#", function() {
         this.velocity -= 0.5;
       } });
 
-    setTimeout(function() {
-      expect(ship.x).to.be(25);
-      expect(ship.y).to.be(0);
-      next();
-    }, 2);
+    for (var i = 1000; i--;) s.update();
+
+    expect(ship.x).to.be(30);
+    expect(ship.y).to.be(0);
   });
 
   it("properly removes two entities that collide with one another", function(next) {
@@ -65,10 +54,10 @@ describe(__filename + "#", function() {
 
     e2.setProperties({ x: 0, y: 0 });
 
-    setTimeout(function() {
-      expect(r1stub.callCount).to.be(1);
-      expect(r2stub.callCount).to.be(1);
-      next();
-    }, 10);
+    s.update();
+
+    expect(r1stub.callCount).to.be(1);
+    expect(r2stub.callCount).to.be(1);
+    next();
   });
 });
