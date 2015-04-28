@@ -71,5 +71,17 @@ describe(__filename + "#", function() {
     expect(bullet.y).to.be(826);
   });
 
+  it("moves an entity to the other end of the space if it goes out of bounds", function() {
+    var space = Space({ width: 50, height: 100 });
+    var ship  = space.addEntity({ type: "ship", x: 0, y: 0 });
 
+    ship.setProperties({ x: 51, y: 101 });
+    space.update();
+    expect(ship.x).to.be(0);
+    expect(ship.y).to.be(0);
+    ship.setProperties({ x: -1, y: -1 });
+    space.update();
+    expect(ship.x).to.be(50);
+    expect(ship.y).to.be(100);
+  });
 });

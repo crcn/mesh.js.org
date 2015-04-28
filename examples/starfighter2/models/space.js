@@ -47,6 +47,7 @@ module.exports = caplet.createModelClass({
       if (!entity) continue;
 
       this._moveEntity(entity);
+      this._moveInBounds(entity);
       this._checkCollisions(entity);
 
       entity.update();
@@ -76,6 +77,16 @@ module.exports = caplet.createModelClass({
       x: entity.x + x,
       y: entity.y + y
     });
+  },
+
+  /**
+   */
+
+  _moveInBounds: function(entity) {
+    if (entity.y > this.height) entity.set("y", 0);
+    if (entity.x > this.width) entity.set("x", 0);
+    if (entity.x < 0) entity.set("x", this.width);
+    if (entity.y < 0) entity.set("y", this.height);
   },
 
   /**
