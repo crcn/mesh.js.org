@@ -42,7 +42,6 @@ module.exports = React.createClass({
       <div className='space' style={s}>
         {
           space.entities.filter(function(entity) {
-            if (!viewport.canSee(entity)) console.log("NO SEE");
             return viewport.canSee(entity);
           }).map(function(entity) {
             return <Entity key={entity.cid} entity={entity} />
