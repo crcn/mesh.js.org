@@ -30,15 +30,19 @@ module.exports = React.createClass({
   render: function() {
 
     var s = {
-      transform: 'matrix(' + [0, 0, 0, 0, this.state.space.x, this.state.space.y] + ')'
-    }
+      //transform: 'matrix(' + [0, 0, 0, 0, 0, 0] + ')'
+      top: this.state.space.y,
+      left: this.state.space.x
+    };
 
-    return <div id="map" ref="space" tabIndex="0" style={s className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
-      {
-        this.state.space.entities.map(function(entity) {
-          return <Entity key={entity.cid} entity={entity} />
-        })
-      }
+    return <div id="map" ref="viewport" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
+      <div className='space' style={s}>
+        {
+          this.state.space.entities.map(function(entity) {
+            return <Entity key={entity.cid} entity={entity} />
+          })
+        }
+      </div>
     </div>
   },
   _initShips: function() {
@@ -102,12 +106,12 @@ module.exports = React.createClass({
     }
   },
   _updateSpace: function() {
-    var spaceNode = this.refs.space.getDOMNode();
+    var vpNode = this.refs.viewport.getDOMNode();
     var viewport = this.state.viewport;
-    viewport.width = spaceNode.offsetWidth;
-    viewport.height = spaceNode.offsetHeight;
+    viewport.width = vpNode.offsetWidth;
+    viewport.height = vpNode.offsetHeight;
 
-    this._viewport.tick();
+    this.state.viewport.tick();
     this._robot.tick();
     this.state.space.tick();
   }

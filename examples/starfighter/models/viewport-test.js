@@ -28,26 +28,26 @@ describe(__filename + "#", function() {
 
     viewport.tick();
 
-    expect(space.x).to.be(-530);
-    expect(space.y).to.be(30);
+    expect(space.x).to.be(-600);
+    expect(space.y).to.be(100);
 
     ship.y = 1000;
     viewport.tick();
-    expect(space.y).to.be(-530);
+    expect(space.y).to.be(-600);
 
     ship.x = -1000;
     ship.y = -1000;
     viewport.tick();
-    expect(space.x).to.be(-970);
-    expect(space.y).to.be(-970);
+    expect(space.x).to.be(1100);
+    expect(space.y).to.be(1100);
   });
 
   it("can set the padding in the viewport", function() {
     var space = Space();
 
     var viewport = Viewport({
-      width: 500,
-      height: 500,
+      width: 100,
+      height: 100,
       space: space
     });
 
@@ -59,11 +59,11 @@ describe(__filename + "#", function() {
 
     viewport.focus = ship;
     viewport.tick();
-    expect(space.x).to.be(30);
-    expect(space.y).to.be(30);
+    expect(space.x).to.be(100);
+    expect(space.y).to.be(100);
     viewport.padding = 10;
     viewport.tick();
-    expect(space.x).to.be(10);
-    expect(space.y).to.be(10);
+    expect(space.x).to.be(90);
+    expect(space.y).to.be(90);
   });
 });

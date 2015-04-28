@@ -79,6 +79,7 @@ module.exports = caplet.createModelClass({
 
   _moveInBounds: function(entity) {
 
+
     if (this.height < Infinity) {
       if (entity.y > this.height) entity.set("y", 0);
       if (entity.y < 0) entity.set("y", this.height);

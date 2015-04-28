@@ -6,7 +6,7 @@ module.exports = caplet.createModelClass({
    * padding for the focused element
    */
 
-  padding: 30,
+  padding: 100,
 
   /**
    */
@@ -25,8 +25,7 @@ module.exports = caplet.createModelClass({
 
     if (vx > pw) this.space.set("x", pw - fx);
     if (vy > ph) this.space.set("y", ph - fy);
-
-    if (fx < this.padding) this.space.set("x", fx + this.padding);
-    if (fy < this.padding) this.space.set("y", fy + this.padding);
+    if (vx < this.padding) this.space.set("x", this.padding - fx);
+    if (vy < this.padding) this.space.set("y", this.padding - fy);
   }
 });
