@@ -20,8 +20,9 @@ module.exports = React.createClass({
     });
 
     return {
-      viewport    : viewport,
-      space       : space
+      viewport : viewport,
+      space    : space,
+      entities : space.entities
     }
   },
   componentDidMount: function() {
@@ -36,12 +37,13 @@ module.exports = React.createClass({
     };
 
     var space    = this.state.space;
+    var entities    = this.state.entities;
     var viewport = this.state.viewport;
 
     return <div id="map" ref="viewport" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
       <div className='space' style={s}>
         {
-          space.entities.filter(function(entity) {
+          entities.filter(function(entity) {
             return viewport.canSee(entity);
           }).map(function(entity) {
             return <Entity key={entity.cid} entity={entity} />
