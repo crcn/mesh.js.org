@@ -26,7 +26,7 @@ describe(__filename + "#", function() {
     for (var i = 1000; i--;) s.update();
 
     expect(ship.x).to.be(0);
-    expect(ship.y).to.be(30);
+    expect(ship.y).to.be(-25);
 
   });
 

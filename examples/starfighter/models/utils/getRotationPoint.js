@@ -1,7 +1,7 @@
 module.exports = function(entity) {
 
   // return;
-  var rotation = entity.rotation;
+  var rotation = 180-entity.rotation;
 
   if (rotation < 0) {
     rotation = 360 + rotation;

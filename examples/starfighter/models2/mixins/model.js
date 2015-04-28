@@ -61,6 +61,6 @@ module.exports = {
     }
 
     stream
-    .once("end", onRun);
+    .once("end", onRun.bind(this, void 0, this));
   }
 }

@@ -1,25 +1,35 @@
 var caplet = require("caplet");
+var mesh   = require("mesh");
 
 module.exports = caplet.createModelClass({
+  bus: mesh.noop,
+  x: 0,
+  y: 0,
   rotation: 0,
+  velocity: 0,
   mixins: [
     require("./mixins/model")
   ],
-  explode: function() {
-    this.remove();
-    this.emit("dispose");
-  },
   toData: function() {
     return {
-      cid      : this.cid,
-      x        : this.x,
-      y        : this.y,
-      width    : this.width,
-      height   : this.height,
-      ownerId  : this.ownerId,
-      ts       : this.timestamp,
-      rotation : this.rotation,
-      type     : this.type
-    }
+      cid       : this.cid,
+      timestamp : this.timestamp,
+      rotation  : this.rotation,
+      velocity  : this.velocity
+    };
+  },
+  initialize: function() {
+    this.timestamp = Date.now();
+  },
+  explode: function() {
+
+    // persist removal
+    this.remove();
+
+    // remove the entity immediately
+    this.dispose();
+  },
+  update: function() {
+
   }
 });

@@ -61,13 +61,6 @@ module.exports = caplet.createModelClass({
 
     if (entity.velocity <= 0) return;
 
-    // return;
-    var rotation = entity.rotation;
-
-    if (rotation < 0) {
-      rotation = 360 + rotation;
-    }
-
     var p = grp(entity);
 
     var x = Math.round(p.x * entity.velocity);
@@ -83,10 +76,16 @@ module.exports = caplet.createModelClass({
    */
 
   _moveInBounds: function(entity) {
-    if (entity.y > this.height) entity.set("y", 0);
-    if (entity.x > this.width) entity.set("x", 0);
-    if (entity.x < 0) entity.set("x", this.width);
-    if (entity.y < 0) entity.set("y", this.height);
+
+    if (this.height < Infinity) {
+      if (entity.y > this.height) entity.set("y", 0);
+      if (entity.y < 0) entity.set("y", this.height);
+    }
+
+    if (this.width < Infinity) {
+      if (entity.x > this.width) entity.set("x", 0);
+      if (entity.x < 0) entity.set("x", this.width);
+    }
   },
 
   /**

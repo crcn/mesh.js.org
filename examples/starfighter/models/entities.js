@@ -1,8 +1,9 @@
 var caplet = require("caplet");
+var Entity = require("./entity");
 
-var entityClasses = {
-  bullet : require("./bullet"),
-  ship   : require("./ship")
+var classes = {
+  ship: require("./ship"),
+  bullet: require("./bullet")
 };
 
 module.exports = caplet.createCollectionClass({
@@ -11,12 +12,14 @@ module.exports = caplet.createCollectionClass({
   ],
   createModel: function(properties) {
     properties.bus   = this.bus;
-    properties.stage = this.stage;
-    var clazz        = entityClasses[properties.type || properties.data.type];
+    properties.space = this.space;
+    var clazz = classes[properties.type] || Entity;
     return clazz(properties);
   },
-  addEntity: function(properties, onSave) {
-    var entity = this.createModel(properties).save(onSave);
-    return entity;
+  add: function(properties, onSave) {
+    var e = this.createModel(properties);
+    e.save(onSave);
+    this.push(e);
+    return e;
   }
 });

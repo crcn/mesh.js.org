@@ -33,7 +33,7 @@ describe(__filename + "#", function() {
 
     setTimeout(function() {
       for (var i = 1000; i--;) space.update();
-      expect(ship.y).to.be(110);
+      expect(ship.y).to.be(-100);
       next();
     }, 10);
   });
@@ -41,33 +41,59 @@ describe(__filename + "#", function() {
   it("can shoot the phasers", function() {
     var space = Space();
     var ship = space.addEntity({ type: "ship", bulletTTL: 0 });
-    ship.shootPhasers();
+    ship.shootPhaser();
     expect(space.entities.length).to.be(2);
   });
 
   it("move the phasers starting from the ship", function() {
     var space = Space();
     var ship = space.addEntity({ type: "ship", x: 100, y:100 });
-    var bullet = ship.shootPhasers();
+    var bullet = ship.shootPhaser();
 
     expect(bullet.x).to.be(115);
-    expect(bullet.y).to.be(130);
+    expect(bullet.y).to.be(100);
 
     for (var i = 100; i--;) space.update();
     expect(bullet.x).to.be(115);
-    expect(bullet.y).to.be(1130);
+    expect(bullet.y).to.be(-900);
   });
 
   it("rotates the bullet with the ship", function() {
     var space = Space();
     var ship = space.addEntity({ type: "ship", x: 100, y:100, rotation: 45 });
-    var bullet = ship.shootPhasers();
+    var bullet = ship.shootPhaser();
 
     expect(bullet.x).to.be(126);
-    expect(bullet.y).to.be(126);
+    expect(bullet.y).to.be(104);
 
     for (var i = 100; i--;) space.update();
     expect(bullet.x).to.be(826);
-    expect(bullet.y).to.be(826);
+    expect(bullet.y).to.be(-596);
+  });
+
+  it("saves the ship if moved", function() {
+    var ship = Ship();
+    var stub = sinon.stub(ship, "save");
+    ship.update();
+    expect(stub.callCount).to.be(0);
+    ship.move(1);
+    ship.update();
+    expect(stub.callCount).to.be(1);
+  });
+
+  it("saves the ship if rotated", function() {
+    var ship = Ship();
+    var stub = sinon.stub(ship, "save");
+    ship.update();
+    expect(stub.callCount).to.be(0);
+    ship.rotate(1);
+    ship.update();
+    expect(stub.callCount).to.be(1);
+  });
+
+  it("doesn't exceed max velocity", function() {
+    var ship = Ship({ maxVelocity: 10 });
+    for (var i = 1000; i--;) ship.move(1);
+    expect(ship.velocity).to.be(10);
   });
 });

@@ -1,29 +1,12 @@
-var Base = require("./entity");
+var Entity = require("./entity");
 
-module.exports = Base.extend({
-  mixins: [
-    require("./mixins/model")
-  ],
+module.exports = Entity.extend({
   ttl: 1000 * 5,
+  width: 2,
+  height: 5,
   update: function() {
-
-    // console.log(this.timestamp, this.ttl);
     if (Date.now() > this.timestamp + this.ttl) {
-      return this.remove();
+      return this.explode();
     }
-
-    var r = 180-this.rotation;
-
-    if (r < 0) {
-      r = 360 + r;
-    }
-
-    var s = 10;
-
-    var x = Math.sin(r/180*Math.PI) * s;
-    var y = Math.cos(r/180*Math.PI) * s;
-
-    this.setProperties({ x: this.x + x, y: this.y + y });
-    this.save();
   }
 });
