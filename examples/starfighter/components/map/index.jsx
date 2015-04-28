@@ -3,14 +3,14 @@ var Space  = require("../../models/space");
 var Entity = require("./entity");
 var caplet = require("caplet");
 var bus    = require("../../bus");
-// var Robot  = require("../../models/robot");
+var Robot  = require("../../models/robot");
 
 module.exports = React.createClass({
   mixins: [caplet.watchModelsMixin],
   getInitialState: function() {
 
     var space = Space({
-      // bus: bus
+      bus: bus
     });
 
     return {
@@ -31,20 +31,21 @@ module.exports = React.createClass({
     </div>
   },
   _initShips: function() {
-    // this._robot = Robot();
-    // this._addRobotShip();
+    this._addRobotShip();
     this._addShip();
+    this._tick();
   },
   _addRobotShip: function() {
+    if (!this._robot) this._robot = Robot();
 
-    this._robot.ship = this.state.map.addShip({
-     width: 30,
-     height: 30,
-     x: 100,
-     y: 100
+    this._robot.ship = this.state.space.addEntity({
+      type: "ship",
+      maxVelocity: 4,
+      x: Math.round(Math.random() * 1000),
+      y: Math.round(Math.random() * 600)
    });
 
-   this._robot.ship.once("die", this._addRobotShip);
+   this._robot.ship.once("dispose", this._addRobotShip);
   },
   _addShip: function(onAdd) {
 
@@ -54,8 +55,7 @@ module.exports = React.createClass({
       y: Math.round(Math.random() * 600)
     });
 
-    this._tick();
-    // this._ship.once("die", this._addShip);
+    this._ship.once("dispose", this._addShip);
   },
   _onKeyDown: function(event) {
     event.preventDefault();
@@ -89,14 +89,13 @@ module.exports = React.createClass({
         this._ship.shootPhaser();
       }
     }
-
-
   },
   _updateSpace: function() {
     var spaceNode = this.refs.space.getDOMNode();
     var space = this.state.space;
     space.width = spaceNode.offsetWidth;
     space.height = spaceNode.offsetHeight;
+    this._robot.update();
     this.state.space.update();
   }
 });

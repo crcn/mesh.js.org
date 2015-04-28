@@ -14,7 +14,6 @@ function create() {
   });
 
   bus = tailable(bus);
-  bus = attachModelData(bus);
 
   if (process.browser) {
     bus = realtime(bus);
@@ -44,38 +43,10 @@ function tailable(bus) {
 /**
  */
 
-function attachModelData(bus) {
-  return mesh.attach(function(operation) {
-    if (!operation.model) return;
-
-    var data = operation.model.toData();
-
-    if (operation.name === "insert") {
-      data.cid       = createId();
-      data.timestamp = Date.now();
-    }
-    return {
-      data: data
-    }
-  }, bus);
-}
-
-/**
- */
-
 function realtime(bus) {
 
   var rtBus = mesh.attach({ model: void 0 }, io("starfighter", bus));
 
   bus(mesh.op("tail")).pipe(mesh.open(rtBus));
   return bus;
-}
-
-/**
- */
-
-var _id = 0;
-
-function createId() {
-  return Date.now() + "." + (_id++);
 }

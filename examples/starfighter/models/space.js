@@ -100,7 +100,7 @@ module.exports = caplet.createModelClass({
 
     for (var i = this.entities.length; i--;) {
       var e2 = this.entities.at(i);
-      if (e1 === e2 || e1.ownerId === e1.cid) continue;
+      if (e1 === e2 || e2.ownerId === e1.cid) continue;
 
       var e2xs = e2.x;
       var e2xe = e2xs + e2.width;

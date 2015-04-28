@@ -57,7 +57,7 @@ module.exports = caplet.createModelClass({
         var e2ys = e2.y;
         var e2ye = e2ys + e2.height;
 
-  
+
         if (!(e1ys > e2ye || e1xe < e2xs || e1ye < e2ys || e1xs > e2xe)) {
           e1.explode();
           e2.explode();
