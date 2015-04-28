@@ -19,6 +19,7 @@ module.exports = {
    */
 
   initialize: function() {
+    if (!this.bus) return;
     var tail = this.bus(mesh.op("tail")).on("data", _syncCollection(this));
     this.once("dispose", tail.end.bind(tail));
   },

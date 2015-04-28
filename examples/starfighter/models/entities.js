@@ -23,6 +23,9 @@ module.exports = caplet.createCollectionClass({
     this.push(e);
     e.insert(onSave);
     return e;
+  },
+  tick: function() {
+    for (var i = this.length; i--;) this.at(i).tick();
   }
 });
 
