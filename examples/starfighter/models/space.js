@@ -93,6 +93,8 @@ module.exports = caplet.createModelClass({
 
   _checkCollisions: function(e1) {
 
+    if (e1 !== "ship") return;
+
     var e1xs = e1.x;
     var e1xe = e1xs + e1.width;
     var e1ys = e1.y;
