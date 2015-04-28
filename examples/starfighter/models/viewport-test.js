@@ -66,4 +66,34 @@ describe(__filename + "#", function() {
     expect(space.x).to.be(90);
     expect(space.y).to.be(90);
   });
+
+  it("returns TRUE if an entity is in view", function() {
+    var space = Space();
+
+    var viewport = Viewport({
+      width: 100,
+      height: 100,
+      space: space
+    });
+
+    var ship = space.addEntity({
+      x: 0,
+      y: 0,
+      type: "ship"
+    });
+
+    space.x = 1000;
+    space.y = 1000;
+
+    expect(viewport.canSee(ship)).to.be(false);
+    space.x = 50;
+    space.y = 50;
+    expect(viewport.canSee(ship)).to.be(true);
+    space.x = 1000;
+    space.y = 50;
+    expect(viewport.canSee(ship)).to.be(false);
+    space.x = 50;
+    space.y = 1000;
+    expect(viewport.canSee(ship)).to.be(false);
+  });
 });

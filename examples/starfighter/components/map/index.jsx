@@ -35,10 +35,15 @@ module.exports = React.createClass({
       left: this.state.space.x
     };
 
+    var space    = this.state.space;
+    var viewport = this.state.viewport;
+
     return <div id="map" ref="viewport" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
       <div className='space' style={s}>
         {
-          this.state.space.entities.map(function(entity) {
+          space.entities.filter(function(entity) {
+            return viewport.canSee(entity);
+          }).map(function(entity) {
             return <Entity key={entity.cid} entity={entity} />
           })
         }

@@ -27,5 +27,15 @@ module.exports = caplet.createModelClass({
     if (vy > ph) this.space.set("y", ph - fy);
     if (vx < this.padding) this.space.set("x", this.padding - fx);
     if (vy < this.padding) this.space.set("y", this.padding - fy);
+  },
+
+  /**
+   */
+
+  canSee: function(entity) {
+    var vx = this.space.x + entity.x;
+    var vy = this.space.y + entity.y;
+
+    return vx > 0 && vx < this.width && vy > 0 && vy < this.height;
   }
 });
