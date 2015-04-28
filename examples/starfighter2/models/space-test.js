@@ -20,7 +20,8 @@ describe(__filename + "#", function() {
       velocity: 5,
       rotation: 0, x: 0, y: 0, update: function() {
         this.velocity -= 0.5;
-      } });
+      }
+    });
 
     for (var i = 1000; i--;) s.update();
 
@@ -36,7 +37,8 @@ describe(__filename + "#", function() {
       velocity: 5,
       rotation: 90, x: 0, y: 0, update: function() {
         this.velocity -= 0.5;
-      } });
+      }
+    });
 
     for (var i = 1000; i--;) s.update();
 
