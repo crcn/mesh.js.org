@@ -2,6 +2,7 @@ var React  = require("react");
 var Space  = require("../../models/space");
 var Viewport = require("../../models/viewport");
 var Entity = require("./entity");
+var Map    = require("./map");
 var Entities = require("../../models/entities");
 var caplet = require("caplet");
 var bus    = require("../../bus");
@@ -18,6 +19,7 @@ module.exports = React.createClass({
     var viewport = Viewport({
       space: space
     });
+
 
     return {
       viewport : viewport,
@@ -37,19 +39,20 @@ module.exports = React.createClass({
     };
 
     var space    = this.state.space;
-    var entities    = this.state.entities;
+    var entities = this.state.entities;
     var viewport = this.state.viewport;
 
     return <div id="map" ref="viewport" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
-      <div className='space' style={s}>
+      <div className="space" style={s}>
         {
           entities.filter(function(entity) {
             return viewport.canSee(entity);
           }).map(function(entity) {
-            return <Entity key={entity.cid} entity={entity} />
-          })
+            return <Entity key={entity.cid} entity={entity} focus={this._ship} />
+          }.bind(this))
         }
       </div>
+      <Map entities={entities} focus={this._ship} />
     </div>
   },
   _initShips: function() {
@@ -73,6 +76,7 @@ module.exports = React.createClass({
 
     this._ship = this.state.viewport.focus = this.state.space.addEntity({
       type: "ship",
+      isUsers: true,
       x: Math.round(Math.random() * 1000),
       y: Math.round(Math.random() * 600)
     });

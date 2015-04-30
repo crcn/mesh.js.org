@@ -25,6 +25,7 @@ module.exports = caplet.createModelClass({
 
     this.entities = Entities({
       space: this,
+      user: this.user,
       bus: mesh.attach({
         collection: "entities"
       }, this.bus)
