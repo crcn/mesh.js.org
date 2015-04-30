@@ -61,6 +61,7 @@ module.exports = React.createClass({
     this._tick();
   },
   _addRobotShip: function() {
+    console.log("ROBO");
     if (!this._robot) this._robot = Robot();
 
     this._robot.ship = this.state.space.addEntity({
