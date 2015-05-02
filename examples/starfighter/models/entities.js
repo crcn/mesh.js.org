@@ -16,16 +16,13 @@ module.exports = caplet.createCollectionClass({
     var clazz = classes[properties.type] || Entity;
     return clazz(properties);
   },
-  add: function(properties, onSave) {
-    properties.cid = createCID();
-    properties.timestamp = Date.now();
-    var e = this.createModel(properties);
+  add: function(props, onSave) {
+    props.cid       = createCID();
+    props.timestamp = Date.now();
+    var e = this.createModel(props);
     this.push(e);
     e.insert(onSave);
     return e;
-  },
-  tick: function() {
-    for (var i = this.length; i--;) this.at(i).tick();
   }
 });
 

@@ -5,11 +5,10 @@ var Entity = require("./entity");
 var Map    = require("./map");
 var Entities = require("../../models/entities");
 var caplet = require("caplet");
-var bus    = require("../../bus");
+var bus    = require("../../bus")();
 var Robot  = require("../../models/robot");
 
 module.exports = React.createClass({
-  mixins: [caplet.watchModelsMixin],
   getInitialState: function() {
 
     var space = Space({
@@ -56,7 +55,7 @@ module.exports = React.createClass({
     </div>
   },
   _initShips: function() {
-    this._addRobotShip();
+    // this._addRobotShip();
     this._addShip();
     this._tick();
   },
@@ -92,7 +91,8 @@ module.exports = React.createClass({
     this._keys[event.keyCode] = false;
   },
   _tick: function() {
-    setTimeout(this._tick, 1000/30);
+    this._fps = 30;
+    setTimeout(this._tick, 1000/this._fps);
     this._updateShipPosition();
     this._updateSpace();
   },
@@ -105,11 +105,15 @@ module.exports = React.createClass({
       var isDown = this._keys[c];
 
       if (isDown && c === 39) {
-        this._ship.rotate(6);
+        this._ship.rotate(360/this._fps/2);
       } else if (isDown && c === 37) {
-        this._ship.rotate(-6);
-      } else if (isDown && c === 38) {
-        this._ship.move(4);
+        this._ship.rotate(-360/this._fps/2);
+      } else if (c === 38) {
+        if (isDown) {
+          this._ship.move(4);
+        } else {
+          this._ship.move(-0.5);
+        }
       } else if (c === 32 && !isDown) {
         delete this._keys[c];
         this._ship.shootPhaser();
@@ -117,13 +121,16 @@ module.exports = React.createClass({
     }
   },
   _updateSpace: function() {
-    var vpNode = this.refs.viewport.getDOMNode();
-    var viewport = this.state.viewport;
-    viewport.width = vpNode.offsetWidth;
+
+    var vpNode      = this.refs.viewport.getDOMNode();
+    var viewport    = this.state.viewport;
+    viewport.width  = vpNode.offsetWidth;
     viewport.height = vpNode.offsetHeight;
 
     this.state.viewport.tick();
-    this._robot.tick();
+    // this._robot.tick();
     this.state.space.tick();
+
+    this.setState({ space: this.state.space });
   }
 });

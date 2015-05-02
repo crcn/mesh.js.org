@@ -5,7 +5,8 @@ var React      = require("react");
 var mesh       = require("mesh");
 var path       = require("path");
 var less       = require("./less");
-var starfighter   = require("./starfighter");
+var realtime   = require("./realtime");
+var glob       = require("glob");
 
 module.exports = function(app) {
 
@@ -59,5 +60,9 @@ module.exports = function(app) {
     });
   });
 
-  starfighter(server.listen(port));
+  realtime(server.listen(port), app);
+
+  glob.sync(app.config.directories.examples + "/*/server.js").forEach(function(pathname) {
+    require(pathname)(app);
+  });
 }

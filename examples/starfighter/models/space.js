@@ -1,6 +1,7 @@
 var caplet   = require("caplet");
 var Entities = require("./entities");
 var mesh     = require("mesh");
+var memory   = require("mesh-memory");
 var grp      = require("./utils/getRotationPoint");
 
 module.exports = caplet.createModelClass({
@@ -16,18 +17,16 @@ module.exports = caplet.createModelClass({
   /**
    */
 
-  bus: mesh.tailable(mesh.noop),
+  bus: mesh.limit(1, mesh.tailable(memory())),
 
   /**
    */
 
   initialize: function() {
-
     this.entities = Entities({
       space: this,
-      user: this.user,
       bus: mesh.attach({
-        collection: "entities"
+        collection : "entities"
       }, this.bus)
     });
   },
@@ -50,8 +49,7 @@ module.exports = caplet.createModelClass({
       if (!entity) continue;
 
       this._moveEntity(entity);
-      this._moveInBounds(entity);
-      this._checkCollisions(entity);
+      if (!process.browser) this._checkCollisions(entity);
 
       entity.tick();
     }
@@ -69,33 +67,14 @@ module.exports = caplet.createModelClass({
     var x = Math.round(p.x * entity.velocity);
     var y = Math.round(p.y * entity.velocity);
 
-    entity.setProperties({
-      x: entity.x + x,
-      y: entity.y + y
-    });
-  },
-
-  /**
-   */
-
-  _moveInBounds: function(entity) {
-
-    if (this.height < Infinity) {
-      if (entity.y > this.height) entity.set("y", 0);
-      if (entity.y < 0) entity.set("y", this.height);
-    }
-
-    if (this.width < Infinity) {
-      if (entity.x > this.width) entity.set("x", 0);
-      if (entity.x < 0) entity.set("x", this.width);
-    }
+    entity.x = entity.x + x;
+    entity.y = entity.y + y;
   },
 
   /**
    */
 
   _checkCollisions: function(e1) {
-
 
     if (e1.type !== "ship") return;
 

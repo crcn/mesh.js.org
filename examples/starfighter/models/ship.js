@@ -3,16 +3,16 @@ var Bullet = require("./bullet");
 var grp    = require("./utils/getRotationPoint");
 
 module.exports = Entity.extend({
-  slowdown: 0.5,
+  slowdown: 0.1,
   bulletTTL: 1000 * 5,
   maxVelocity: 10,
   width: 30,
   height: 30,
   move: function(delta) {
-    this._changed = this.set("velocity", Math.min(this.maxVelocity, Math.max(0, this.velocity + delta))) || this._changed;
+    this.set("velocity", Math.min(this.maxVelocity, Math.max(0, this.velocity + delta)));
   },
   rotate: function(delta) {
-    this._changed = this.set("rotation", (this.rotation + delta) % 360) || this._changed;
+    this.set("rotation", (this.rotation + delta) % 360);
   },
   shootPhaser: function() {
 
@@ -33,12 +33,5 @@ module.exports = Entity.extend({
       x: Math.round(x),
       y: Math.round(y)
     });
-  },
-  tick: function() {
-    this.move(-this.slowdown);
-    if (this._changed) {
-      this._changed = false;
-      this.update();
-    }
   }
 });

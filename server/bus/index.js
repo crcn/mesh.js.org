@@ -1,5 +1,4 @@
 var mesh = require("mesh");
 
-module.exports = function(options) {
-  
+module.exports = function(app) {
 }

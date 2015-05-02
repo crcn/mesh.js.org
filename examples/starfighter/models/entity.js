@@ -29,9 +29,6 @@ module.exports = caplet.createModelClass({
 
     // persist removal
     this.remove();
-
-    // remove the entity immediately
-    this.dispose();
   },
   tick: function() { }
 });

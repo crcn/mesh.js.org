@@ -52,7 +52,7 @@ function _syncCollection(collection) {
     var handler = ({
       insert  : insert,
       remove  : remove,
-      update  : update
+      // update  : update
     })[operation.name] || noop;
     handler(operation);
   };
@@ -61,7 +61,6 @@ function _syncCollection(collection) {
     if (_find(operation).length) {
       return;
     }
-
     collection.push.apply(collection, _toArray(operation.data).map(_createModel));
   }
 
@@ -96,7 +95,7 @@ function _syncCollection(collection) {
   }
 
   function _createModel(data) {
-    return collection.createModel({ data: data });
+    return collection.createModel(data);
   }
 
   function noop(operation) {

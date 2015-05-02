@@ -17,6 +17,4 @@ var app = new Application({
   })
 });
 
-
-
 app.load();

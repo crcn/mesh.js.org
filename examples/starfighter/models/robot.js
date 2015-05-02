@@ -7,8 +7,6 @@ var extend   = require("xtend/mutable");
 module.exports = caplet.createModelClass({
   tick: function() {
 
-    var props = {};
-
     if (Math.random() > 0.98) this.ship.shootPhaser();
     if (Math.random() > 0.3) this.ship.move(2);
     if (Math.random() > 0.95) {
