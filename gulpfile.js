@@ -76,7 +76,7 @@ gulp.task("bundlejs", function() {
   return b.bundle().
   pipe(source('bundle.js')).
   pipe(buffer()).
-  // pipe(uglify()).
+  pipe(uglify()).
   pipe(gulp.dest('./static'));
 });
 
