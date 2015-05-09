@@ -11,9 +11,7 @@ module.exports = Entity.extend({
    * default properties
    */
 
-  x: 0,
-  y: 0,
-  slowdown    : 0.1,
+  drag        : 0.1,
   bulletTTL   : 1000 * 5,
   maxVelocity : 10,
   width       : 30,

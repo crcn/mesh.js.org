@@ -29,7 +29,7 @@ describe(__filename + "#", function() {
 
   it("can be added in space", function(next) {
     var space = Space();
-    var ship = space.addEntity({ type: "ship", velocity: 10, slowdown: 0.5 });
+    var ship = space.addEntity({ type: "ship", velocity: 10, drag: 0.5 });
 
     setTimeout(function() {
       for (var i = 100; i--;) space.tick();
