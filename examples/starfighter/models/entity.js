@@ -11,13 +11,14 @@ module.exports = caplet.createModelClass({
   mixins: [
     require("./mixins/model")
   ],
-  toJSON: function() {
+  toData: function() {
     return {
       x         : this.x,
       y         : this.y,
       width     : this.width,
       height    : this.height,
       cid       : this.cid,
+      timestamp : this.timestamp,
       rotation  : this.rotation,
       velocity  : this.velocity,
       ownerId   : this.ownerId,

@@ -4,17 +4,25 @@ var mesh     = require("mesh");
 var memory   = require("mesh-memory");
 var grp      = require("./utils/getRotationPoint");
 
+/*
+ */
+
 module.exports = caplet.createModelClass({
 
   /**
+   * default properties
    */
 
-  x: 0,
-  y: 0,
-  width: Infinity,
-  height: Infinity,
+  x              : 0,
+  y              : 0,
+  width          : Infinity,
+  height         : Infinity,
+
+  // leave updating entities up to the server
+  updateEntities : !process.browser,
 
   /**
+   * default
    */
 
   bus: mesh.limit(1, mesh.tailable(memory())),
@@ -23,6 +31,7 @@ module.exports = caplet.createModelClass({
    */
 
   initialize: function() {
+
     this.entities = Entities({
       space: this,
       bus: mesh.attach({
@@ -48,10 +57,14 @@ module.exports = caplet.createModelClass({
       // entity might have been exploded
       if (!entity) continue;
 
+      // move the entity around based on velocity & rotation - this
+      // is calculated on the client's machine, and the server
       this._moveEntity(entity);
-      if (!process.browser) this._checkCollisions(entity);
 
-      entity.tick();
+      if (this.updateEntities) {
+        this._checkCollisions(entity);
+        entity.tick();
+      }
     }
   },
 

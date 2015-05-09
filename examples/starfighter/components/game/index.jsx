@@ -1,16 +1,22 @@
-var React  = require("react");
-var Space  = require("../../models/space");
-var Viewport = require("../../models/viewport");
-var SpaceComponent = require("./space");
-var Entity = require("./entity");
+var React           = require("react");
+var Ticker          = require("../../models/ticker");
+var Space           = require("../../models/space");
+var Viewport        = require("../../models/viewport");
+var SpaceComponent  = require("./space");
+var Entity          = require("./entity");
 var MapComponent    = require("./map");
-var Entities = require("../../models/entities");
-var caplet = require("caplet");
-var bus    = require("../../bus/browser")();
-var Robot  = require("../../models/robot");
-var mesh   = require("mesh");
+var bus             = require("../../bus/browser")();
+var Robot           = require("../../models/robot");
+var mesh            = require("mesh");
+
+/**
+ */
 
 module.exports = React.createClass({
+
+  /**
+   */
+
   getInitialState: function() {
 
     var space = Space({
@@ -28,9 +34,17 @@ module.exports = React.createClass({
       entities : space.entities
     }
   },
+
+  /**
+   */
+
   componentDidMount: function() {
     this._initShips();
   },
+
+  /**
+   */
+
   render: function() {
 
     var space    = this.state.space;
@@ -44,11 +58,19 @@ module.exports = React.createClass({
       <MapComponent entities={entities} focus={this._ship} />
     </div>
   },
+
+  /**
+   */
+
   _initShips: function() {
-    // this._addRobotShip();
+    this._addRobotShip();
     this._addShip();
     this._tick();
   },
+
+  /**
+   */
+
   _addRobotShip: function() {
     if (!this._robot) this._robot = Robot();
 
@@ -61,6 +83,10 @@ module.exports = React.createClass({
 
    this._robot.ship.once("dispose", this._addRobotShip);
   },
+
+  /**
+   */
+
   _addShip: function() {
 
     this._ship = this.state.viewport.focus = this.state.space.addEntity({
@@ -72,22 +98,41 @@ module.exports = React.createClass({
 
     this._ship.once("dispose", this._addShip);
   },
+
+  /**
+   */
+
   _onKeyDown: function(event) {
     event.preventDefault();
     if (!this._keys) this._keys = {};
     this._keys[event.keyCode] = true;
   },
+
+  /**
+   */
+
   _onKeyUp: function(event) {
     this._keys[event.keyCode] = false;
   },
+
+  /**
+   */
+
   _tick: function() {
-    // setTimeout(this._tick, 1000/this._fps);
-    bus(mesh.op("tail", { q: { name: "tick" }})).on("data", this._onTick);
+    new Ticker({ bus: bus, target: this });
   },
-  _onTick: function() {
+
+  /**
+   */
+
+  tick: function() {
     this._updateShipPosition();
     this._updateSpace();
   },
+
+  /**
+   */
+
   _updateShipPosition: function() {
 
     var props = {};
@@ -116,6 +161,10 @@ module.exports = React.createClass({
 
     this._ship.move(vDelta, rDelta);
   },
+
+  /**
+   */
+
   _updateSpace: function() {
 
     var vpNode      = this.refs.viewport.getDOMNode();
@@ -124,7 +173,7 @@ module.exports = React.createClass({
     viewport.height = vpNode.offsetHeight;
 
     this.state.viewport.tick();
-    // this._robot.tick();
+    this._robot.tick();
     this.state.space.tick();
 
     this.setState({ space: this.state.space });

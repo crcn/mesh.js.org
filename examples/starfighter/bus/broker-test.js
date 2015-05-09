@@ -14,11 +14,7 @@ function _fakeClient() {
     on: i.on.bind(i),
     once: i.once.bind(i),
     in: i,
-    out: o,
-    join: function(room) {
-      this.room = room;
-      return c;
-    }
+    out: o
   }
 
   return c;
@@ -35,7 +31,6 @@ describe(__filename + "#", function() {
     var master = new EventEmitter();
     var b = broker(master);
     master.emit("connection", c);
-    expect(c.room).to.be("default");
     next();
   });
 

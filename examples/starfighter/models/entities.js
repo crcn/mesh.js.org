@@ -18,8 +18,14 @@ module.exports = caplet.createCollectionClass({
   },
   add: function(props, onSave) {
     props.cid       = createCID();
+    props.timestamp = Date.now();
+    
     var entity = this.createModel(props);
+
+    // insert immediately
     this.push(entity);
+
+    // persist this
     entity.insert();
     return entity;
   }

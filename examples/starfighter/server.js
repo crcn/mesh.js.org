@@ -1,4 +1,6 @@
 var Space     = require("./models/space");
+var Timer     = require("./models/timer");
+var Ticker    = require("./models/ticker");
 var createBus = require("./bus/server");
 
 module.exports = function(app) {
@@ -9,9 +11,13 @@ module.exports = function(app) {
     bus: bus
   });
 
-  setInterval(function() {
+  new Ticker({
+    bus: bus,
+    target: space
+  });
 
-    bus({ name: "tick" });
-    space.tick();
-  }, 1000/30);
-}
+  new Timer({
+    bus: bus,
+    fps: 30
+  }).start();
+};
