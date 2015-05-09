@@ -67,12 +67,17 @@ gulp.task("test-coveralls", ["test-coverage"], function () {
 /**
  */
 
-gulp.task("bundle", function() {
-  return browserify("./lib/browser.js").
-  bundle().
-  pipe(source(pkg.name + '.js')).
+gulp.task("bundlejs", function() {
+  var b = browserify("./browser/index.js", {
+    extensions: [".jsx"],
+
+  });
+  b.transform('reactify');
+  return b.bundle().
+  pipe(source('bundle.js')).
   pipe(buffer()).
-  pipe(gulp.dest('./dist'));
+  // pipe(uglify()).
+  pipe(gulp.dest('./static'));
 });
 
 /**

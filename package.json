@@ -57,7 +57,8 @@
   },
   "scripts": {
     "test": "gulp lint test-coveralls",
-    "start": "node server/index.js"
+    "start": "node server/index.js",
+    "postinstall": "gulp bundlejs"
   },
   "repository": {
     "type": "git",
