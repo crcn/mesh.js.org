@@ -8,4 +8,4 @@ module.exports = function(app) {
   bus = tailable(bus);
   bus = mesh.reject("tail", mesh.limit(1, mio({}, bus)), bus);
   return bus;
-}
+};

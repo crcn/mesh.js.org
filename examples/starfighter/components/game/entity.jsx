@@ -3,21 +3,14 @@ var Ship   = require("./ship");
 var Bullet = require("./bullet");
 var caplet = require("caplet");
 var cx     = require("classnames");
+var grp    = require("../../models/utils/getRotationPoint");
 
 module.exports = React.createClass({
   render: function() {
     var e = this.props.entity;
+    var p = grp(e);
 
-    var r = e.rotation;
-
-    if (r < 0) {
-      r = 360 + r;
-    }
-
-    var r1 = Math.cos(r/180*Math.PI);
-    var r2 = Math.sin(r/180*Math.PI);
-
-    var matrix = [r1, r2, -r2, r1, e.x, e.y];
+    var matrix = [-p.y, p.x, -p.x, -p.y, e.x, e.y];
 
     var s = {
       width: e.width + 'px',
