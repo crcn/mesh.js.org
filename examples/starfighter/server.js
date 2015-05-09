@@ -1,19 +1,17 @@
-var Space  = require("./models/space");
-var mesh   = require("mesh");
-var memory = require("mesh-memory");
+var Space     = require("./models/space");
+var createBus = require("./bus/server");
 
 module.exports = function(app) {
 
-  app.ioserver.on("connection", function(client) {
-    console.log("D");
-  });
-
+  var bus = createBus(app);
 
   var space = Space({
-    bus: app.bus
+    bus: bus
   });
 
   setInterval(function() {
+
+    bus({ name: "tick" });
     space.tick();
   }, 1000/30);
 }

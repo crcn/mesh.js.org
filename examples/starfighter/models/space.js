@@ -28,14 +28,14 @@ module.exports = caplet.createModelClass({
       bus: mesh.attach({
         collection : "entities"
       }, this.bus)
-    });
+    }).load();
   },
 
   /**
    */
 
   addEntity: function(properties, onSave) {
-    return this.entities.add(properties);
+    return this.entities.add(properties, onSave);
   },
 
   /**

@@ -1,6 +1,5 @@
 var caplet   = require("caplet");
 var Entities = require("./entities");
-var bus      = require("../bus");
 var mesh     = require("mesh");
 var extend   = require("xtend/mutable");
 

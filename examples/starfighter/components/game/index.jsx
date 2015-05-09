@@ -1,12 +1,14 @@
 var React  = require("react");
 var Space  = require("../../models/space");
 var Viewport = require("../../models/viewport");
+var SpaceComponent = require("./space");
 var Entity = require("./entity");
-var Map    = require("./map");
+var MapComponent    = require("./map");
 var Entities = require("../../models/entities");
 var caplet = require("caplet");
-var bus    = require("../../bus")();
+var bus    = require("../../bus/browser")();
 var Robot  = require("../../models/robot");
+var mesh   = require("mesh");
 
 module.exports = React.createClass({
   getInitialState: function() {
@@ -31,27 +33,15 @@ module.exports = React.createClass({
   },
   render: function() {
 
-    var s = {
-      //transform: 'matrix(' + [0, 0, 0, 0, 0, 0] + ')'
-      top: this.state.space.y,
-      left: this.state.space.x
-    };
-
     var space    = this.state.space;
-    var entities = this.state.entities;
     var viewport = this.state.viewport;
+    var entities = this.state.entities;
 
     return <div id="map" ref="viewport" tabIndex="0" className="example-startfighter" onKeyDown={this._onKeyDown} onKeyUp={this._onKeyUp}>
-      <div className="space" style={s}>
-        {
-          entities.filter(function(entity) {
-            return viewport.canSee(entity);
-          }).map(function(entity) {
-            return <Entity key={entity.cid} entity={entity} focus={this._ship} />
-          }.bind(this))
-        }
-      </div>
-      <Map entities={entities} focus={this._ship} />
+      <SpaceComponent space={space} entities={this.state.entities.filter(function(entity) {
+        return viewport.canSee(entity);
+      })} />
+      <MapComponent entities={entities} focus={this._ship} />
     </div>
   },
   _initShips: function() {
@@ -71,7 +61,7 @@ module.exports = React.createClass({
 
    this._robot.ship.once("dispose", this._addRobotShip);
   },
-  _addShip: function(onAdd) {
+  _addShip: function() {
 
     this._ship = this.state.viewport.focus = this.state.space.addEntity({
       type: "ship",
@@ -91,34 +81,40 @@ module.exports = React.createClass({
     this._keys[event.keyCode] = false;
   },
   _tick: function() {
-    this._fps = 30;
-    setTimeout(this._tick, 1000/this._fps);
+    // setTimeout(this._tick, 1000/this._fps);
+    bus(mesh.op("tail", { q: { name: "tick" }})).on("data", this._onTick);
+  },
+  _onTick: function() {
     this._updateShipPosition();
     this._updateSpace();
   },
   _updateShipPosition: function() {
 
     var props = {};
+    var vDelta = 0;
+    var rDelta = 0;
 
     for (var c in this._keys) {
       c = Number(c);
       var isDown = this._keys[c];
 
       if (isDown && c === 39) {
-        this._ship.rotate(360/this._fps/2);
+        rDelta = 10;
       } else if (isDown && c === 37) {
-        this._ship.rotate(-360/this._fps/2);
+        rDelta = -10;
       } else if (c === 38) {
         if (isDown) {
-          this._ship.move(4);
+          vDelta = 4;
         } else {
-          this._ship.move(-0.5);
+          vDelta = -0.5;
         }
       } else if (c === 32 && !isDown) {
         delete this._keys[c];
         this._ship.shootPhaser();
       }
     }
+
+    this._ship.move(vDelta, rDelta);
   },
   _updateSpace: function() {
 

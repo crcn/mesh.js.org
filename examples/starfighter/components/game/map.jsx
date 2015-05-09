@@ -10,20 +10,6 @@ module.exports = React.createClass({
     });
 
     var scale = 10;
-    var focus = this.props.focus;
-
-    var s;
-
-    /*if (ships.length) {
-      s = {
-        width: ships.sort(function(a, b) {
-          return a.x > b.x ? -1 : 1;
-        })[0].x / scale,
-        height: ships.sort(function(a, b) {
-          return a.y > b.y ? -1 : 1;
-        })[0].y / scale
-      };
-    }*/
 
     s = {
       width: 200,
@@ -39,8 +25,7 @@ module.exports = React.createClass({
           }
 
           var c = cx({
-            dot: true,
-            "is-users": ship.cid === focus.cid
+            dot: true
           });
 
           return <div className={c} style={s}></div>

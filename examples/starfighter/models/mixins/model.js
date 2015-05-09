@@ -8,34 +8,18 @@ module.exports = {
   */
 
   initialize: function() {
-    if (!this.isNew) {
-      this.isNew = function() {
-        return !this.data;
-      }
-    }
 
-    this.watch(function() {
-      this.update();
+    var tail = this.bus(mesh.op("tail", {
+      q: { "query.cid": this.cid }
+    })).on("data", function(op) {
+      if (op.name === "update") {
+        extend(this, op.data);
+      } else if (op.name === "remove") {
+        this.dispose();
+      }
     }.bind(this));
 
-    // var tail = this.bus(mesh.op("tail", {
-    //   query: { cid: this.cid }
-    // })).on("data", function(operation) {
-    //   if (operation.name === "update") {
-    //     this.setProperties(operation.data);
-    //   } else if (operation.name === "remove") {
-    //     this.dispose();
-    //   }
-    // }.bind(this));
-    //
-    // this.once("dispose", tail.end.bind(tail));
-  },
-
-  /**
-  */
-
-  save: function(onSave) {
-    return this.isNew() ? this.insert(onSave) : this.update(onSave);
+    this.once("dispose", tail.end.bind(tail));
   },
 
   /**
@@ -44,31 +28,32 @@ module.exports = {
   insert: function(onSave) {
     if (!onSave) onSave = function() {}
     this.bus(mesh.op("insert", {
-      data: this.toData(),
-      remote: false
-    })).on("end", onSave);
+      data: this.toJSON()
+    }))
+    .on("error", onSave.bind(this))
+    .on("end", onSave.bind(this, void 0, this));
     return this;
   },
 
   /**
   */
 
-  update: function(onSave) {
+  update: function(properties, onSave) {
+
     if (!onSave) onSave = function() {}
 
-    var newData;
-    // var data = diff(this.data || {}, newData = this.toData());
-    var data = this.toData();
-    if(Object.keys(data).length > 0) {
-      this.data = newData;
-      this.bus(mesh.op("update", {
-        query: { cid: this.cid },
-        remote: false,
-        data: data
-      })).on("end", onSave);
-    } else {
-      onSave();
-    }
+    // no changes?
+    if (!Object.keys(diff(this, properties)).length) return onSave();
+
+    this.setProperties(properties);
+
+    this.bus(mesh.op("update", {
+      query: { cid: this.cid },
+      data: extend({ cid: this.cid }, properties)
+    }))
+    .on("error", onSave.bind(this))
+    .on("end", onSave.bind(this, void 0, this));
+
     return this;
   },
 
@@ -77,10 +62,8 @@ module.exports = {
 
   remove: function(onRemove) {
     this.bus(mesh.op("remove", {
-      query: { cid: this.cid },
-      remote: false
+      query: { cid: this.cid }
     })).on("end", onRemove || function() {});
-    this.dispose();
     return this;
   }
 }

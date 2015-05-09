@@ -7,7 +7,6 @@ var cx     = require("classnames");
 module.exports = React.createClass({
   render: function() {
     var e = this.props.entity;
-    var f = this.props.focus;
 
     var r = e.rotation;
 
@@ -27,8 +26,7 @@ module.exports = React.createClass({
     };
 
     var c = cx({
-      entity: true,
-      "is-users": e.cid == f.cid || e.ownerId == f.cid
+      entity: true
     });
 
     return <div className={c} style={s}>{{

@@ -18,11 +18,10 @@ module.exports = caplet.createCollectionClass({
   },
   add: function(props, onSave) {
     props.cid       = createCID();
-    props.timestamp = Date.now();
-    var e = this.createModel(props);
-    this.push(e);
-    e.insert(onSave);
-    return e;
+    var entity = this.createModel(props);
+    this.push(entity);
+    entity.insert();
+    return entity;
   }
 });
 

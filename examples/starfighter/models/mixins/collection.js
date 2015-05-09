@@ -11,16 +11,9 @@ module.exports = {
   /**
    */
 
-  onCreateModel: function(model) {
-    model.bus = this.bus;
-  },
-
-  /**
-   */
-
   initialize: function() {
     if (!this.bus) return;
-    var tail = this.bus(mesh.op("tail")).on("data", _syncCollection(this));
+    var tail = this.bus(mesh.op("tail")).on("data", this._onTail.bind(this));
     this.once("dispose", tail.end.bind(tail));
   },
 
@@ -35,49 +28,49 @@ module.exports = {
     }))
     .pipe(_.pipeline(_.collect))
     .once("error", onLoad)
-    .on("data", this.set.bind(this, "data"))
+    .on("data", this.onLoad.bind(this))
     .once("end", onLoad);
     return this;
-  }
-};
+  },
 
-/**
- * synchronizes collections with tailed operations from the service
- * bus
- */
+  /**
+   */
 
-function _syncCollection(collection) {
-  return function(operation) {
+  onLoad: function(data) {
+    data.map(function(item) {
+      this._onInsert({ name: "insert", data: item });
+    }.bind(this));
+  },
+
+  /**
+   */
+
+  _onTail: function(operation) {
 
     var handler = ({
-      insert  : insert,
-      remove  : remove,
-      // update  : update
-    })[operation.name] || noop;
-    handler(operation);
-  };
+      insert  : this._onInsert
+    })[operation.name] || function() { };
 
-  function insert(operation) {
-    if (_find(operation).length) {
+    handler.call(this, operation);
+  },
+
+  /**
+   */
+
+  _onInsert: function(operation) {
+
+    // make sure that the
+    if (this._find(operation).length) {
       return;
     }
-    collection.push.apply(collection, _toArray(operation.data).map(_createModel));
-  }
 
-  function remove(operation) {
-    _find(operation).forEach(function(model) {
-      collection.splice(collection.indexOf(model), 1);
-      model.dispose();
-    });
-  }
+    this.push.apply(this, _toArray(operation.data).map(this.createModel.bind(this)));
+  },
 
-  function update(operation) {
-    _find(operation).forEach(function(model) {
-      model.set("data", extend({}, model.data, operation.data));
-    });
-  }
+  /**
+   */
 
-  function _find(operation) {
+  _find: function(operation) {
     var query = operation.query;
     var filter;
 
@@ -89,19 +82,12 @@ function _syncCollection(collection) {
       filter = sift(query);
     }
 
-    var models = collection.filter(filter);
+    var models = this.filter(filter);
     if (!operation.multi && !!models.length) models = [models[0]];
     return models;
   }
-
-  function _createModel(data) {
-    return collection.createModel(data);
-  }
-
-  function noop(operation) {
-    // do nothing
-  }
 };
+
 
 /**
  */
