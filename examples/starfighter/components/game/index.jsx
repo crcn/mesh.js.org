@@ -63,7 +63,7 @@ module.exports = React.createClass({
    */
 
   _initShips: function() {
-    this._addRobotShip();
+    //this._addRobotShip();
     this._addShip();
     this._tick();
   },
@@ -173,7 +173,7 @@ module.exports = React.createClass({
     viewport.height = vpNode.offsetHeight;
 
     this.state.viewport.tick();
-    this._robot.tick();
+    //this._robot.tick();
     this.state.space.tick();
 
     this.setState({ space: this.state.space });
