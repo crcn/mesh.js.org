@@ -44,7 +44,6 @@ module.exports = {
 
     // no changes?
     if (!Object.keys(diff(this, properties)).length) return onSave();
-    
 
     this.bus(mesh.op("update", {
       query: { cid: this.cid },
