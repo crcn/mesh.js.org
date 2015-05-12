@@ -15,7 +15,6 @@ module.exports = {
       q: { "query.cid": this.cid }
     })).on("data", function(op) {
       if (op.name === "update") {
-        self._locked = false;
         extend(this, op.data);
       } else if (op.name === "remove") {
         this.dispose();
@@ -31,7 +30,7 @@ module.exports = {
   insert: function(onSave) {
     if (!onSave) onSave = function() {}
     this.bus(mesh.op("insert", {
-      data: this.toJSON()
+      data: this.toData()
     }))
     .on("error", onSave.bind(this))
     .on("end", onSave.bind(this, void 0, this));
@@ -44,10 +43,14 @@ module.exports = {
   update: function(properties, onSave) {
 
     if (!onSave) onSave = function() {}
-    if (this._locked) return;
+    if (this._locked) return false;
 
     // no changes?
-    if (!Object.keys(diff(this, properties)).length) return onSave();
+    if (!Object.keys(diff(this, properties)).length) {
+      onSave();
+      return false;
+    }
+
     this._locked = true;
 
     this.bus(mesh.op("update", {
@@ -55,9 +58,12 @@ module.exports = {
       data: extend({ cid: this.cid }, properties)
     }))
     .on("error", onSave.bind(this))
-    .on("end", onSave.bind(this, void 0, this));
+    .on("end", onSave.bind(this, void 0, this))
+    .on("end", function() {
+      this._locked = false;
+    }.bind(this));
 
-    return this;
+    return true;
   },
 
   /**
