@@ -72,7 +72,8 @@ module.exports = React.createClass({
    */
 
   _addRobotShip: function() {
-    if (!this._robot) this._robot = Robot();
+    if (!this._robot) this._robot = Robot();t
+
 
     this._robot.ship = this.state.space.addEntity({
       type: "ship",
@@ -144,9 +145,9 @@ module.exports = React.createClass({
       var isDown = this._keys[c];
 
       if (isDown && c === 39) {
-        rDelta = 10;
+        rDelta = 30;
       } else if (isDown && c === 37) {
-        rDelta = -10;
+        rDelta = -30;
       } else if (c === 38) {
         if (isDown) {
           vDelta = 4;
