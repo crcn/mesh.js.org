@@ -72,7 +72,8 @@ module.exports = React.createClass({
    */
 
   _addRobotShip: function() {
-    if (!this._robot) this._robot = Robot();t
+    if (!this._robot) this._robot = Robot();er
+    t
 
 
     this._robot.ship = this.state.space.addEntity({
@@ -120,14 +121,15 @@ module.exports = React.createClass({
    */
 
   _tick: function() {
-    new Ticker({ bus: bus, target: this });
+    this._i = 0;
+    setInterval(this.tick, 1000/30);
   },
 
   /**
    */
 
   tick: function() {
-    this._updateShipPosition();
+    if (this._i++ % 2) this._updateShipPosition();
     this._updateSpace();
   },
 
@@ -145,9 +147,9 @@ module.exports = React.createClass({
       var isDown = this._keys[c];
 
       if (isDown && c === 39) {
-        rDelta = 30;
+        rDelta = 10;
       } else if (isDown && c === 37) {
-        rDelta = -30;
+        rDelta = -10;
       } else if (c === 38) {
         if (isDown) {
           vDelta = 4;

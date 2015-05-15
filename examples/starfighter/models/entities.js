@@ -31,6 +31,7 @@ module.exports = caplet.createCollectionClass({
   add: function(props, onSave) {
     props.cid       = createCID();
     props.timestamp = Date.now();
+    props.local     = true;
 
     var entity = this.createModel(props);
 

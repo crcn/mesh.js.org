@@ -14,9 +14,11 @@ module.exports = {
     var tail = this.bus(mesh.op("tail", {
       q: { "query.cid": this.cid }
     })).on("data", function(op) {
-      this._locked = false;
       if (op.name === "update") {
-        extend(this, op.data);
+        console.log(this.local);
+        if (this.local !== true) {
+          extend(this, op.data);
+        }
       } else if (op.name === "remove") {
         this.dispose();
       }
@@ -44,7 +46,6 @@ module.exports = {
   update: function(properties, onSave) {
 
     if (!onSave) onSave = function() {}
-    if (this._locked) return false;
 
     // no changes?
     if (!Object.keys(diff(this, properties)).length) {
@@ -52,7 +53,7 @@ module.exports = {
       return false;
     }
 
-    this._locked = true;
+    this.setProperties(properties);
 
     this.bus(mesh.op("update", {
       query: { cid: this.cid },

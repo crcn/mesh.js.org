@@ -26,7 +26,9 @@ module.exports = Entity.extend({
     // update all models with this data
     this.update({
       velocity : Math.min(this.maxVelocity, Math.max(0, this.velocity + vDelta || 0)),
-      rotation : (this.rotation + rDelta) % 360
+      rotation : (this.rotation + rDelta) % 360,
+      x        : this.x,
+      y        : this.y
     });
   },
 
