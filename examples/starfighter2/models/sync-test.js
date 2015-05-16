@@ -11,10 +11,10 @@ describe(__filename + "#", function() {
 
   beforeEach(function() {
     ops = [];
-    fakeBus = mesh.wrap(function(operation, next) {
+    fakeBus = mesh.tailable(mesh.wrap(function(operation, next) {
       ops.push(operation);
       next();
-    });
+    }));
   })
 
   it("can be created", function() {
@@ -63,5 +63,48 @@ describe(__filename + "#", function() {
       expect(ops[1].name).to.be("remove");
       next();
     }, 10);
+  });
+
+  it("syncs tailed inserts", function(next) {
+    var s = sync({ bus: fakeBus, entities: group(), createItem: function(data) {
+      return ship(data);
+    } });
+    fakeBus(mesh.op("insert", { data: ship({x:100}).toJSON() }));
+    setTimeout(function() {
+      s.update();
+      expect(s.entities.items.length).to.be(1);
+      expect(s.entities.items[0].x).to.be(100);
+      next();
+    }, 50);
+  });
+
+  it("syncs tailed removes", function(next) {
+
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+
+    var s = sync({ bus: fakeBus, entities: g, createItem: function() { } });
+    fakeBus(mesh.op("remove", { query: { cid: sh.cid } }));
+    setTimeout(function() {
+      s.update();
+      expect(s.entities.items.length).to.be(0);
+      next();
+    }, 50);
+  });
+
+  it("syncs tailes updates", function(next) {
+
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+
+    var s = sync({ bus: fakeBus, entities: g, createItem: function() { } });
+    fakeBus(mesh.op("update", { query: { cid: sh.cid }, data: { x: 100 } }));
+    setTimeout(function() {
+      s.update();
+      expect(sh.x).to.be(100);
+      next();
+    }, 50);
   });
 });

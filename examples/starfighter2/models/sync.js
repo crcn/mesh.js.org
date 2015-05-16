@@ -2,6 +2,8 @@ var Base   = require("./base");
 var _nonew = require("./_nonew");
 var mesh   = require("mesh");
 var group  = require("./group");
+var sift   = require("sift");
+var extend = require("xtend/mutable");
 
 /**
  */
@@ -23,12 +25,21 @@ Base.extend(Sync, {
 
   initialize: function() {
     this._freeze();
+    this._tailInserts();
   },
 
   /**
    */
 
   update: function() {
+    this._pushChanges();
+    this._pullChanges();
+  },
+
+  /**
+   */
+
+  _pushChanges: function() {
     var changes = this._diff(this._cache, this._freeze());
 
     // TODO - debounce this
@@ -48,6 +59,38 @@ Base.extend(Sync, {
         }
       }
     }
+  },
+
+  /**
+   */
+
+  _pullChanges: function() {
+    
+    for (var i = 0, n = this._remoteOps.length; i < n; i++) {
+      var op = this._remoteOps[i];
+
+      if (op.name === "insert") {
+        this.entities.add(this.createItem(op.data));
+      } else {
+        var items = sift(op.query, this.entities.items);
+        if (!items.length) return;
+        if (op.name === "remove") {
+          items[0].dispose();
+        } else if (op.name === "update") {
+          extend(items[0], op.data);
+        }
+      }
+    }
+
+    this._remoteOps = [];
+  },
+
+  /**
+   */
+
+  _tailInserts: function() {
+    this._remoteOps = [];
+    this._tail = this.bus(mesh.op("tail")).on("data", this._remoteOps.push.bind(this._remoteOps));
   },
 
   /**
