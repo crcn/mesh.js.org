@@ -26,6 +26,9 @@ function Entity(properties) {
 
 Base.extend(Entity, observable, {
 
+  /**
+   */
+
   x        : 0,
   y        : 0,
   rotation : 0,
@@ -33,8 +36,26 @@ Base.extend(Entity, observable, {
   width    : 0,
   height   : 0,
 
+  /**
+   */
+
   dispose: function() {
     this.emit("dispose");
+  },
+
+
+  /**
+   */
+
+  toJSON: function() {
+    return {
+      type     : this.type,
+      cid      : this.cid,
+      x        : this.x,
+      y        : this.y,
+      rotation : this.rotation,
+      velocity : this.velocity
+    };
   }
 });
 
