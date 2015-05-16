@@ -16,7 +16,9 @@ function _createCID() {
 
 function Entity(properties) {
   Base.call(this, properties);
+
   this.cid = _createCID();
+  this.ts  = Date.now();
 };
 
 /**

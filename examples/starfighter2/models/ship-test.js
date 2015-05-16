@@ -1,19 +1,29 @@
 var ship   = require("./ship");
+var space  = require("./space");
 var expect = require("expect.js");
 var Bullet = require("./bullet");
 
 describe(__filename + "#", function() {
+
   it("can be created", function() {
     ship();
   })
 
-  it("emits 'child' when a bullet is fired", function() {
-    var s = ship();
-    var child;
-    s.on("child", function(c) {
-      child = c;
-    });
+  it("can fire a bullet", function() {
+    var s = ship({ x: 100, y: 100, rotation: 90 });
+    var sp = space();
+    sp.entities.add(s);
+
     s.fire();
-    expect(child instanceof Bullet).to.be(true);
+    expect(sp.entities.items.length).to.be(2);
+    var bullet = sp.entities.items[1];
+    for (var i = 5; i--;) {
+      sp.update();
+    }
+
+    expect(bullet.x).to.be(180);
+    expect(bullet.y).to.be(130);
   });
+
+
 });

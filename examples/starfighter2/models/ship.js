@@ -1,6 +1,7 @@
-var _nonew     = require("./_nonew");
-var Base       = require("./entity");
-var bullet     = require("./bullet");
+var _nonew = require("./_nonew");
+var Base   = require("./entity");
+var bullet = require("./bullet");
+var grp    = require("./utils/getRotationPoint");
 
 /**
  */
@@ -16,7 +17,7 @@ Base.extend(Ship, {
 
   /**
    */
-   
+
   type   : "ship",
   width  : 30,
   height : 30,
@@ -26,13 +27,22 @@ Base.extend(Ship, {
 
   fire: function() {
 
-    var bx = this.y;
-    var by = this.y;
+    var p = grp(this);
+
+    // find the middle of the ship
+    var x = this.x + this.height/2;
+    var y = this.y + this.height/2;
+
+    // add rotation & move position to end of ship.
+    x += p.x * (this.width/2);
+    y += p.y * (this.height/2);
+
 
     this.emit("child", bullet({
-      x        : bx,
-      y        : by,
-      rotation : this.rotation
+      x        : x,
+      y        : x,
+      rotation : this.rotation,
+      velocity : 10
     }));
   }
 });
