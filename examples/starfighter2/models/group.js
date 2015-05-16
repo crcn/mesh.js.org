@@ -1,5 +1,5 @@
-var _nonew = require("./_nonew");
-var Base   = require("./base");
+var _nonew      = require("./_nonew");
+var Base        = require("./base");
 
 /**
  */
@@ -40,9 +40,16 @@ Base.extend(Group, {
 
   update: function() {
     for (var i = this.items.length; i--;) {
-      this.items[i].update();
-      // this.updateItem() TODO
+      var item = this.items[i];
+      item.update();
     }
+  },
+
+  /**
+   */
+
+  updateItem: function(item) {
+    // do nothing
   },
 
   /**
