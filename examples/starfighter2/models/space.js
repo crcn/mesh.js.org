@@ -30,7 +30,7 @@ Base.extend(Space, {
 
   /**
    */
-   
+
   update: function() {
     this.entities.update();
     var es = this.getItems();
