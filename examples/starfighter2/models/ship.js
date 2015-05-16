@@ -16,6 +16,13 @@ Base.extend(Ship, {
 
   /**
    */
+   
+  type   : "ship",
+  width  : 30,
+  height : 30,
+
+  /**
+   */
 
   fire: function() {
 

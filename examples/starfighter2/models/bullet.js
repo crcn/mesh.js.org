@@ -12,6 +12,14 @@ function Bullet(properties) {
  */
 
 Base.extend(Bullet, {
+
+  /**
+   */
+
+  type   : "bullet",
+  width  : 2,
+  height : 5
+  
 });
 
 /**

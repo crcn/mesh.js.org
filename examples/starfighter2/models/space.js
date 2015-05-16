@@ -14,8 +14,26 @@ function Space(entities) {
  */
 
 Base.extend(Space, {
+
+  /**
+   */
+
+  width  : Infinity,
+  height : Infinity,
+
+  /**
+   */
+
+  getItems: function() {
+    return this.entities.getItems();
+  },
+
+  /**
+   */
+   
   update: function() {
-    var es = this.entities.items;
+    this.entities.update();
+    var es = this.getItems();
     for (var i = es.length; i--;) {
       var entity = es[i];
       if (entity.velocity <= 0) continue;

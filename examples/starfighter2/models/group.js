@@ -15,6 +15,13 @@ function Group(properties) {
 Base.extend(Group, {
 
   /**
+   */
+
+  getItems: function() {
+    return this.items;
+  },
+
+  /**
    * adds an item to the group
    */
 
