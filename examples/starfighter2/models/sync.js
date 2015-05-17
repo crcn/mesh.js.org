@@ -6,7 +6,7 @@ var sift   = require("sift");
 var extend = require("xtend/mutable");
 
 /**
- */
+*/
 
 function Sync(properties) {
   Base.call(this, properties);
@@ -16,12 +16,12 @@ function Sync(properties) {
 }
 
 /**
- */
+*/
 
 Base.extend(Sync, {
 
   /**
-   */
+  */
 
   initialize: function() {
     this._freeze();
@@ -29,18 +29,20 @@ Base.extend(Sync, {
   },
 
   /**
-   */
+  */
 
   update: function() {
+    this._localChanges = this._diff(this._cache, this._freeze());
+    this._removeConflictingChanges();
     this._pushChanges();
     this._pullChanges();
   },
 
   /**
-   */
+  */
 
   _pushChanges: function() {
-    var changes = this._diff(this._cache, this._freeze());
+    var changes = this._localChanges;
 
     // TODO - debounce this
     for (var action in changes) {
@@ -61,17 +63,20 @@ Base.extend(Sync, {
     }
   },
 
+
   /**
-   */
+  */
 
   _pullChanges: function() {
-    
+
     for (var i = 0, n = this._remoteOps.length; i < n; i++) {
       var op = this._remoteOps[i];
 
       if (op.name === "insert") {
         this.entities.add(this.createItem(op.data));
       } else {
+
+        // TODO - maintain TS on ops - diff against cache here
         var items = sift(op.query, this.entities.items);
         if (!items.length) return;
         if (op.name === "remove") {
@@ -86,7 +91,35 @@ Base.extend(Sync, {
   },
 
   /**
-   */
+  */
+
+  _removeConflictingChanges: function() {
+    for (var i = this._remoteOps.length; i--;) {
+      var remoteOp = this._remoteOps[i];
+
+      if (remoteOp.name === "remove") {
+        this._removeLocalChange(remoteOp, this._localChanges.insert);
+        this._removeLocalChange(remoteOp, this._localChanges.update);
+        this._removeLocalChange(remoteOp, this._localChanges.remove);
+      }
+    }
+  },
+
+  /**
+  */
+
+  _removeLocalChange: function(remoteOp, localChanges) {
+    for (var i = localChanges.length; i--;) {
+      var lc    = localChanges[i];
+      var rdata = remoteOp.query || remoteOp.data;
+      if (lc.cid === rdata.cid) {
+        return localChanges.splice(i, 1);
+      }
+    }
+  },
+
+  /**
+  */
 
   _tailInserts: function() {
     this._remoteOps = [];
@@ -94,7 +127,7 @@ Base.extend(Sync, {
   },
 
   /**
-   */
+  */
 
   _diff: function(a, b) {
     var changes = {
@@ -123,14 +156,14 @@ Base.extend(Sync, {
   },
 
   /**
-   */
+  */
 
   _freeze: function() {
     return this._cache = this._serializeEntities();
   },
 
   /**
-   */
+  */
 
   _serializeEntities: function() {
 
@@ -147,7 +180,7 @@ Base.extend(Sync, {
 });
 
 /**
- */
+*/
 
 function _changed(a, b) {
 
@@ -162,6 +195,6 @@ function _changed(a, b) {
 }
 
 /**
- */
+*/
 
 module.exports = _nonew(Sync);

@@ -99,12 +99,56 @@ describe(__filename + "#", function() {
     var sh = ship();
     g.add(sh);
 
-    var s = sync({ bus: fakeBus, entities: g, createItem: function() { } });
+    var s = sync({ bus: fakeBus, entities: g });
     fakeBus(mesh.op("update", { query: { cid: sh.cid }, data: { x: 100 } }));
     setTimeout(function() {
       s.update();
       expect(sh.x).to.be(100);
       next();
     }, 50);
+  });
+
+  it("doens't emit an update op if the item updated is removed", function(next) {
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+    fakeBus(mesh.op("remove", { query: { cid: sh.cid } }));
+    sh.x = 100;
+
+    setTimeout(function() {
+      s.update();
+      setTimeout(function() {
+        expect(ops.length).to.be(1);
+        expect(ops[0].name).to.be("remove");
+        next();
+      }, 10);
+    }, 10);
+  });
+
+  it("doens't emit an update op if the item updated is removed", function(next) {
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+    fakeBus(mesh.op("remove", { query: { cid: sh.cid } }));
+    sh.x = 100;
+
+    setTimeout(function() {
+      s.update();
+      setTimeout(function() {
+        expect(ops.length).to.be(1);
+        expect(ops[0].name).to.be("remove");
+        next();
+      }, 10);
+    }, 10);
+  });
+
+  xit("doesn't repush changes applied to a local item", function(next) {
+
+  });
+
+  xit("removes remote emit operations if a local update exists", function(next) {
+
   });
 });
