@@ -11,6 +11,7 @@ var extend = require("xtend/mutable");
 function Sync(properties) {
   Base.call(this, properties);
   if (!this.entities) this.entities = group();
+  this._bus = mesh.attach({ collection: this.collection }, this.bus);
   this.initialize();
 
 }
@@ -19,6 +20,11 @@ function Sync(properties) {
 */
 
 Base.extend(Sync, {
+
+  /**
+   */
+
+  collection: "entities",
 
   /**
   */
@@ -50,11 +56,11 @@ Base.extend(Sync, {
       var action = changes[i][0];
       var item   = changes[i][1];
       if (action === "insert") {
-        this.bus(mesh.op(action, {
+        this._bus(mesh.op(action, {
           data: item
         }));
       } else {
-        this.bus(mesh.op(action, {
+        this._bus(mesh.op(action, {
           query: { cid: item.cid },
           data: action === "update" ? item : void 0
         }));
@@ -71,7 +77,9 @@ Base.extend(Sync, {
       var op = this._remoteChanges[i];
 
       if (op.name === "insert") {
-        this.entities.add(this.createItem(op.data));
+        if (!sift({ cid: op.data.cid }, this.entities.items).length) {
+          this.entities.add(this.createItem(op.data));
+        }
       } else {
 
         // TODO - maintain TS on ops - diff against cache here
@@ -102,8 +110,8 @@ Base.extend(Sync, {
 
       if (remoteOp.name === "remove") {
         for (j = this._localChanges.length; j--;) {
-          var lc    = this._localChanges[i][1];
-          var rdata = remoteOp.query || remoteOp.data;
+          var lc    = this._localChanges[j][1];
+          var rdata = remoteOp.query || remoteOp.data || {};
           if (lc.cid === rdata.cid) {
             this._localChanges.splice(j, 1);
             break;
@@ -119,7 +127,7 @@ Base.extend(Sync, {
       if (action === "update") {
         for (j = this._remoteChanges.length; j--;) {
           var remoteOp = this._remoteChanges[j];
-          var rdata = remoteOp.query || remoteOp.data;
+          var rdata = remoteOp.query || remoteOp.data || {};
           if (lc.cid === rdata.cid) {
             this._remoteChanges.splice(j, 1);
             break;
@@ -135,7 +143,7 @@ Base.extend(Sync, {
   _removeLocalChange: function(remoteOp, localChanges) {
     for (var i = localChanges.length; i--;) {
       var lc    = localChanges[i];
-      var rdata = remoteOp.query || remoteOp.data;
+      var rdata = remoteOp.query || remoteOp.data || {};
       if (lc.cid === rdata.cid) {
         return localChanges.splice(i, 1);
       }
@@ -147,7 +155,7 @@ Base.extend(Sync, {
 
   _tailInserts: function() {
     this._remoteChanges = [];
-    this._tail = this.bus(mesh.op("tail")).on("data", function(op) {
+    this._tail = this._bus(mesh.op("tail")).on("data", function(op) {
       this._remoteChanges.push(op);
     }.bind(this));
   },

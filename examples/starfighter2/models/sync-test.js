@@ -14,7 +14,9 @@ describe(__filename + "#", function() {
     fakeBus = mesh.tailable(mesh.wrap(function(operation, next) {
       ops.push(operation);
       next();
-    }));
+    }), function() {
+      return true;
+    });
   })
 
   it("can be created", function() {
@@ -175,6 +177,20 @@ describe(__filename + "#", function() {
     setTimeout(function() {
       s.update();
       expect(sh.x).to.be(100);
+      next();
+    }, 10);
+  });
+
+  it("doesn't insert items that have already been added", function(next) {
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g, createItem: ship });
+    fakeBus(mesh.op("insert", { data: sh.toJSON() }));
+
+    setTimeout(function() {
+      s.update();
+      expect(g.items.length).to.be(1);
       next();
     }, 10);
   });

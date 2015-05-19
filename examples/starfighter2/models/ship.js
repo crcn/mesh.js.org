@@ -18,9 +18,10 @@ Base.extend(Ship, {
   /**
    */
 
-  type   : "ship",
-  width  : 30,
-  height : 30,
+  type        : "ship",
+  width       : 30,
+  height      : 30,
+  maxVelocity : 10,
 
   /**
    */
@@ -30,7 +31,7 @@ Base.extend(Ship, {
     var p = grp(this);
 
     // find the middle of the ship
-    var x = this.x + this.height/2;
+    var x = this.x + this.width/2;
     var y = this.y + this.height/2;
 
     // add rotation & move position to end of ship.
@@ -40,10 +41,19 @@ Base.extend(Ship, {
 
     this.emit("child", bullet({
       x        : x,
-      y        : x,
+      y        : y,
       rotation : this.rotation,
       velocity : 10
     }));
+  },
+
+  /**
+   * updates the entity
+   */
+
+  move: function(vDelta, rDelta) {
+    this.velocity =  Math.min(this.maxVelocity, Math.max(0, this.velocity + vDelta || 0));
+    this.rotation = (this.rotation + rDelta) % 360;
   }
 });
 

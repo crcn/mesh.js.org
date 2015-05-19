@@ -16,5 +16,4 @@ Base.extend(Timer, {
   }
 });
 
-
-return _nonew(Timer);
+module.exports = _nonew(Timer);

@@ -5,8 +5,15 @@ var Base        = require("./base");
  */
 
 function Group(properties) {
+
+  if (Object.prototype.toString.call(properties) === "[object Array]") {
+    this.items = properties;
+    properties = {};
+  } else {
+    this.items = [];
+  }
+
   Base.call(this, properties);
-  this.items = [];
 }
 
 /**

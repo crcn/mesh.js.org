@@ -22,7 +22,7 @@ describe(__filename + "#", function() {
     }
 
     expect(bullet.x).to.be(180);
-    expect(bullet.y).to.be(130);
+    expect(bullet.y).to.be(115);
   });
 
 

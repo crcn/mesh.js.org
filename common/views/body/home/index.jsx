@@ -1,6 +1,6 @@
 var React = require("react");
 var IDE   = require("../../ide");
-var StarFighter = require("../../../../examples/starfighter/components/game");
+var StarFighter = require("../../../../examples/starfighter2/components/game");
 
 module.exports = React.createClass({
   render: function() {
