@@ -32,10 +32,11 @@ Base.extend(Sync, {
   */
 
   update: function() {
-    this._localChanges = this._diff(this._cache, this._freeze());
+    this._localChanges = this._diff(this._cache, this._serializeEntities());
     this._removeConflictingChanges();
     this._pushChanges();
     this._pullChanges();
+    this._freeze();
   },
 
   /**
@@ -45,32 +46,29 @@ Base.extend(Sync, {
     var changes = this._localChanges;
 
     // TODO - debounce this
-    for (var action in changes) {
-      var items = changes[action];
-      for (var i = items.length; i--;) {
-        var item = items[i];
-        if (action === "insert") {
-          this.bus(mesh.op(action, {
-            data: item
-          }));
-        } else {
-          this.bus(mesh.op(action, {
-            query: { cid: item.cid },
-            data: action === "update" ? item : void 0
-          }));
-        }
+    for (var i = changes.length; i--;) {
+      var action = changes[i][0];
+      var item   = changes[i][1];
+      if (action === "insert") {
+        this.bus(mesh.op(action, {
+          data: item
+        }));
+      } else {
+        this.bus(mesh.op(action, {
+          query: { cid: item.cid },
+          data: action === "update" ? item : void 0
+        }));
       }
     }
   },
-
 
   /**
   */
 
   _pullChanges: function() {
 
-    for (var i = 0, n = this._remoteOps.length; i < n; i++) {
-      var op = this._remoteOps[i];
+    for (var i = 0, n = this._remoteChanges.length; i < n; i++) {
+      var op = this._remoteChanges[i];
 
       if (op.name === "insert") {
         this.entities.add(this.createItem(op.data));
@@ -87,20 +85,46 @@ Base.extend(Sync, {
       }
     }
 
-    this._remoteOps = [];
+    this._remoteChanges = [];
   },
 
   /**
   */
 
   _removeConflictingChanges: function() {
-    for (var i = this._remoteOps.length; i--;) {
-      var remoteOp = this._remoteOps[i];
+
+    var i;
+    var j;
+
+    // remove local changes from getting pushed
+    for (i = this._remoteChanges.length; i--;) {
+      var remoteOp = this._remoteChanges[i];
 
       if (remoteOp.name === "remove") {
-        this._removeLocalChange(remoteOp, this._localChanges.insert);
-        this._removeLocalChange(remoteOp, this._localChanges.update);
-        this._removeLocalChange(remoteOp, this._localChanges.remove);
+        for (j = this._localChanges.length; j--;) {
+          var lc    = this._localChanges[i][1];
+          var rdata = remoteOp.query || remoteOp.data;
+          if (lc.cid === rdata.cid) {
+            this._localChanges.splice(j, 1);
+            break;
+          }
+        }
+      }
+    }
+
+    for(i = this._localChanges.length; i--;) {
+      var action = this._localChanges[i][0];
+      var lc     = this._localChanges[i][1];
+
+      if (action === "update") {
+        for (j = this._remoteChanges.length; j--;) {
+          var remoteOp = this._remoteChanges[j];
+          var rdata = remoteOp.query || remoteOp.data;
+          if (lc.cid === rdata.cid) {
+            this._remoteChanges.splice(j, 1);
+            break;
+          }
+        }
       }
     }
   },
@@ -122,33 +146,29 @@ Base.extend(Sync, {
   */
 
   _tailInserts: function() {
-    this._remoteOps = [];
-    this._tail = this.bus(mesh.op("tail")).on("data", this._remoteOps.push.bind(this._remoteOps));
+    this._remoteChanges = [];
+    this._tail = this.bus(mesh.op("tail")).on("data", this._remoteChanges.push.bind(this._remoteChanges));
   },
 
   /**
   */
 
   _diff: function(a, b) {
-    var changes = {
-      insert: [],
-      remove: [],
-      update: []
-    };
+    var changes =  [];
 
     for (var ak in a) {
 
       if (!b[ak]) {
-        changes.remove.push(a[ak]);
+        changes.push(["remove", a[ak]]);
 
       } else if (_changed(b[ak], a[ak])) {
-        changes.update.push(a[ak]);
+        changes.push(["update", a[ak]]);
       }
     }
 
     for (var bk in b) {
       if (!a[bk]) {
-        changes.insert.push(b[bk]);
+        changes.push(["insert", b[bk]]);
       }
     }
 

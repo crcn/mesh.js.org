@@ -144,11 +144,38 @@ describe(__filename + "#", function() {
     }, 10);
   });
 
-  xit("doesn't repush changes applied to a local item", function(next) {
+  it("doesn't repush changes applied to a local item", function(next) {
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+    fakeBus(mesh.op("update", { query: { cid: sh.cid }, data: { x: 200 } }));
 
+
+    setTimeout(function() {
+      s.update();
+      setTimeout(function() {
+        s.update();
+        setTimeout(function() {
+          expect(ops.length).to.be(1);
+          next();
+        }, 10);
+      }, 10);
+    }, 10);
   });
 
-  xit("removes remote emit operations if a local update exists", function(next) {
+  it("removes remote emit operations if a local update exists", function(next) {
+    var g = group();
+    var sh = ship();
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+    fakeBus(mesh.op("update", { query: { cid: sh.cid }, data: { x: 200 } }));
+    sh.x = 100;
 
+    setTimeout(function() {
+      s.update();
+      expect(sh.x).to.be(100);
+      next();
+    }, 10);
   });
 });
