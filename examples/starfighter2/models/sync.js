@@ -60,6 +60,7 @@ Base.extend(Sync, {
           data: item
         }));
       } else {
+        item.ts = Date.now();
         this._bus(mesh.op(action, {
           query: { cid: item.cid },
           data: action === "update" ? item : void 0
@@ -116,6 +117,13 @@ Base.extend(Sync, {
             this._localChanges.splice(j, 1);
             break;
           }
+        }
+      }
+
+      if(remoteOp.name === "update") {
+        var toUpdate = sift(remoteOp.query, this.entities.items).shift();
+        if (toUpdate && toUpdate.ts > remoteOp.data.ts) {
+          this._remoteChanges.splice(i, 1);
         }
       }
     }

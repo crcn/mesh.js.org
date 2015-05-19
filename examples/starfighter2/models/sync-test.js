@@ -194,4 +194,21 @@ describe(__filename + "#", function() {
       next();
     }, 10);
   });
+
+  it("doesn't update a prop if the TS is older", function(next) {
+    var g = group();
+    var ts = Date.now();
+    var sh = ship({ ts: Number(ts) + 100 });
+    sh.ts = ts + 100;
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+    fakeBus(mesh.op("update", { query: { cid: sh.cid }, data: { ts: ts, x: 200 } }));
+
+
+    setTimeout(function() {
+      s.update();
+      expect(sh.x).to.be(0);
+      next();
+    }, 10);
+  });
 });
