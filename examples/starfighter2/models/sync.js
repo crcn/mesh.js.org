@@ -147,7 +147,9 @@ Base.extend(Sync, {
 
   _tailInserts: function() {
     this._remoteChanges = [];
-    this._tail = this.bus(mesh.op("tail")).on("data", this._remoteChanges.push.bind(this._remoteChanges));
+    this._tail = this.bus(mesh.op("tail")).on("data", function(op) {
+      this._remoteChanges.push(op);
+    }.bind(this));
   },
 
   /**
