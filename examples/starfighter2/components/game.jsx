@@ -75,6 +75,8 @@ module.exports = React.createClass({
       y           : 100 + Math.round(Math.random() * 600)
     });
 
+    this.state.viewport.focus = ship;
+
     this.state.player = Player({ ship: ship, element: document.body });
     this.state.entities.add(ship);
   },

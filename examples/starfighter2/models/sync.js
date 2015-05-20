@@ -11,7 +11,8 @@ var extend = require("xtend/mutable");
 function Sync(properties) {
   Base.call(this, properties);
   if (!this.entities) this.entities = group();
-  this._bus = mesh.attach({ collection: this.collection }, this.bus);
+  this.cid = Date.now();
+  this._bus = mesh.attach({ collection: this.collection, cid: this.cid }, this.bus);
   this.initialize();
 
 }
@@ -32,6 +33,16 @@ Base.extend(Sync, {
   initialize: function() {
     this._freeze();
     this._tailInserts();
+    this.load();
+  },
+
+  /**
+   */
+
+  load: function() {
+    this._bus(mesh.op("load", { multi: true })).on("data", function(data) {
+      this._remoteChanges.push(mesh.op("insert", { data: data }));
+    }.bind(this));
   },
 
   /**
@@ -55,12 +66,12 @@ Base.extend(Sync, {
     for (var i = changes.length; i--;) {
       var action = changes[i][0];
       var item   = changes[i][1];
+      item.ts    = Date.now();
       if (action === "insert") {
         this._bus(mesh.op(action, {
           data: item
         }));
       } else {
-        item.ts = Date.now();
         this._bus(mesh.op(action, {
           query: { cid: item.cid },
           data: action === "update" ? item : void 0
@@ -85,7 +96,10 @@ Base.extend(Sync, {
 
         // TODO - maintain TS on ops - diff against cache here
         var items = sift(op.query, this.entities.items);
-        if (!items.length) return;
+        console.log(op.query, items, this.entities.items.map(function(i) {
+          return i.cid;
+        }));
+        if (!items.length) continue;
         if (op.name === "remove") {
           items[0].dispose();
         } else if (op.name === "update") {
@@ -121,10 +135,11 @@ Base.extend(Sync, {
       }
 
       if(remoteOp.name === "update") {
-        var toUpdate = sift(remoteOp.query, this.entities.items).shift();
-        if (toUpdate && toUpdate.ts > remoteOp.data.ts) {
-          this._remoteChanges.splice(i, 1);
-        }
+        // var toUpdate = sift(remoteOp.query, this.entities.items).shift();
+
+        // if (toUpdate && toUpdate.ts > remoteOp.data.ts) {
+          // this._remoteChanges.splice(i, 1);
+        // }
       }
     }
 
@@ -164,7 +179,9 @@ Base.extend(Sync, {
   _tailInserts: function() {
     this._remoteChanges = [];
     this._tail = this._bus(mesh.op("tail")).on("data", function(op) {
-      this._remoteChanges.push(op);
+      if (op.cid !== this.cid) {
+        this._remoteChanges.push(op);
+      }
     }.bind(this));
   },
 
@@ -210,6 +227,7 @@ Base.extend(Sync, {
 
     for (var i = items.length; i--;) {
       var item  = items[i];
+      item.ts = Date.now();
       data[item.cid] = item.toJSON();
     }
 
