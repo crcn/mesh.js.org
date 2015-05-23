@@ -10,6 +10,7 @@ var Timer         = require("../models/timer");
 var Player        = require("../models/player");
 var Ship          = require("../models/ship");
 var Sync          = require("../models/sync");
+var Throttle      = require("../models/throttle");
 var bus           = require("../bus/browser")();
 var entityFactory = require("../models/utils/entityFactory");
 
@@ -28,7 +29,11 @@ module.exports = React.createClass({
     var space    = Space(entities);
     var viewport = Viewport({ space: space });
     var timer    = Timer({ target: this });
-    var sync     = Sync({ entities: entities, bus: bus, createItem: entityFactory });
+    var sync     = Throttle({
+      target: Sync({ entities: entities, bus: bus, createItem: entityFactory }),
+      timeout: 50
+    });
+
 
     return {
       sync     : sync,

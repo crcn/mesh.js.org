@@ -66,7 +66,15 @@ Base.extend(Sync, {
     for (var i = changes.length; i--;) {
       var action = changes[i][0];
       var item   = changes[i][1];
+      item.remote = true;
       item.ts    = Date.now();
+
+      // TODO - don't do this. Just for testing - want to ensure that ships don't
+      // jump back
+      if (item.velocity > 0) {
+        item.velocity = Math.max(item.velocity - 1, 0);
+      }
+      
       if (action === "insert") {
         this._bus(mesh.op(action, {
           data: item
@@ -96,9 +104,7 @@ Base.extend(Sync, {
 
         // TODO - maintain TS on ops - diff against cache here
         var items = sift(op.query, this.entities.items);
-        console.log(op.query, items, this.entities.items.map(function(i) {
-          return i.cid;
-        }));
+
         if (!items.length) continue;
         if (op.name === "remove") {
           items[0].dispose();
@@ -227,6 +233,7 @@ Base.extend(Sync, {
 
     for (var i = items.length; i--;) {
       var item  = items[i];
+      if (item.remote) continue;
       item.ts = Date.now();
       data[item.cid] = item.toJSON();
     }
