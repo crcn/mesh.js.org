@@ -31,7 +31,7 @@ module.exports = React.createClass({
     var timer    = Timer({ target: this });
     var sync     = Throttle({
       target: Sync({ entities: entities, bus: bus, createItem: entityFactory }),
-      timeout: 50
+      timeout: 100
     });
 
 

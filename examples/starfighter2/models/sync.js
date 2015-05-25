@@ -72,7 +72,7 @@ Base.extend(Sync, {
       // TODO - don't do this. Just for testing - want to ensure that ships don't
       // jump back
       if (item.velocity > 0) {
-        item.velocity = Math.max(item.velocity - 1, 0);
+        item.velocity = Math.max(item.velocity / 2, 0);
       }
 
       if (action === "insert") {
