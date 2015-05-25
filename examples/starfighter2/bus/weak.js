@@ -13,7 +13,7 @@ module.exports = function(bus) {
 
   var db = {};
 
-  var ref = memory({ db: db });
+  var mem = memory({ db: db });
 
   function dispose(operation, next) {
     for (var collectionName in db) {
@@ -23,7 +23,7 @@ module.exports = function(bus) {
   }
 
   function clearCollection(collectionName) {
-    bus(mesh.op("load", {
+    mem(mesh.op("load", {
       collection: collectionName,
       multi: true
     }))
@@ -40,7 +40,10 @@ module.exports = function(bus) {
 
   return mesh.accept(
     /insert|remove/,
-    mesh.parallel(mute(ref), bus),
+    mesh.parallel(mute(mem), bus, mesh.wrap(function(op, next) {
+      console.log(op);
+      next();
+    })),
     mesh.accept(
       /dispose|disconnect/,
       mesh.wrap(dispose),
