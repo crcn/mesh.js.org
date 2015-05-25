@@ -21,7 +21,6 @@ Base.extend(Player, {
   },
   update: function() {
 
-
     var vDelta = 0;
     var rDelta = 0;
 

@@ -2,6 +2,7 @@ var sync   = require("./sync");
 var expect = require("expect.js");
 var group  = require("./group");
 var ship   = require("./ship");
+var space  = require("./space");
 var mesh   = require("mesh");
 
 describe(__filename + "#", function() {
@@ -41,7 +42,7 @@ describe(__filename + "#", function() {
     var sh = ship();
     s.entities.add(sh);
     s.update();
-    sh.x = 100;
+    sh.velocity = 100;
     s.update();
 
     setTimeout(function() {
@@ -95,10 +96,10 @@ describe(__filename + "#", function() {
     }, 50);
   });
 
-  it("syncs tailes updates", function(next) {
+  it("syncs tailed updates", function(next) {
 
     var g = group();
-    var sh = ship();
+    var sh = ship({ remote: true });
     g.add(sh);
 
     var s = sync({ bus: fakeBus, entities: g });
@@ -148,7 +149,7 @@ describe(__filename + "#", function() {
     }, 10);
   });
 
-  it("removes remote emit operations if a local update exists", function(next) {
+  xit("removes remote emit operations if a local update exists", function(next) {
     var g = group();
     var sh = ship();
     g.add(sh);
@@ -177,7 +178,7 @@ describe(__filename + "#", function() {
     }, 10);
   });
 
-  xit("doesn't update a prop if the TS is older", function(next) {
+  it("doesn't update a prop if the TS is older", function(next) {
     var g = group();
     var ts = Date.now();
     var sh = ship({ ts: Number(ts) + 100 });
@@ -209,6 +210,27 @@ describe(__filename + "#", function() {
       s.update();
       expect(g.items.length).to.be(2);
       next();
+    }, 10);
+  });
+
+  it("does not synchronize updates for ship bullets", function(next) {
+    var sh = ship();
+    var g = group();
+    var sp = space(g);
+    g.add(sh);
+    var s = sync({ bus: fakeBus, entities: g });
+
+    sh.fire();
+    s.update();
+    sp.update();
+
+    setTimeout(function() {
+      s.update();
+      setTimeout(function() {
+        s.update();
+        expect(ops.length).to.be(2);
+        next();
+      }, 10);
     }, 10);
   });
 });

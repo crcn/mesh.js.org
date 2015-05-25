@@ -40,10 +40,11 @@ Base.extend(Ship, {
 
 
     this.emit("child", bullet({
-      x        : x,
-      y        : y,
-      rotation : this.rotation,
-      velocity : 10
+      syncUpdate : false,
+      x          : x,
+      y          : y,
+      rotation   : this.rotation,
+      velocity   : 10
     }));
   },
 

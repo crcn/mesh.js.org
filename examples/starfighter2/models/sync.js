@@ -74,7 +74,7 @@ Base.extend(Sync, {
       if (item.velocity > 0) {
         item.velocity = Math.max(item.velocity - 1, 0);
       }
-      
+
       if (action === "insert") {
         this._bus(mesh.op(action, {
           data: item
@@ -141,29 +141,30 @@ Base.extend(Sync, {
       }
 
       if(remoteOp.name === "update") {
-        // var toUpdate = sift(remoteOp.query, this.entities.items).shift();
+        var toUpdate = sift(remoteOp.query, this.entities.items).shift();
+        // console.log(toUpdate, toUpdate.remote);
 
-        // if (toUpdate && toUpdate.ts > remoteOp.data.ts) {
-          // this._remoteChanges.splice(i, 1);
-        // }
-      }
-    }
-
-    for(i = this._localChanges.length; i--;) {
-      var action = this._localChanges[i][0];
-      var lc     = this._localChanges[i][1];
-
-      if (action === "update") {
-        for (j = this._remoteChanges.length; j--;) {
-          var remoteOp = this._remoteChanges[j];
-          var rdata = remoteOp.query || remoteOp.data || {};
-          if (lc.cid === rdata.cid) {
-            this._remoteChanges.splice(j, 1);
-            break;
-          }
+        if (toUpdate && !toUpdate.remote) {
+          this._remoteChanges.splice(i, 1);
         }
       }
     }
+
+    // for(i = this._localChanges.length; i--;) {
+    //   var action = this._localChanges[i][0];
+    //   var lc     = this._localChanges[i][1];
+    //
+    //   if (action === "update") {
+    //     for (j = this._remoteChanges.length; j--;) {
+    //       var remoteOp = this._remoteChanges[j];
+    //       var rdata = remoteOp.query || remoteOp.data || {};
+    //       if (lc.cid === rdata.cid) {
+    //         this._remoteChanges.splice(j, 1);
+    //         break;
+    //       }
+    //     }
+    //   }
+    // }
   },
 
   /**
@@ -203,6 +204,7 @@ Base.extend(Sync, {
         changes.push(["remove", a[ak]]);
 
       } else if (_changed(b[ak], a[ak])) {
+        // console.log(a[ak]);
         changes.push(["update", a[ak]]);
       }
     }
@@ -252,6 +254,9 @@ function _changed(a, b) {
   if (ak.length !== bk.length) return true;
   for (var i = ak.length; i--;) {
     var k = ak[i];
+
+    if (/^(x|y)$/.test(k)) continue;
+
     if (a[k] !== b[k]) return true;
   }
   return false;
