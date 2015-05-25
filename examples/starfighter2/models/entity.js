@@ -1,6 +1,7 @@
-var Base   = require("./base");
-var extend = require("xtend/mutable");
+var Base       = require("./base");
+var extend     = require("xtend/mutable");
 var observable = require("./mixins/observable");
+var crc32      = require("crc32");
 
 /**
  */
@@ -8,7 +9,7 @@ var observable = require("./mixins/observable");
 var _i = 0;
 
 function _createCID() {
-  return (++_i) + "." + Date.now() + "." + (Math.round(Math.random() * 999999));
+  return crc32((++_i) + "." + Date.now() + "." + (Math.round(Math.random() * 999999)));
 }
 
 /**

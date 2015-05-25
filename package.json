@@ -8,6 +8,7 @@
     "browserify-middleware": "^5.0.2",
     "caplet": "^2.0.x",
     "classnames": "^1.2.1",
+    "crc32": "^0.2.2",
     "express": "^4.12.3",
     "glob": "^5.0.5",
     "highland": "^2.4.0",

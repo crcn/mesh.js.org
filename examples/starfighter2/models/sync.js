@@ -11,8 +11,7 @@ var extend = require("xtend/mutable");
 function Sync(properties) {
   Base.call(this, properties);
   if (!this.entities) this.entities = group();
-  this.cid = Date.now();
-  this._bus = mesh.attach({ collection: this.collection, cid: this.cid }, this.bus);
+  this._bus = mesh.attach({ collection: this.collection }, this.bus);
   this.initialize();
 
 }
@@ -64,16 +63,16 @@ Base.extend(Sync, {
 
     // TODO - debounce this
     for (var i = changes.length; i--;) {
-      var action = changes[i][0];
-      var item   = changes[i][1];
+      var action  = changes[i][0];
+      var item    = changes[i][1];
       item.remote = true;
-      item.ts    = Date.now();
 
       // TODO - don't do this. Just for testing - want to ensure that ships don't
       // jump back
       if (item.velocity > 0) {
         item.velocity = Math.max(item.velocity / 2, 0);
       }
+
 
       if (action === "insert") {
         this._bus(mesh.op(action, {
@@ -186,9 +185,7 @@ Base.extend(Sync, {
   _tailInserts: function() {
     this._remoteChanges = [];
     this._tail = this._bus(mesh.op("tail")).on("data", function(op) {
-      if (op.cid !== this.cid) {
-        this._remoteChanges.push(op);
-      }
+      this._remoteChanges.push(op);
     }.bind(this));
   },
 
@@ -236,7 +233,6 @@ Base.extend(Sync, {
     for (var i = items.length; i--;) {
       var item  = items[i];
       if (item.remote) continue;
-      item.ts = Date.now();
       data[item.cid] = item.toJSON();
     }
 

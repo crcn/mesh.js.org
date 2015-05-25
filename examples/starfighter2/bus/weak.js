@@ -41,7 +41,6 @@ module.exports = function(bus) {
   return mesh.accept(
     /insert|remove/,
     mesh.parallel(mute(mem), bus, mesh.wrap(function(op, next) {
-      console.log(op);
       next();
     })),
     mesh.accept(
