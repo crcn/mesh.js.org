@@ -189,7 +189,7 @@ exports.pack = function(data) {
 
 exports.unpack = function(packet) {
   if (Object.prototype.toString.call(packet) !== "[object Object]") return packet;
-  // console.log("unpack ", JSON.stringify(packet));
   var data = unpack(packet);
+  // console.log("unpack ", JSON.stringify(packet), data);
   return data;
 }

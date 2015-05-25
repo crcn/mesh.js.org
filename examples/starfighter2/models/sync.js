@@ -40,6 +40,7 @@ Base.extend(Sync, {
 
   load: function() {
     this._bus(mesh.op("load", { multi: true })).on("data", function(data) {
+      data.remote = true;
       this._remoteChanges.push(mesh.op("insert", { data: data }));
     }.bind(this));
   },
@@ -65,7 +66,6 @@ Base.extend(Sync, {
     for (var i = changes.length; i--;) {
       var action  = changes[i][0];
       var item    = changes[i][1];
-      item.remote = true;
 
       // TODO - don't do this. Just for testing - want to ensure that ships don't
       // jump back
@@ -96,6 +96,7 @@ Base.extend(Sync, {
 
       if (op.name === "insert") {
         if (!sift({ cid: op.data.cid }, this.entities.items).length) {
+          op.data.remote = true;
           this.entities.add(this.createItem(op.data));
         }
       } else {
@@ -138,9 +139,9 @@ Base.extend(Sync, {
         }
       }
 
+
       if(remoteOp.name === "update") {
         var toUpdate = sift(remoteOp.query, this.entities.items).shift();
-        // console.log(toUpdate, toUpdate.remote);
 
         if (toUpdate && !toUpdate.remote) {
           this._remoteChanges.splice(i, 1);
