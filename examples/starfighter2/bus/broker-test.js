@@ -45,7 +45,7 @@ describe(__filename + "#", function() {
     broker(master, bus);
     master.emit("connection", c);
 
-    c.emit("operation", mesh.op("abba", { req: 1 }));
+    c.emit("o", mesh.op("abba", { req: 1 }));
   });
 
   it("dumps data from the main db after the client has disconnected", function(next) {
@@ -56,9 +56,9 @@ describe(__filename + "#", function() {
     var master = new EventEmitter();
     broker(master, bus);
     master.emit("connection", c);
-    c.in.emit("operation", mesh.op("insert", { req: 1, collection: "a", data: { cid: 1 } }));
-    c.in.emit("operation", mesh.op("insert", { req: 1, collection: "a", data: { cid: 2 } }));
-    c.in.emit("operation", mesh.op("insert", { req: 1, collection: "a", data: { cid: 3 } }));
+    c.in.emit("o", mesh.op("insert", { req: 1, collection: "a", data: { cid: 1 } }));
+    c.in.emit("o", mesh.op("insert", { req: 1, collection: "a", data: { cid: 2 } }));
+    c.in.emit("o", mesh.op("insert", { req: 1, collection: "a", data: { cid: 3 } }));
     setTimeout(function() {
       expect(db.a.data.length).to.be(3);
       c.in.emit("disconnect");
@@ -75,7 +75,7 @@ describe(__filename + "#", function() {
     var bus = mesh.tailable(mesh.noop);
     var c = _fakeClient();
 
-    c.out.on("operation", function(o) {
+    c.out.on("o", function(o) {
       ops.push(o);
     });
 

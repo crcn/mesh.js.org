@@ -28,10 +28,10 @@ module.exports = React.createClass({
     var entities = Group();
     var space    = Space(entities);
     var viewport = Viewport({ space: space });
-    var timer    = Timer({ target: this });
+    var timer    = Timer({ target: this, fps: 30 });
     var sync     = Throttle({
       target: Sync({ entities: entities, bus: bus, createItem: entityFactory }),
-      timeout: 100
+      timeout: 50
     });
 
 
