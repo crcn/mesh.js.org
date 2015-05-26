@@ -251,7 +251,7 @@ function _changed(a, b) {
   for (var i = ak.length; i--;) {
     var k = ak[i];
 
-    // if (/^(x|y)$/.test(k)) continue;
+    if (a.type !== "ship" && /^(x|y)$/.test(k)) continue;
 
     if (a[k] !== b[k]) return true;
   }
