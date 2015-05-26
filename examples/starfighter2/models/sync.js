@@ -75,12 +75,14 @@ Base.extend(Sync, {
 
       if (action === "insert") {
         this._bus(mesh.op(action, {
-          data: item
+          data: item,
+          resp: false
         }));
       } else {
         this._bus(mesh.op(action, {
           query: { cid: item.cid },
-          data: action === "update" ? item : void 0
+          data: action === "update" ? item : void 0,
+          resp: false
         }));
       }
     }

@@ -7,9 +7,9 @@ module.exports = function(app) {
   if (!process.browser) return mesh.noop;
   var bus = mesh.noop;
   bus = tailable(bus);
-  bus = mesh.reject("tail", mesh.limit(1, mesh.attach({ resp: false }, mio({
+  bus = mesh.reject("tail", mesh.limit(1, mio({
     pack   : compress.pack,
     unpack : compress.unpack
-  }, bus))), bus);
+  }, bus)), bus);
   return bus;
 };
