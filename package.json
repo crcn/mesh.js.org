@@ -6,6 +6,7 @@
   "dependencies": {
     "common": "file:./common",
     "application": "file:./server",
+    "examples": "file:./examples",
     "browserify-middleware": "^5.0.2",
     "caplet": "^2.0.x",
     "classnames": "^1.2.1",
@@ -62,7 +63,7 @@
   },
   "scripts": {
     "test": "gulp lint test-coveralls",
-    "start": "node server/index.js",
+    "start": "rm static/bundle.js; node server/index.js",
     "postinstall": "gulp bundlejs && linklocal"
   },
   "repository": {

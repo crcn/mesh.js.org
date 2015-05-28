@@ -21,7 +21,7 @@ module.exports = function(app) {
   server.use(express.static(config.get("directories.static")));
   server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
     extensions: [".jsx"],
-    debug: false,
+    debug: prod,
     cache: prod,
     precompile: prod,
     minify: prod,

@@ -1,5 +1,6 @@
 .home {
   width: 100%;
+  font-size: 18px;
 
   & .navigation {
     padding: 15px;
@@ -17,7 +18,9 @@
 
   & .header {
     height: 100%;
+    min-height: 600px;
     .background-image(linear-gradient(left, @blue-light, @blue));
+
     & .tagline {
       /*z-index: 1024;*/
       color: white;
@@ -40,5 +43,20 @@
         font-size: 28px;
       }
     }
+
+    & .ide {
+      width: 50%;
+      height: 400px;
+      margin: 0px auto;
+      position: relative;
+      top: 100px;
+    }
+  }
+
+  & .punchline {
+    text-align: center;
+    padding: 30px;
+    color: white;
+    background-color: black;
   }
 }

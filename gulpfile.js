@@ -71,7 +71,7 @@ gulp.task("test-coveralls", ["test-coverage"], function () {
 gulp.task("bundlejs", function() {
   var b = browserify("./browser/index.js", {
     extensions: [".jsx"],
-
+    global: true
   });
   b.transform('reactify');
   return b.bundle().

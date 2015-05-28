@@ -20,6 +20,8 @@ routing, meta API, adapter
 
 Mesh it all up
 
+Should be able to make the home screen game full screen
+
 #### Taglines
 
 - A swiss-army knife for synchronizing data

@@ -53,7 +53,8 @@ Base.extend(Ship, {
    */
 
   move: function(vDelta, rDelta) {
-    this.velocity =  Math.min(this.maxVelocity, Math.max(0, this.velocity + vDelta || 0));
+    // this.velocity =  Math.min(this.maxVelocity, Math.max(0, this.velocity + vDelta || 0));
+    this.velocity = 10;
     this.rotation = (this.rotation + rDelta) % 360;
   }
 });
