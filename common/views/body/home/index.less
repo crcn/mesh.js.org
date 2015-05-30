@@ -8,11 +8,12 @@
     opacity: 0.7;
 
 
-    background-color: rgba(0,0,0,0.1);
+    //background-color: rgba(0,0,0,0.1);
     width: 100%;
     padding: 15px;
     position: relative;
     z-index: 1024;
+
     & a {
       font-size: 16px;
       text-decoration: none;
@@ -20,8 +21,26 @@
       color: #FFF;
     }
 
+    & .links {
+      line-height: 40px;
+    }
+
     & .logo {
       display: inline-block;
+      padding-left: 30px;
+      font-size: 30px;
+      &:before {
+        content: " ";
+        width: 50px;
+        height: 50px;
+        z-index:-1;
+        position: absolute;
+        background-repeat: no-repeat;
+        background-size:100%;
+        top: 14px;
+        left: 28px;
+        background-image: url(/images/scribble.svg);
+      }
     }
 
     & .links {
@@ -42,8 +61,8 @@
       margin: 0px auto;
       position: relative;
       text-align: center;
-      top: 45%;
-      transform: translateY(-80%);
+      top: 30%;
+      transform: translateY(-50%);
       & h1 {
         font-size: 72px;
         font-weight: 300;
@@ -51,9 +70,19 @@
         background-position-x: 60px;
         background-repeat: no-repeat;
       }
+      
       & p {
-        margin-top: 30px;
-        font-size: 28px;
+        font-size: 30px;
+      }
+
+      & .install-command {
+        border: 1px solid rgba(255,255,255,0.7);
+        .border-radius(5px);
+        padding: 15px;
+        background-color: rgba(0,0,0,0.1);
+        width: 50%;
+        margin: 0px auto;
+        margin-top: 15px;
       }
     }
 

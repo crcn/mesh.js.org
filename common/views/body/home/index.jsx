@@ -31,8 +31,10 @@ module.exports = React.createClass({
             </div>
           </div>
           <div className="hook">
-            <h1><strong>Mesh</strong> it all up.</h1>
             <p>A featherlight JavaScript message bus for creating sophisticated applications</p>
+            <div className="install-command">
+              npm install mesh --save
+            </div>
           </div>
         </div>
 
