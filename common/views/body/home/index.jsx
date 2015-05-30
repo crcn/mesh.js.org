@@ -6,7 +6,7 @@ var fs    = require("fs");
 var features = [
   {
     title: "Just a utility",
-    desc : "Mesh was initially created to help normalize how applications interact with data sources, but it’s just a bundle of useful functions. You can easily use mesh however you want to write message handling code."
+    desc : "Mesh provides just a bundle of helpful functions and design patterns that help you build powerful, and explicit message handlers."
   },
   {
     title: "Decoupled",
