@@ -6,7 +6,6 @@
 
 
     color: #FFF;
-    opacity: 0.7;
 
 
     //background-color: rgba(0,0,0,0.1);
@@ -26,9 +25,11 @@
 
     & .links {
       line-height: 60px;
+      opacity: 0.7;
     }
 
     & .logo {
+      opacity: 0.9;
       font-weight: 600;
       position: relative;
       display: inline-block;
@@ -105,10 +106,23 @@
     color: white;
     background-color: @blue-dark;
 
+    margin-bottom: 30px;
+
     & .diagram {
       width: 100%;
       position: absolute;
       transform: translateY(-25%);
+    }
+  }
+
+  & .feature {
+    color: @blue-dark;
+    margin-bottom: 30px;
+    & .title {
+      font-size: 28px;
+    }
+    & p {
+
     }
   }
 }
