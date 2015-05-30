@@ -10,7 +10,7 @@ var features = [
   },
   {
     title: "Decoupled",
-    desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service vendor."
+    desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service."
   },
   {
     title: "Testable",
