@@ -14,7 +14,7 @@ var features = [
   },
   {
     title: "Testable",
-    desc: "Write highly testable code that’s as resilient, and decoupled as your application code. No more mocking & stubbing API calls."
+    desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls."
   },
   {
     title: "Interoperable",
