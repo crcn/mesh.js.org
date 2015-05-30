@@ -26,7 +26,7 @@ var features = [
   },
   {
     title: "Flexible",
-    desc: "Use mesh in your pre-existing codebase. It's flexible enough to work with even the most complex APIs.",
+    desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complex APIs.",
     source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8")
   }
 ]
