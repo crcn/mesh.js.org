@@ -41,9 +41,10 @@ module.exports = React.createClass({
           value={this.props.source}
           mode="java"
           name={ "editor-" + (_ref++) }
-          theme="kuroir"
+          theme="xcode"
           height={(this.props.source || "").split("\n").length * 17}
           width="100%"
+          highlightActiveLine={false}
           {...this.props}
         />
       </div>
