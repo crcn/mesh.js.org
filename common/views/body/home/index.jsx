@@ -6,23 +6,28 @@ var fs    = require("fs");
 var features = [
   {
     title: "Just a utility",
-    desc : "Mesh provides just a bundle of helpful functions and design patterns that help you build powerful, and explicit message handlers."
+    desc : "Mesh provides just a bundle of helpful functions and design patterns that help you build powerful, and explicit message handlers.",
+    source: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8")
   },
   {
     title: "Decoupled",
-    desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service."
+    desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service.",
+    source: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8")
   },
   {
     title: "Testable",
-    desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls."
+    desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls.",
+    source: fs.readFileSync(__dirname + "/examples/testable.js", "utf8")
   },
   {
     title: "Interoperable",
-    desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build."
+    desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
+    source: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8")
   },
   {
     title: "Flexible",
-    desc: "Use mesh in your pre-existing codebase. Mesh is flexible enough to work with even the most complex APIs."
+    desc: "Use mesh in your pre-existing codebase. Mesh is flexible enough to work with even the most complex APIs.",
+    source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8")
   }
 ]
 
@@ -78,12 +83,12 @@ module.exports = React.createClass({
           {
             features.map(function(feature, i) {
               return <div className="row feature content" key={i}>
-                <div className="col-sm-6">
+                <div className="col-sm-4">
                   <div className="title">{feature.title}</div>
                   <p>{feature.desc}</p>
                 </div>
-                <div className="col-sm-6">
-                  <div className="example"></div>
+                <div className="col-sm-8">
+                  <IDE className="example" readOnly={true} showGutter={false} source={feature.source} />
                 </div>
               </div>;
             })

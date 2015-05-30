@@ -7,6 +7,8 @@ var NoComp = React.createClass({
 });
 
 
+var _ref = 0;
+
 var AceEditor = process.browser ? require("react-ace") : NoComp;
 var cx        = require("classnames");
 
@@ -28,7 +30,7 @@ module.exports = React.createClass({
         ide: true,
         expanded: this.state.expanded,
         animated: true
-      })}>
+      }) + (this.props.className ? " " + this.props.className : "")}>
         <ul className="nav">
           <li></li>
           <li></li>
@@ -38,9 +40,11 @@ module.exports = React.createClass({
         <AceEditor
           value={this.props.source}
           mode="java"
+          name={ "editor-" + (_ref++) }
           theme="kuroir"
-          height="100%"
+          height={(this.props.source || "").split("\n").length * 17}
           width="100%"
+          {...this.props}
         />
       </div>
     );
