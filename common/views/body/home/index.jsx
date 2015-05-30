@@ -22,7 +22,7 @@ var features = [
   },
   {
     title: "Flexible",
-    desc: "Mesh is flexible enough to rangle even the most complex messaging systems."
+    desc: "Use mesh in your pre-existing codebase. Mesh is flexible enough to work with even the most complex APIs"
   }
 ]
 
