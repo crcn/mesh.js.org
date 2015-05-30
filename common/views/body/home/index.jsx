@@ -1,28 +1,60 @@
 var React = require("react");
 var IDE   = require("../../ide");
-// var StarFighter = require("examples/starfighter2/components/game ");
+var fs    = require("fs");
+
 
 module.exports = React.createClass({
   render: function() {
-
-    // <div className="navigation">
-    //   <a href="//github.com/mojo-js/mesh.js">GitHub</a>
-    // </div>
-
-    // TODO - add starfighter example here
     return (
       <div>
 
         <div className="row header">
-          <div className="tagline">
+          <div className="navigation">
+
+            <div className="logo">
+              MeshJS
+            </div>
+
+            <div className="links">
+              <a href="#">
+                Documentation
+              </a>
+              <a href="#">
+                Examples
+              </a>
+              <a href="#">
+                Support
+              </a>
+              <a href="http://github.com/mojo-js/mesh.js">
+                GitHub
+              </a>
+            </div>
+          </div>
+          <div className="hook">
             <h1><strong>Mesh</strong> it all up.</h1>
             <p>A featherlight JavaScript message bus for creating sophisticated applications</p>
           </div>
         </div>
 
-        <div className="row punchline content">
-          <p>Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates *all* remote, or local communication for your application.
-          Server-side and client-side.</p>
+        <div className="row elevator">
+          <div className="content">
+            <div className="col-sm-6">
+              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates *all* remote, or local communication for your application.
+              Server-side and client-side.
+            </div>
+            <div className="col-sm-6">
+              <img className="diagram" src="/images/home/elevator-diagram.png" />
+            </div>
+          </div>
+        </div>
+
+
+        <div className="row features content">
+          <div className="col-sm-6">
+            <h4>Just a utility</h4>
+            <p>Mesh was initially created to help normalize how applications interact with data sources,
+            but it’s just a bundle of useful functions. You can easily use mesh however you want to write message handling code.</p>
+          </div>
         </div>
       </div>
     );

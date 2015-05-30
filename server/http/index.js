@@ -26,7 +26,7 @@ module.exports = function(app) {
     precompile: prod,
     minify: prod,
     gzip: true,
-    transform: "reactify"
+    transform: ["reactify", "brfs"]
   }));
 
   less(app, server);

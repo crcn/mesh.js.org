@@ -10,6 +10,17 @@
 - https://github.com/trustmaster/goflow
 - https://launchpad.net/route11
 
+#### Designs
+
+- http://emberjs.com/
+- http://krakenjs.com/
+- http://picocms.org/
+- http://sailsjs.org/#!/
+- http://foundation.zurb.com/apps/
+- https://rubygems.org/
+- https://kitematic.com/
+- http://www.rethinkdb.com/
+
 #### Keywords
 
 normalizes, unifies, isomorphic, encapsulated, interoperable, non-opinionated, utility-based,
@@ -21,6 +32,8 @@ routing, meta API, adapter
 Mesh it all up
 
 Should be able to make the home screen game full screen
+
+[ INSTALL COMMAND ]
 
 #### Taglines
 
@@ -60,6 +73,13 @@ Should be able to make the home screen game full screen
   - replace flux dispatcher
 - ** Unopinionated
 
+#### Guides
+
+- patterns
+  - Building a database adapter
+  - Building a realtime adapter
+  - use test suites
+
 #### Diagrams
 
 - encapsulated - show app & adapters
@@ -84,14 +104,47 @@ Flexible
 Mesh doesn't make any assumptions about your codebase. Use it as an event bus system, message broker,
 or use it to build complex features such as offline-mode, realtime data, rollbacks, and more.
 
-[ GAME EXAMPLE HERE ]
+[ GAME EXAMPLE HERE   ]
+[ MESSAGE BROKER HERE ]
+
+- broker example
+- realtime example
+- testing example
+
+maybe slideshow on descriptions instead of just flexibility
+
+- Testable - makes code *more* testable. Less stubbing & mocking.
+- Flexible
+- Decoupled
+- Normalizes
+- Isomorphic
+- Write less
+- Reusable
+- Functional
+- Streaming
+- Unopinionated
+- Flux replacement
 
 Interoperable
 
 Mesh decouples your application from data sources. Build robust applications that are more testable, isomorphic,
-and doesn't lock you into *any* service /* - even your own API. */
+and doesn't lock you into *any* service /* - even your own API.
 
-[ BUS CALL HERE ] -> [ SLIDE HERE BETWEEN SERVICES ]
+Plugins ready to go
+
+- search bar somewhere pointing to NPM
+
+```javascript
+var mesh = require("mesh");
+// var http = require("mesh-http");
+// var mongo   = require("mesh-mongodb");
+var memory = require("mesh-memory");
+
+// var bus = mongo({ host: "mongodb://"});
+var bus = memory();
+
+bus(mesh.op("insert", { collection: "test", data: { name: "blah" }}));
+```
 
 [ DIGRAM HERE - swap services out ]
 
@@ -104,6 +157,18 @@ Mesh comes with ready to go adapters that you can drop into your application. - 
 Works with any framework
 
 Mesh works with Backbone, Angular, React, or your own super slick in-house JavaScript framework.
+
+More shorter points (things that cannot be explained in code)
+
+- Works with any framework
+- small footprint
+- unopinionated
+- isomorphic (maybe)
+- simple
+- reactive
+- non-inventive (leverages existing patterns)
+- consistent
+
 
 * Normalizes
 
@@ -129,3 +194,9 @@ Drop-in adapters ready to go. Easily setup realtime data, offline mode, and othe
 What else can you do?
 
 Testable
+
+#### Footer
+
+various links
+
+built by Craig
