@@ -12,7 +12,7 @@ module.exports = React.createClass({
           <div className="navigation">
 
             <div className="logo">
-              MeshJS
+              Mesh
             </div>
 
             <div className="links">
