@@ -22,7 +22,7 @@ var features = [
   },
   {
     title: "Flexible",
-    desc: "Use mesh in your pre-existing codebase. Mesh is flexible enough to work with even the most complex APIs"
+    desc: "Use mesh in your pre-existing codebase. Mesh is flexible enough to work with even the most complex APIs."
   }
 ]
 
@@ -65,8 +65,8 @@ module.exports = React.createClass({
         <div className="row elevator">
           <div className="content">
             <div className="col-sm-6">
-              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates *all* remote, or local communication for your application.
-              Server-side and client-side.
+              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates <strong>all</strong> remote, or local communication for your application.
+               <strong>&nbsp;Server-side and client-side.</strong>
             </div>
             <div className="col-sm-6">
               <img className="diagram" src="/images/home/elevator-diagram.png" />
