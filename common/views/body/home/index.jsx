@@ -74,17 +74,21 @@ module.exports = React.createClass({
           </div>
         </div>
 
-
-        {
-          features.map(function(feature) {
-            return <div className="row feature content">
-              <div className="col-sm-6">
-                <div className="title">{feature.title}</div>
-                <p>{feature.desc}</p>
-              </div>
-            </div>;
-          })
-        }
+        <div className="row features">
+          {
+            features.map(function(feature, i) {
+              return <div className="row feature content" key={i}>
+                <div className="col-sm-6">
+                  <div className="title">{feature.title}</div>
+                  <p>{feature.desc}</p>
+                </div>
+                <div className="col-sm-6">
+                  <div className="example"></div>
+                </div>
+              </div>;
+            })
+          }
+        </div>
       </div>
     );
   }
