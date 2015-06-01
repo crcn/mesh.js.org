@@ -17,7 +17,8 @@ var features = [
   {
     title: "Testable",
     desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls.",
-    source: fs.readFileSync(__dirname + "/examples/testable.js", "utf8")
+    source: fs.readFileSync(__dirname + "/examples/testable.js", "utf8"),
+    runnable: false
   },
   {
     title: "Interoperable",
@@ -27,7 +28,8 @@ var features = [
   {
     title: "Flexible",
     desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complex APIs.",
-    source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8")
+    source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
+    runnable: false
   }
 ]
 
@@ -88,7 +90,7 @@ module.exports = React.createClass({
                   <p>{feature.desc}</p>
                 </div>
                 <div className="col-sm-8">
-                  <IDE className="example" readOnly={true} showGutter={false} source={feature.source} />
+                  <IDE className="example" readOnly={false} showGutter={false} source={feature.source} runnable={feature.runnable} />
                 </div>
               </div>;
             })

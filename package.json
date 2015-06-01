@@ -5,12 +5,14 @@
   "main": "./index.js",
   "dependencies": {
     "application": "file:./server",
+    "async": "^1.0.0",
     "brfs": "^1.4.0",
     "browserify-middleware": "^5.0.2",
     "caplet": "^2.0.x",
     "classnames": "^1.2.1",
     "common": "file:./common",
     "crc32": "^0.2.2",
+    "detective": "^4.1.0",
     "examples": "file:./examples",
     "express": "^4.12.3",
     "glob": "^5.0.5",
@@ -34,6 +36,8 @@
     "sift": "^1.1.0",
     "socket.io": "^1.3.5",
     "socketio-wildcard": "^0.1.1",
+    "sprintf": "^0.1.5",
+    "superagent": "^1.2.0",
     "watchable-collection": "^4.0.x",
     "watchable-object": "^3.0.0",
     "xtend": "^4.0.0"

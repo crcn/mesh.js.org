@@ -1,6 +1,6 @@
 var User   = require("./user-model");
 var expect = require("expect.js");
-var extend = require("xtend/mutable");
+var extend = require("extend");
 
 describe("user-model#", function() {
 
