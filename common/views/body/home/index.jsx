@@ -96,6 +96,18 @@ module.exports = React.createClass({
             })
           }
         </div>
+
+        <div className="row extensions">
+          <div className="content">
+            <div className="col-sm-6">
+            </div>
+            <div className="col-sm-6">
+              <div className="title">Pugins ready to go</div>
+              <p>Easily incorporate services such as socket.io, pubnub, firebase, and mongodb with just a few lines of code.</p>
+              <a className="view-more" href="https://www.npmjs.com/search?q=meshjs">View more on NPM &#10095;</a>
+            </div>
+          </div>
+        </div>
       </div>
     );
   }
