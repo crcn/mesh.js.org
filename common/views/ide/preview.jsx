@@ -1,6 +1,7 @@
 var React   = require("react");
 var bundle  = require("./bundle");
-var sprintf = require("sprintf").sprintf;
+
+global.mio = require("mesh-socket.io");
 
 module.exports = React.createClass({
   componentDidMount: function() {
@@ -33,10 +34,10 @@ module.exports = React.createClass({
       var msg = Array.prototype.slice.call(arguments, 0).map(function(arg) {
         if (typeof arg === "object") return JSON.stringify(arg);
         return arg;
-      });
+      }).join(" ");
 
       this.setState({
-        logs: this.state.logs.concat(sprintf.apply(this, msg))
+        logs: this.state.logs.concat(msg)
       })
     }.bind(this)
   }

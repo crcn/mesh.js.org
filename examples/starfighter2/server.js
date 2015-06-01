@@ -8,6 +8,8 @@ var entityFactory = require("./models/utils/entityFactory");
 
 module.exports = function(app) {
 
+  return;
+
   var bus = createBus(app);
 
   var entities = Group();
