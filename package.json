@@ -30,7 +30,7 @@
     "object-diff": "0.0.2",
     "protoclass": "0.0.6",
     "react": "^0.13.2",
-    "react-ace": "^1.1.7",
+    "react-ace": "git+https://git@github.com/crcn/react-ace.git",
     "react-tools": "^0.13.2",
     "reactify": "^1.1.0",
     "sift": "^1.1.0",
