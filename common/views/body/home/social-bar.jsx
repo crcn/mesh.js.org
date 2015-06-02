@@ -48,7 +48,7 @@ module.exports = React.createClass({
           </li>
           <li>
             <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(this.state.tweetMessage) } target="_blank">
-              <i className="ion-social-twitter"></i> <span id="tw-followers">{this.state.followerCount} tweet</span>
+              <i className="ion-social-twitter"></i> <span id="tw-followers">{this.state.followerCount} tweets</span>
             </a>
           </li>
         </ul>
