@@ -1,21 +1,18 @@
-var Base   = require("../common/application");
-var bus    = require("./bus");
-var Body   = require("../common/views/body");
-var React  = require("react");
-var router = require("./router");
-var mesh   = require("mesh");
+var Base             = require("common/application");
+var Body             = require("common/components/body");
+var React            = require("react");
+var interceptAnchors = require("./plugins/interceptAnchors");
 
 module.exports = Base.extend({
   initialize: function() {
     Base.prototype.initialize.call(this);
-    router(this);
+    interceptAnchors(this);
   },
-  load: function(attrs) {
-    this.renderBody(attrs);
-    this.bus(mesh.op("load"));
+  load: function(state) {
+    this.renderBody(state);
   },
-  renderBody: function(attrs) {
-    this.attrs = attrs;
-    React.render(React.createElement(Body, attrs), document.getElementById("app"));
+  renderBody: function(state) {
+    this.state = state;
+    React.render(React.createElement(Body, { state: state, app: this }), document.getElementById("app"));
   }
 });

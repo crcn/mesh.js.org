@@ -1,7 +1,7 @@
-var React = require("react");
-var IDE   = require("../../ide");
-var fs    = require("fs");
-var SocialBar = require("./social-bar");
+var React      = require("react");
+var IDE        = require("../../ide");
+var fs         = require("fs");
+var SocialBar  = require("./social-bar");
 var Navigation = require("../../navigation");
 
 var features = [
@@ -47,7 +47,7 @@ module.exports = React.createClass({
 
         <div className="row header">
 
-          <Navigation />
+          <Navigation {...this.props} />
 
           <div className="hook">
             <p>A featherlight JavaScript message bus for creating sophisticated applications</p>
@@ -56,7 +56,7 @@ module.exports = React.createClass({
             </div>
           </div>
 
-          <SocialBar />
+          <SocialBar {...this.props} />
         </div>
 
         <div className="row elevator">

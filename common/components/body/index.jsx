@@ -12,7 +12,7 @@ module.exports = React.createClass({
             home     : <Home {...this.props} />,
             examples : <Examples {...this.props} />,
             docs     : <Docs {...this.props} />
-          }[this.props.pages.body]
+          }[this.props.state.pages.body]
         }
       </div>
     );

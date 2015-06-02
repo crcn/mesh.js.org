@@ -183,13 +183,11 @@ function unpack(packed) {
 exports.pack = function(data) {
   if (Object.prototype.toString.call(data) !== "[object Object]") return data;
   var p = pack(data);
-  console.log("pack", data, JSON.stringify(p));
   return p;
 }
 
 exports.unpack = function(packet) {
   if (Object.prototype.toString.call(packet) !== "[object Object]") return packet;
   var data = unpack(packet);
-  console.log("unpack ", JSON.stringify(packet), data);
   return data;
 }

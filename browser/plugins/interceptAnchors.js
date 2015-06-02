@@ -1,24 +1,11 @@
-var mesh = require("mesh");
-
-module.exports = function(app) {
-  app.bus = mesh.parallel(
-    mesh.accept("load", mesh.wrap(function(op, next) {
-      interceptAnchors(app);
-      next();
-    })),
-    app.bus
-  )
-}
 
 function interceptAnchors(app) {
 
   window.onpopstate = redirect;
 
   function redirect() {
-    mesh.run(app.bus, window.location.pathname, {}, function(err, attrs) {
-      if (!attrs) return;
-      app.renderBody(attrs);
-    });
+    app.router.redirect(window.location.pathname);
+    app.renderBody(app.router.location.state);
   }
 
   document.body.addEventListener("click", function(event) {
@@ -30,3 +17,5 @@ function interceptAnchors(app) {
     redirect();
   })
 }
+
+module.exports = interceptAnchors;

@@ -1,5 +1,5 @@
 var express    = require("express");
-var Body       = require("../../common/views/body");
+var Body       = require("common/components/body");
 var browserify = require("browserify-middleware");
 var React      = require("react");
 var mesh       = require("mesh");
@@ -26,7 +26,7 @@ module.exports = function(app) {
     precompile: prod,
     minify: prod,
     gzip: true,
-    transform: ["reactify", "brfs"]
+    transform: [["reactify", { global: true }], ["brfs", { global: true }]]
   }));
 
   less(app, server);
@@ -46,20 +46,18 @@ module.exports = function(app) {
       "</body>" +
       "<script type=\"text/javascript\" src=\"/bundle.js\"></script>" +
       "<script type=\"text/javascript\">" +
-        "app.load(" + JSON.stringify(content.attrs) + ")" +
+        "app.load(" + JSON.stringify(content.state) + ")" +
       "</script>" +
     "</html>";
   }
 
   server.use(function(req, res, next) {
-    mesh.run(app.bus, req.path, {}, function(err, attrs) {
-      if (!attrs) return next();
-      var component = React.createElement(Body, attrs);
-      res.send(html({
-        body: React.renderToString(component),
-        attrs: attrs
-      }));
-    });
+    app.router.redirect(req.path);
+    var component = React.createElement(Body, { state: app.router.location.state, app: app });
+    res.send(html({
+      body: React.renderToString(component),
+      state: app.router.location.state
+    }));
   });
 
   realtime(server.listen(port), app);

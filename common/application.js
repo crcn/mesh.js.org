@@ -1,13 +1,23 @@
 var caplet  = require("caplet");
 var routes  = require("./routes");
-var mesh    = require("mesh");
-var memory  = require("mesh-memory");
+var Router  = require("./routes/router");
+
+/**
+ */
 
 module.exports = caplet.createModelClass({
+
+  /**
+   */
+
   initialize: function() {
-    this.bus = mesh.noop;
+    this.router = new Router();
     routes(this);
   },
+
+  /**
+   */
+
   load: function() {
 
   }

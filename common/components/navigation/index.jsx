@@ -1,17 +1,18 @@
 var React = require("react");
+var Link  = require("common/components/link");
 
 module.exports = React.createClass({
   render: function() {
     return <div className="rx-navigation">
 
-      <a href="/" className="logo">
+      <Link alias="home" className="logo" {...this.props}>
         Mesh
-      </a>
+      </Link>
 
       <div className="links">
-        <a href="/docs">
+        <Link alias="docs" {...this.props}>
           Documentation
-        </a>
+        </Link>
         <a href="#">
           Examples
         </a>

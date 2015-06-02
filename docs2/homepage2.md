@@ -2,6 +2,8 @@
 
 Mesh it all up
 A featherlight JavaScript message bus for creating sophisticated applications
+creating connected applications
+
 
 ### Elevator
 
@@ -26,7 +28,7 @@ Build robust data-driven applications with ease
 #### Just a utilty (unopinionated)
 
 Mesh is just a bundle of utility functions - just like underscore. Use it however you want to build explicit, and powerful
-message brokers. 
+message brokers.
 
 ```javascript
 var mesh = require("mesh");

@@ -6,7 +6,7 @@ module.exports = React.createClass({
     return (
       <div className="rx-docs">
         <div className="row">
-          <Navigation />
+          <Navigation {...this.props} />
         </div>
         <div className="row main">
           <div className="col-sm-2 sidebar">
