@@ -73,7 +73,7 @@ gulp.task("bundlejs", function() {
     extensions: [".jsx"],
     global: true
   });
-  b.transform('reactify');
+  b.transform({global:true}, 'reactify');
   return b.bundle().
   pipe(source('bundle.js')).
   pipe(buffer()).
