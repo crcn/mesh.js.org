@@ -4,12 +4,12 @@ module.exports = React.createClass({
   render: function() {
     return <div className="rx-navigation">
 
-      <div className="logo">
+      <a href="/" className="logo">
         Mesh
-      </div>
+      </a>
 
       <div className="links">
-        <a href="#">
+        <a href="/docs">
           Documentation
         </a>
         <a href="#">
