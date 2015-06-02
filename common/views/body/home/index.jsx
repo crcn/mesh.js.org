@@ -7,29 +7,34 @@ var features = [
   {
     title: "Just a utility",
     desc : "Mesh provides just a bundle of helpful functions and design patterns that help you build powerful, and explicit message handlers.",
-    source: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8")
+    source: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
+    icon: "settings"
   },
   {
     title: "Decoupled",
     desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service.",
-    source: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8")
+    source: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8"),
+    icon: "unlocked"
   },
   {
     title: "Testable",
     desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls.",
     source: fs.readFileSync(__dirname + "/examples/testable.js", "utf8"),
-    runnable: false
+    runnable: false,
+    icon: "help-buoy"
   },
   {
     title: "Interoperable",
     desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
-    source: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8")
+    source: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
+    icon: "shuffle"
   },
   {
     title: "Flexible",
     desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complex APIs.",
     source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
-    runnable: false
+    runnable: false,
+    icon: "beer"
   }
 ]
 
@@ -93,7 +98,7 @@ module.exports = React.createClass({
               return <div className="row feature" key={i}>
                 <div className="content">
                   <div className="col-sm-4">
-                    <div className="title">{feature.title}</div>
+                    <div className="title"><i className={"ion-" + feature.icon}></i>{feature.title}</div>
                     <p>{feature.desc}</p>
                   </div>
                   <div className="col-sm-8">
