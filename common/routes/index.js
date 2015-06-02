@@ -15,4 +15,20 @@ module.exports = function(app) {
       }
     });
   });
+
+  app.router.addRoute("examples", "/docs", function(location) {
+    location.set("state", {
+      pages: {
+        body: "docs"
+      }
+    });
+  });
+
+  app.router.addRoute("snippets", "/docs", function(location) {
+    location.set("state", {
+      pages: {
+        body: "docs"
+      }
+    });
+  });
 }

@@ -112,9 +112,8 @@ module.exports = React.createClass({
               </ul>
               <ul className="col-sm-4">
                 <li>Docs</li>
-                <li>Snippets</li>
-                <li>Examples</li>
-                <li>Guides</li>
+                <li><Link alias="snippets" {...this.props}>Snippets</Link></li>
+                <li><Link alias="examples" {...this.props}>Examples</Link></li>
                 <li><Link alias="docs" {...this.props}>API</Link></li>
               </ul>
               <ul className="col-sm-4">
