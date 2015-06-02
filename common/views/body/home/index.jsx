@@ -120,6 +120,11 @@ module.exports = React.createClass({
         </div>
 
         <div className="row footer">
+          <div className="logo">
+            <a href="http://github.com/mojo-js">
+              <img src="/images/logos/mojo-js-white.png"></img>
+            </a>
+          </div>
           <div className="copyright">
             Code licensed under <a href="https://github.com/mojo-js/mesh.js/blob/master/MIT-LICENSE.txt">MIT</a> | Designed & developed by <a href="https://github.com/crcn">Craig Jefferds</a>
           </div>
