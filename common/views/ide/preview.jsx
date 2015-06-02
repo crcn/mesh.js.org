@@ -11,14 +11,19 @@ module.exports = React.createClass({
   },
   getInitialState: function() {
     return {
+      loading: true,
       logs: []
     }
   },
   onBundle: function(err, exports) {
     if (err) console.error(err);
+    this.setState({ loading: false });
     exports.initialize(this);
   },
   render: function() {
+    if (this.state.loading) {
+      return <div className="ide-preview-loading">loading...</div>;
+    }
     return <div className="ide-preview">
       <ul className="logs">
         {
