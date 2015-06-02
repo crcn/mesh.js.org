@@ -85,6 +85,14 @@ module.exports = caplet.createModelClass({
    */
 
   addRoute: function(alias, pathname, handler) {
+
+    if (Object.prototype.toString.call(pathname) === "[object Array]") {
+      return pathname.forEach(function(pathname) {
+        this.addRoute(alias, pathname, handler);
+      }.bind(this));
+    }
+
+
     if (!handler) handler = function() { };
 
     // convert something like /home/:id/path to /home/(\w+)/

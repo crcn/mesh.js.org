@@ -1,6 +1,6 @@
 module.exports = function(app) {
 
-  app.router.addRoute("home", "/", function(location) {
+  app.router.addRoute("home", ["/", "/index"], function(location) {
     location.set("state", {
       pages: {
         body: "home"

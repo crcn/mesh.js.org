@@ -52,11 +52,24 @@ module.exports = function(app) {
   }
 
   server.use(function(req, res, next) {
-    app.router.redirect(req.path);
-    var component = React.createElement(Body, { state: app.router.location.state, app: app });
+
+    var path = req.path;
+    var json = false;
+
+    if (json = !!~path.indexOf(".json")) {
+      path = path.replace(".json", "");
+    }
+
+    app.router.redirect(path);
+    var state = app.router.location.state;
+
+    if (json) return res.send(state);
+
+    var component = React.createElement(Body, { state: state, app: app });
+
     res.send(html({
       body: React.renderToString(component),
-      state: app.router.location.state
+      state: state
     }));
   });
 
