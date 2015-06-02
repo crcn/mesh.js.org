@@ -64,7 +64,7 @@ module.exports = caplet.createModelClass({
 
   initialize: function() {
     this.location = new Location();
-    this._routes = {};
+    this._routes = [];
     if (process.browser) {
       _bindWindowLocation(this);
     }
@@ -92,7 +92,6 @@ module.exports = caplet.createModelClass({
       }.bind(this));
     }
 
-
     if (!handler) handler = function() { };
 
     // convert something like /home/:id/path to /home/(\w+)/
@@ -103,7 +102,8 @@ module.exports = caplet.createModelClass({
       return pathname.substr(1);
     });
 
-    this._routes[alias] = {
+    this._routes.push({
+      alias: alias,
       pathTester: pathTester,
       getPathname: function(aliasOrPathname, options) {
         if (!options) options = {};
@@ -129,7 +129,7 @@ module.exports = caplet.createModelClass({
         return pathname === alias || pathTester.test(pathname);
       },
       handler: handler
-    }
+    });
   },
 
   /**
@@ -179,8 +179,8 @@ module.exports = caplet.createModelClass({
 
   getRoute: function(aliasOrPathname) {
 
-    for (var alias in this._routes) {
-      var route = this._routes[alias];
+    for (var i = this._routes.length; i--;) {
+      var route = this._routes[i];
       if (route.test(aliasOrPathname)) return route;
     }
 

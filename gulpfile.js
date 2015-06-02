@@ -11,7 +11,6 @@ var jscs        = require("gulp-jscs");
 var coveralls   = require("gulp-coveralls");
 var rename      = require("gulp-rename");
 var browserSync = require("browser-sync");
-var karma       = require("karma").server;
 var options     = require("yargs").argv;
 
 var pkg = require("./package");
@@ -21,9 +20,9 @@ process.env.PC_DEBUG = 1;
  */
 
 var paths = {
-  testFiles  : ["test/**/*-test.js", "examples/**/*-test.js", "common/**/*-test.js", "browser/**/*-test.js"],
+  testFiles  : ["docs/**/*-test.js", "src/**/*-test.js"],
   appFiles   : ["lib/**/*.js"],
-  allFiles   : ["test/**", "lib/**", "examples/**"]
+  allFiles   : ["docs/**", "src/**"]
 };
 
 /**
@@ -66,10 +65,11 @@ gulp.task("test-coveralls", ["test-coverage"], function () {
 });
 
 /**
+ * TODO - add all bundling scripts here - docs, css, js
  */
 
-gulp.task("bundlejs", function() {
-  var b = browserify("./browser/index.js", {
+gulp.task("bundle", function() {
+  var b = browserify("./src/browser/index.js", {
     extensions: [".jsx"],
     global: true
   });
@@ -97,20 +97,9 @@ gulp.task("minify", ["bundle"], function() {
 gulp.task("browser-sync", function(next) {
 	browserSync({
 		proxy: "http://localhost:8081",
-		files: [__dirname + "/browser/**", __dirname + "/server/**", __dirname + "/common/**", __dirname + "/examples/**"]
+		files: [__dirname + "/src/**", __dirname + "/docs/**"]
 	})
 });
-
-/**
- */
-
-gulp.task("test-browser", function(complete) {
-  karma.start({
-    configFile: __dirname + '/karma.conf.js',
-    singleRun: true
-  }, complete);
-});
-
 
 /**
  */
@@ -196,13 +185,6 @@ gulp.task("watch", function () {
  */
 
 gulp.task("default", function () {
-  return gulp.run("test-coverage");
-});
-
-/**
- */
-
-gulp.task("example", function () {
   return gulp.run("test-coverage");
 });
 

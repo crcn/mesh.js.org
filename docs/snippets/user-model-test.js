@@ -1,10 +1,11 @@
 var User   = require("./user-model");
 var expect = require("expect.js");
 var extend = require("xtend/mutable");
+var mesh   = require("mesh");
 
 describe("user-model#", function() {
 
-  it("can insert() a user", function(complete) {
+  xit("can insert() a user", function(complete) {
 
     var user = new User({
       name: "Kung Fury",

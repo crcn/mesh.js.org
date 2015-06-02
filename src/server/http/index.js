@@ -18,6 +18,8 @@ module.exports = function(app) {
   console.log("listening on port %d", port);
   var prod = process.env.NODE_ENV === "production";
 
+  console.log(config.get("directories.static"));
+  
   server.use(express.static(config.get("directories.static")));
   server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
     extensions: [".jsx"],

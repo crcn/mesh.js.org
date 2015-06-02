@@ -4,16 +4,15 @@
   "description": "",
   "main": "./index.js",
   "dependencies": {
-    "application": "file:./server",
+    "application": "file:./src/server",
     "async": "^1.0.0",
     "brfs": "^1.4.0",
     "browserify-middleware": "^5.0.2",
     "caplet": "^2.0.0",
     "classnames": "^1.2.2",
-    "common": "file:./common",
+    "common": "file:./src/common",
     "crc32": "^0.2.2",
     "detective": "^4.1.0",
-    "examples": "file:./examples",
     "express": "^4.12.3",
     "glob": "^5.0.5",
     "highland": "^2.4.0",
@@ -55,8 +54,8 @@
     "gulp-plumber": "^1.0.0",
     "gulp-rename": "^1.2.2",
     "gulp-uglify": "^1.2.0",
-    "karma": "^0.12.31",
     "linklocal": "^2.5.2",
+    "mesh-loki": "^1.0.0",
     "mocha": "^2.2.4",
     "sinon": "^1.14.1",
     "vinyl-buffer": "^1.0.0",
@@ -65,8 +64,8 @@
   },
   "scripts": {
     "test": "gulp lint test-coveralls",
-    "start": "rm static/bundle.js; node server/index.js",
-    "postinstall": "gulp bundlejs && linklocal"
+    "start": "rm static/bundle.js; node src/server/index.js",
+    "postinstall": "gulp bundle && linklocal"
   },
   "repository": {
     "type": "git",
