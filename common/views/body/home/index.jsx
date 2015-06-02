@@ -120,14 +120,43 @@ module.exports = React.createClass({
         </div>
 
         <div className="row footer">
-          <div className="logo">
-            <a href="http://github.com/mojo-js">
-              <img src="/images/logos/mojo-js-white.png"></img>
-            </a>
+          <div className="col-sm-4">
+            <div className="logo">
+              <a href="http://github.com/mojo-js">
+                <img src="/images/logos/mojo-js-white.png"></img>
+              </a>
+            </div>
+            <div className="copyright">
+              <div>Code licensed under <a href="https://github.com/mojo-js/mesh.js/blob/master/MIT-LICENSE.txt">MIT</a></div>
+              Designed & developed by <a href="https://github.com/crcn">Craig Jefferds</a>
+            </div>
           </div>
-          <div className="copyright">
-            Code licensed under <a href="https://github.com/mojo-js/mesh.js/blob/master/MIT-LICENSE.txt">MIT</a> | Designed & developed by <a href="https://github.com/crcn">Craig Jefferds</a>
-          </div>
+
+          <div className="col-sm-8">
+            <div className="row navigation">
+              <ul className="col-sm-4">
+                <li>Downloads</li>
+                <li><a href="https://raw.githubusercontent.com/mojo-js/mesh.js/master/dist/mesh.min.js">browser bundle</a></li>
+                <li><a href="https://www.npmjs.com/search?q=meshjs">Plugins</a></li>
+                <li>API</li>
+              </ul>
+              <ul className="col-sm-4">
+                <li>Docs</li>
+                <li>Snippets</li>
+                <li>Examples</li>
+                <li>Guides</li>
+                <li>API</li>
+              </ul>
+              <ul className="col-sm-4">
+                <li>Connect</li>
+                <li><a href="http://github.com/mojo-js/mesh.js">GitHub</a></li>
+                <li><a href="http://twitter.com/mojoframework">Twitter</a></li>
+                <li><a href="https://groups.google.com/forum/#!forum/meshjs">Google group</a></li>
+                <li><a href="https://gitter.im/mojo-js/mesh.js">Chat</a></li>
+                <li>API</li>
+              </ul>
+            </div>
+          </div>  
         </div>
       </div>
     );
