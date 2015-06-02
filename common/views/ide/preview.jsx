@@ -23,7 +23,7 @@ module.exports = React.createClass({
       <ul className="logs">
         {
           this.state.logs.map(function(log) {
-            return <li>{log}</li>;
+            return <li>log: {log}</li>;
           })
         }
       </ul>

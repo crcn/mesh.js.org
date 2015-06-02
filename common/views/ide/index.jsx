@@ -31,7 +31,7 @@ module.exports = React.createClass({
   },
   showPreview: function() {
     this.setState({
-      preview: true
+      preview: !this.state.preview
     });
   },
   onContentChange: function(content) {
@@ -44,20 +44,16 @@ module.exports = React.createClass({
     if (this.state.preview) {
       sections.content = <Preview content={this.state.content} />;
     } else {
-      sections.content = <div>
-        { this.props.runnable !== false ? <button className="btn ptn-primary preview-button" onClick={this.showPreview}>run example</button> : void 0 }
-        <AceEditor
+      sections.content = <AceEditor
         onChange={this.onContentChange}
         value={this.state.content}
         mode="java"
         name={ "editor-" + (_ref++) }
         theme="clouds"
-        // height={(this.props.source || "").split("\n").length * 17}
-        // height="300px"
         width="100%"
         highlightActiveLine={false}
         {...this.props} />
-      </div>
+
     }
 
 
@@ -74,7 +70,10 @@ module.exports = React.createClass({
           <li onClick={this.toggleExpansion}></li>
         </ul>
 
-        { sections.content }
+        <div>
+          { this.props.runnable !== false ? <button className="btn ptn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
+          { sections.content }
+        </div>
 
       </div>
     );

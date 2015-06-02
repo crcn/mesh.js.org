@@ -1,4 +1,3 @@
-
 var mesh    = require("mesh");
 var extend  = require("extend");
 // var mongo   = require("mesh-mongodb");
