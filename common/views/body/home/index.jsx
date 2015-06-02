@@ -1,7 +1,7 @@
 var React = require("react");
 var IDE   = require("../../ide");
 var fs    = require("fs");
-
+var SocialBar = require("./social-bar");
 
 var features = [
   {
@@ -64,12 +64,15 @@ module.exports = React.createClass({
               </a>
             </div>
           </div>
+
           <div className="hook">
             <p>A featherlight JavaScript message bus for creating sophisticated applications</p>
             <div className="install-command">
               npm install mesh --save
             </div>
           </div>
+
+          <SocialBar />
         </div>
 
         <div className="row elevator">
@@ -87,13 +90,15 @@ module.exports = React.createClass({
         <div className="row features">
           {
             features.map(function(feature, i) {
-              return <div className="row feature content" key={i}>
-                <div className="col-sm-4">
-                  <div className="title">{feature.title}</div>
-                  <p>{feature.desc}</p>
-                </div>
-                <div className="col-sm-8">
-                  <IDE className="example" readOnly={false} showGutter={false} source={feature.source} runnable={feature.runnable} />
+              return <div className="row feature" key={i}>
+                <div className="content">
+                  <div className="col-sm-4">
+                    <div className="title">{feature.title}</div>
+                    <p>{feature.desc}</p>
+                  </div>
+                  <div className="col-sm-8">
+                    <IDE className="example" readOnly={false} showGutter={false} source={feature.source} runnable={feature.runnable} />
+                  </div>
                 </div>
               </div>;
             })
@@ -156,7 +161,7 @@ module.exports = React.createClass({
                 <li>API</li>
               </ul>
             </div>
-          </div>  
+          </div>
         </div>
       </div>
     );

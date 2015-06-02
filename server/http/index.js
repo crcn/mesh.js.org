@@ -36,7 +36,9 @@ module.exports = function(app) {
       "<head>" +
         "<link href=\"/vendor/bootstrap/css/bootstrap.min.css\" rel=\"stylesheet\">" +
         "<link href=\"/bundle.css\" rel=\"stylesheet\">" +
+        "<link href=\"http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css\" rel=\"stylesheet\">" +
         "<script src=\"//use.typekit.net/fjj0nzz.js\"></script>" +
+        "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>" +
         "<script>try{Typekit.load();}catch(e){}</script>" +
       "</head>" +
       "<body>" +
