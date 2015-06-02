@@ -2,6 +2,7 @@ var React = require("react");
 var IDE   = require("../../ide");
 var fs    = require("fs");
 var SocialBar = require("./social-bar");
+var Navigation = require("../../navigation");
 
 var features = [
   {
@@ -45,30 +46,8 @@ module.exports = React.createClass({
       <div>
 
         <div className="row header">
-          <div className="navigation">
 
-            <div className="logo">
-              Mesh
-            </div>
-
-            <div className="links">
-              <a href="#">
-                Documentation
-              </a>
-              <a href="#">
-                Examples
-              </a>
-              <a href="#">
-                Support
-              </a>
-              <a href="https://www.npmjs.com/search?q=meshjs">
-                Plugins
-              </a>
-              <a href="http://github.com/mojo-js/mesh.js">
-                GitHub
-              </a>
-            </div>
-          </div>
+          <Navigation />
 
           <div className="hook">
             <p>A featherlight JavaScript message bus for creating sophisticated applications</p>
