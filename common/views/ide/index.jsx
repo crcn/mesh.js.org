@@ -51,6 +51,7 @@ module.exports = React.createClass({
         name={ "editor-" + (_ref++) }
         theme="clouds"
         width="100%"
+        maxLines={Infinity}
         highlightActiveLine={false}
         {...this.props} />
 
