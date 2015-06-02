@@ -56,6 +56,9 @@ module.exports = React.createClass({
               <a href="#">
                 Support
               </a>
+              <a href="https://www.npmjs.com/search?q=meshjs">
+                Plugins
+              </a>
               <a href="http://github.com/mojo-js/mesh.js">
                 GitHub
               </a>
@@ -100,12 +103,25 @@ module.exports = React.createClass({
         <div className="row extensions">
           <div className="content">
             <div className="col-sm-6">
+              <ul>
+                {
+                  ["mongo", "pubnub", "firebase", "socket.io", "loki"].map(function(name) {
+                    return
+                  })
+                }
+              </ul>
             </div>
             <div className="col-sm-6">
               <div className="title">Pugins ready to go</div>
               <p>Easily incorporate services such as socket.io, pubnub, firebase, and mongodb with just a few lines of code.</p>
               <a className="view-more" href="https://www.npmjs.com/search?q=meshjs">View more on NPM &#10095;</a>
             </div>
+          </div>
+        </div>
+
+        <div className="row footer">
+          <div className="copyright">
+            Code licensed under <a href="https://github.com/mojo-js/mesh.js/blob/master/MIT-LICENSE.txt">MIT</a> | Designed & developed by <a href="https://github.com/crcn">Craig Jefferds</a>
           </div>
         </div>
       </div>

@@ -145,6 +145,7 @@
   & .extensions {
     padding: 15px;
     color: rgba(255,255,255,0.9);
+    display: none;
     background-color: @blue-dark;
     & .title {
       font-size: 28px;
@@ -156,6 +157,22 @@
       margin-top: 15px;
       color: @blue;
       font-weight: bold;
+    }
+  }
+
+  & .footer {
+    background-color: @blue-dark;
+    padding: 30px;
+    color: rgba(255,255,255,0.9);
+    font-size: 14px;
+    padding-left: 30px;
+    padding-right: 30px;
+
+    & .copyright {
+      float: right;
+      & a {
+        color: @blue;
+      }
     }
   }
 }
