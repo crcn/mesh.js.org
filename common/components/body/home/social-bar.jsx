@@ -17,6 +17,7 @@ module.exports = React.createClass({
       dataType: "jsonp",
       url: "https://api.github.com/repos/mojo-js/mesh.js",
       success: function(data) {
+        console.log(data);
         this.setState({
           watcherCount : data.data.watchers,
           forkCount    : data.data.forks
@@ -42,7 +43,7 @@ module.exports = React.createClass({
             </a>
           </li>
           <li>
-            <a href="https://github.com/mojo-js/mesh.js" target="_blank">
+            <a href="https://github.com/mojo-js/mesh.js/network" target="_blank">
               <i className="ion-fork-repo"></i> <span id="gh-forks"></span> {this.state.forkCount} forks
             </a>
           </li>

@@ -3,6 +3,7 @@ var IDE        = require("../../ide");
 var fs         = require("fs");
 var SocialBar  = require("./social-bar");
 var Navigation = require("../../navigation");
+var Link       = require("../../link");
 
 var features = [
   {
@@ -89,25 +90,6 @@ module.exports = React.createClass({
           }
         </div>
 
-        <div className="row extensions">
-          <div className="content">
-            <div className="col-sm-6">
-              <ul>
-                {
-                  ["mongo", "pubnub", "firebase", "socket.io", "loki"].map(function(name) {
-                    return
-                  })
-                }
-              </ul>
-            </div>
-            <div className="col-sm-6">
-              <div className="title">Pugins ready to go</div>
-              <p>Easily incorporate services such as socket.io, pubnub, firebase, and mongodb with just a few lines of code.</p>
-              <a className="view-more" href="https://www.npmjs.com/search?q=meshjs">View more on NPM &#10095;</a>
-            </div>
-          </div>
-        </div>
-
         <div className="row footer">
           <div className="col-sm-4">
             <div className="logo">
@@ -127,14 +109,13 @@ module.exports = React.createClass({
                 <li>Downloads</li>
                 <li><a href="https://raw.githubusercontent.com/mojo-js/mesh.js/master/dist/mesh.min.js">browser bundle</a></li>
                 <li><a href="https://www.npmjs.com/search?q=meshjs">Plugins</a></li>
-                <li>API</li>
               </ul>
               <ul className="col-sm-4">
                 <li>Docs</li>
                 <li>Snippets</li>
                 <li>Examples</li>
                 <li>Guides</li>
-                <li>API</li>
+                <li><Link alias="docs" {...this.props}>API</Link></li>
               </ul>
               <ul className="col-sm-4">
                 <li>Connect</li>
