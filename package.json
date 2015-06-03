@@ -64,7 +64,7 @@
   },
   "scripts": {
     "test": "gulp lint test-coveralls",
-    "start": "rm static/bundle.js; node src/server/index.js",
+    "start": "node src/server/index.js",
     "postinstall": "gulp bundle && linklocal"
   },
   "repository": {

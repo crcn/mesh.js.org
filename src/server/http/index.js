@@ -21,15 +21,18 @@ module.exports = function(app) {
   console.log(config.get("directories.static"));
 
   server.use(express.static(config.get("directories.static")));
-  server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
-    extensions: [".jsx"],
-    debug: prod,
-    cache: prod,
-    precompile: prod,
-    minify: prod,
-    gzip: true,
-    transform: [["reactify", { global: true }], ["brfs", { global: true }]]
-  }));
+
+  if (!prod) {
+    server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
+      extensions: [".jsx"],
+      debug: true,
+      cache: false,
+      precompile: false,
+      minify: false,
+      gzip: true,
+      transform: [["reactify", { global: true }], ["brfs", { global: true }]]
+    }));
+  }
 
   less(app, server);
 

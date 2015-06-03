@@ -15,7 +15,7 @@ module.exports = React.createClass({
                 this.props.state.docs.map(function(category) {
                   return <li className="category">
                     <span className="category-title">{category.value}</span>
-                    <ul className="sub-category">
+                    <ul className="sub-categories">
                       {
                         category.children.map(function(category) {
                           return <li>{category.value}</li>;
@@ -28,11 +28,7 @@ module.exports = React.createClass({
             </ul>
           </div>
           <div className="col-sm-10 docs">
-            {
-              Array.apply(null, new Array(100)).map(function() {
-                return <div>fdfsfsd<br /></div>;
-              })
-            }
+            
           </div>
         </div>
       </div>

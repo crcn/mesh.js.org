@@ -20,7 +20,19 @@ module.exports = function(app) {
           children: [
             {
               type: "h1",
-              value: "test"
+              value: "bus accept(condition, bus[, ebus])"
+            },
+            {
+              type: "h1",
+              value: "bus reject(condition, bus[, ebus])"
+            },
+            {
+              type: "h1",
+              value: "bus accept(properties, bus)"
+            },
+            {
+              type: "h1",
+              value: "bus parallel([...busses])"
             }
           ]
         },
