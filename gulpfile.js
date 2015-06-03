@@ -74,6 +74,7 @@ gulp.task("bundle", function() {
     global: true
   });
   b.transform({global:true}, 'reactify');
+  b.transform({ global: true}, 'brfs')
   return b.bundle().
   pipe(source('bundle.js')).
   pipe(buffer()).

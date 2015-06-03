@@ -1,0 +1,44 @@
+start
+  = Children
+
+Children
+  = children:(Header/Text)* {
+    return children
+  }
+
+Header
+  = hashes:("#")+ _ (!(EOL) value:SourceCharacter)+ {
+    return ["h" + hashes.length, value.join("")];
+  }
+
+Text
+  = value:TextCharacter+ {
+    return ["text", value.join("")];
+  }
+
+
+TextCharacter
+  = !("<") SourceCharacter {
+      return text();
+    }
+
+
+SourceCharacter
+  = .
+
+Word
+  = chars:[a-zA-Z]+ { return chars.join(""); }
+
+_
+  = [ \n\r\t]*
+
+
+_n
+  = [\n\r]
+
+
+EOL
+  = (_n/EOF)
+
+EOF
+  = !.
