@@ -30,6 +30,7 @@ module.exports = function(app) {
           children: [
             {
               type: "example",
+              value: "basic example",
               description: "basic example",
               files: [{ path: "/index.js", content: "var a;" }]
             }

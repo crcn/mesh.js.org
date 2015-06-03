@@ -19,7 +19,7 @@ module.exports = function(app) {
   var prod = process.env.NODE_ENV === "production";
 
   console.log(config.get("directories.static"));
-  
+
   server.use(express.static(config.get("directories.static")));
   server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
     extensions: [".jsx"],
@@ -62,7 +62,14 @@ module.exports = function(app) {
       path = path.replace(".json", "");
     }
 
-    app.router.redirect(path);
+    try {
+      app.router.redirect(path);
+    } catch(e) {
+
+      // 404
+      return next();
+    }
+
     var state = app.router.location.state;
 
     if (json) return res.send(state);
