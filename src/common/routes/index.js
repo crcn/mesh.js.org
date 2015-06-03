@@ -12,7 +12,30 @@ module.exports = function(app) {
     location.set("state", {
       pages: {
         body: "docs"
-      }
+      },
+      docs: [
+        {
+          type: "category",
+          value: "api",
+          children: [
+            {
+              type: "h1",
+              value: "test"
+            }
+          ]
+        },
+        {
+          type: "category",
+          value: "examples",
+          children: [
+            {
+              type: "example",
+              description: "basic example",
+              files: [{ path: "/index.js", content: "var a;" }]
+            }
+          ]
+        }
+      ]
     });
   });
 

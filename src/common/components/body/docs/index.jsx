@@ -10,6 +10,22 @@ module.exports = React.createClass({
         </div>
         <div className="row main">
           <div className="col-sm-2 sidebar">
+            <ul>
+              {
+                this.props.state.docs.map(function(category) {
+                  return <li className="category">
+                    <span>{category.value}</span>
+                    <ul className="sub-category">
+                      {
+                        category.children.map(function(category) {
+                          return <li>{category.value}</li>;
+                        })
+                      }
+                    </ul>
+                  </li>;
+                })
+              }
+            </ul>
           </div>
           <div className="col-sm-10 docs">
             {

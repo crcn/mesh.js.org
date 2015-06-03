@@ -179,7 +179,7 @@ module.exports = caplet.createModelClass({
 
   getRoute: function(aliasOrPathname) {
 
-    for (var i = this._routes.length; i--;) {
+    for (var i = 0, n = this._routes.length; i < n; i++) {
       var route = this._routes[i];
       if (route.test(aliasOrPathname)) return route;
     }
