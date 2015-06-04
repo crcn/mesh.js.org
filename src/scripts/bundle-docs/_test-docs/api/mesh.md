@@ -4,3 +4,7 @@
 #### reject(condition, bus[, ebus])
 #### parallel([...busses])
 #### race([...busses])
+
+
+<Example>
+</Example>

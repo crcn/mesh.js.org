@@ -1,41 +1,191 @@
+{
+  function trim(text) {
+    return text.replace(/(^\s+)|(\s+$)/g, "");
+  }
+}
+
 start
   = Children
 
 Children
-  = children:(Header/Text)* {
-    return children
+  = _ children:Child* _ {
+    return children;
+  }
+
+Child
+  = (Comment/Script/Element/Emphasis/Header/HorizontalRule/BlockQuote/List/Link/Image/Text)
+
+Emphasis
+  = (Code/Strong/Italic)
+
+Code
+  = "`" chars:CodeCharacter+ "`" {
+    return ["element", "code", [], [["text", text()]]];
+  }
+
+CodeCharacter
+  = !("`") char:InlineCharacter {
+    return text();
+  }
+
+Strong
+  = "**" chars:StrongCharacter+ "**" {
+    return ["element", "strong", [], [["text", text()]]];
+  }
+
+StrongCharacter
+  = !("**") char:InlineCharacter {
+    return text();
+  }
+
+Italic
+  = "*" chars:ItalicCharacter+ "*" {
+    return ["element", "em", [], [["text", text()]]];
+  }
+
+ItalicCharacter
+  = !("*") char:InlineCharacter {
+    return text();
+  }
+
+Comment
+  = "<!--" _ text:CommentCharacter+ _ "-->" {
+    return ["comment", trim(text.join(""))];
+  }
+
+Element
+  = ElementWithoutChildren/ElementWithChildren
+
+ElementWithChildren
+  = "<" startName:Name attributes:Attribute* ">" children:Children "</" endName:Name ">" {
+
+    if (endName && startName != endName) {
+      expected("</" + endName + ">");
+    }
+
+    return ["element", startName, attributes, children];
+  }
+
+ElementWithoutChildren
+  = "<" startName:Name attributes:Attribute* "/>" {
+    return ["element", startName, attributes, []];
+  }
+
+Script
+  = "<Script" attributes:Attribute* ">" chars:ScriptCharacter* "</Script>" {
+    return ["element", "Script", attributes, [["text", chars.join("")]]];
+  }
+
+ScriptCharacter
+  = !("</Script>") char:SourceCharacter {
+    return text();
+  }
+
+Attribute
+  = _ key:Name "=" value:String _ {
+    return ["attribute", key, value[1]];
+  }
+
+String
+  = "\"" chars:DoubleQuoteCharacter+ "\"" {
+    return ["text", chars.join("")];
+  }
+
+DoubleQuoteCharacter
+  = !("\"") char:SourceCharacter {
+    return char;
+  }
+
+CommentCharacter
+  = !("-->") text:SourceCharacter {
+    return text;
+  }
+
+MultilineChildren
+= child:Child nextChildren:(_n _t Child)* {
+  return [child].concat(nextChildren.map(function(expression) {
+    return expression[2];
+  }));
+}
+
+Link
+  = "[" label:[^\]]+ "](" href:[^)]+ ")" {
+    return ["element","a", [["attribute", "href", trim(href.join(""))]], [["text", trim(label.join(""))]]];
+  }
+
+
+Image
+  = "![" alt:[^\]]+ "](" src:[^)]+ ")" {
+    return ["element","img", [["attribute", "alt", trim(alt.join(""))], ["attribute", "src", trim(src.join(""))]], []];
+  }
+
+HorizontalRule
+  = Dash Dash Dash Dash* EOL {
+    return ["element", "hr", [], []];
+  }
+
+BlockQuote
+  = ">" _ children:MultilineChildren EOL {
+    return ["blockquote", children];
   }
 
 Header
-  = hashes:("#")+ _ (!(EOL) value:SourceCharacter)+ {
-    return ["h" + hashes.length, value.join("")];
+  = hashes:("#")+ children:MultilineChildren EOL {
+    return ["element", "h" + hashes.length, [], children];
+  }
+
+List
+  = listItems:ListItem+  {
+    return ["element", "ul", [], listItems];
+  }
+
+ListItem
+  = Dash children:MultilineChildren EOL {
+    return ["element", "li", [], children];
+  }
+
+Dash
+  = ("-"/"*")
+
+MultilineText
+  = text:Text nextLines:(_n _t Text)* {
+    return ["text", [text[1]].concat(nextLines.map(function(expression) {
+      return expression[2][1];
+    })).join(" ")];
   }
 
 Text
   = value:TextCharacter+ {
-    return ["text", value.join("")];
+    return ["text", trim(value.join(""))];
   }
 
-
 TextCharacter
-  = !("<") SourceCharacter {
-      return text();
-    }
-
+  = !(Image/Link/Emphasis/"<") value:InlineCharacter {
+    return value;
+  }
 
 SourceCharacter
   = .
 
+InlineCharacter
+  = [^\n\r]
+
 Word
   = chars:[a-zA-Z]+ { return chars.join(""); }
 
+Name
+  = chars:[a-zA-Z0-9-]+ { return chars.join(""); }
 _
   = [ \n\r\t]*
 
+_s
+  = [ ]*
+
+_t
+  = [\t]
 
 _n
   = [\n\r]
-
 
 EOL
   = (_n/EOF)
