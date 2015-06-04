@@ -9,14 +9,15 @@ exports.transpile = function(source, options) {
   return _transpile(parser.parse(source));
 }
 
-function _traverse(expr, iterator) {
-  iterator(expr);
-  expr.forEach(function(expr) {
-    if (typeof expr === "object") _traverse(expr, iterator);
+function _traverse(expr, iterator, parent) {
+  iterator(expr, parent);
+  expr.forEach(function(child) {
+    if (typeof child === "object") _traverse(child, iterator, expr);
   });
 }
 
 function _transpile(expr) {
+  // _trim(expr);
   var buffer = "var React = require('react');" +
   "module.exports = "         + _component(expr) +
   "module.exports.headers = " + _headers(expr);
@@ -40,7 +41,7 @@ function _headers(expr) {
     }
   });
 
-  return JSON.stringify(headers);
+  return JSON.stringify(headers) + ";";
 }
 
 function _component(expr) {
@@ -58,7 +59,7 @@ function _nodes(expr) {
 function _node(expr) {
   return {
     element: _element,
-    text   : _text
+    text   : _p
   }[expr[0]](expr);
 }
 
@@ -120,6 +121,14 @@ function _file(filePath, entry) {
   };
 }
 
+function _plainText(expr) {
+  var strings = [];
+  _traverse(expr, function(expr) {
+    if (expr[0] === "text") strings.push(expr[1]);
+  });
+  return strings.join(" ");
+}
+
 function _basicElement(expr) {
   var isRegisteredComponent = _isUpperCase(expr[1].charAt(0));
 
@@ -127,7 +136,16 @@ function _basicElement(expr) {
 
   buffer += ", ";
 
-  var attrBuffer = "{" + expr[2].map(_attribute).join(", ") + "}";
+  var attrBuffer = "{" + expr[2].map(_attribute).join(", ");
+
+  // attach an ID
+  if (/h[1-4]/.test(expr[1])) {
+    if (attrBuffer !== "{") attrBuffer += ", ";
+    var id = _plainText(expr[3]).replace(/\s/g,"-").replace(/[^a-zA-Z0-9-_]/g,"");
+    attrBuffer += _attribute(["attribute", "id", id]);
+  }
+
+  attrBuffer += "}";
 
   if (isRegisteredComponent) {
     // TODO - es6 not in yet
@@ -153,6 +171,11 @@ function _attribute(expr) {
 
 function _text(expr) {
   return "'" + expr[1] + "'";
+}
+
+function _p(expr) {
+  // return "<p>" + expr[1] + "</p>";
+  return "React.createElement('p', void 0, '" + expr[1] + "')"
 }
 
 function _isUpperCase(string) {

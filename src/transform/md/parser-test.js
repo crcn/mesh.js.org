@@ -48,6 +48,14 @@ describe(__filename + "#", function() {
       expect(ast[1][0]).to.be("text");
       expect(ast[1][1]).to.be("text");
     });
+
+    it("can parse a header and another header", function() {
+      var ast = parser.parse("#### h4 \n\n### h3");
+      expect(ast[0][1]).to.be("h4");
+      expect(ast[0][3][0][1]).to.be("h4");
+      expect(ast[1][0]).to.be("element");
+      expect(ast[1][1]).to.be("h3");
+    });
   });
 
   describe("blockquotes", function() {

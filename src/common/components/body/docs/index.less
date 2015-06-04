@@ -13,6 +13,7 @@
     background-color: @blue-dark;
     height: 100%;
     padding: 0px;
+    overflow: scroll;
 
     & ul {
       list-style-type: none;
@@ -24,20 +25,18 @@
 
       & li.category {
         font-size: 14px;
-        & .category-title {
-          text-transform: capitalize;
-          display: block;
-          margin-top: 7px;
-          background-color: @blue-darker;
-          padding: 8px 16px;
-        }
+        text-transform: capitalize;
+        display: block;
+        margin-top: 7px;
+        background-color: @blue-darker;
+        padding: 8px 16px;
+      }
 
-        & .sub-categories {
-          font-size: 12px;
-          padding-top: 7px;
-          padding-left: 16px;
-          line-height: 30px;
-        }
+      & li.sub-category {
+        font-size: 12px;
+        padding-top: 7px;
+        padding-left: 16px;
+        line-height: 30px;
       }
     }
   }
@@ -45,6 +44,13 @@
   & .docs {
     height: 100%;
     overflow-y: scroll;
+
+    & h4 {
+      padding: 15px;
+      background-color: @blue-dark;
+      color: white;
+      border-left: 3px solid @blue-darker;
+    }
   }
 
 }

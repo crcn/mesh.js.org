@@ -5,12 +5,14 @@ var plumber     = require("gulp-plumber");
 var jshint      = require("gulp-jshint");
 var browserify  = require("browserify");
 var uglify      = require("gulp-uglify");
+var watchify    = require("watchify");
 var source      = require("vinyl-source-stream");
 var buffer      = require("vinyl-buffer");
 var jscs        = require("gulp-jscs");
 var coveralls   = require("gulp-coveralls");
 var rename      = require("gulp-rename");
 var browserSync = require("browser-sync");
+var extend      = require("xtend/mutable");
 var options     = require("yargs").argv;
 
 var pkg = require("./package");
@@ -68,18 +70,38 @@ gulp.task("test-coveralls", ["test-coverage"], function () {
  * TODO - add all bundling scripts here - docs, css, js
  */
 
-gulp.task("bundle", function() {
-  var b = browserify("./src/browser/index.js", {
-    extensions: [".jsx"],
-    global: true
-  });
-  b.transform({global:true}, 'reactify');
-  b.transform({ global: true}, 'brfs')
-  return b.bundle().
-  pipe(source('bundle.js')).
-  pipe(buffer()).
-  pipe(uglify()).
-  pipe(gulp.dest('./static'));
+
+var _bundle;
+
+gulp.task("bundle", function(complete) {
+
+  setTimeout(function() {
+
+    if (!_bundle) {
+
+      var b = _bundle = browserify("./src/browser/index.js", extend({}, watchify.args, {
+        extensions: [".jsx", ".md"],
+        global: true
+      }));
+
+      b = watchify(b);
+
+
+      b.transform({ global:true  }, 'reactify');
+      b.transform({ global: true }, require("./src/transform/md"));
+      b.transform({ global: true }, 'brfs');
+
+    }
+
+    _bundle.
+    bundle().
+    pipe(source('bundle.js')).
+    pipe(buffer()).
+    // pipe(uglify()).
+    pipe(gulp.dest('./static')).
+    once("end", complete);
+
+  }, 500);
 });
 
 /**

@@ -24,13 +24,17 @@ module.exports = function(app) {
 
   if (!prod) {
     server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
-      extensions: [".jsx"],
+      extensions: [".jsx", ".md"],
       debug: true,
       cache: false,
       precompile: false,
       minify: false,
       gzip: true,
-      transform: [["reactify", { global: true }], ["brfs", { global: true }]]
+      transform: [
+        ["reactify", { global: true }],
+        [require("../../transform/md"), { global: true }]
+        ["brfs", { global: true }]
+      ]
     }));
   }
 

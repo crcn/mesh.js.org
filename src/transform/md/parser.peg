@@ -2,6 +2,12 @@
   function trim(text) {
     return text.replace(/(^\s+)|(\s+$)/g, "");
   }
+
+  function trimEmptyText(children) {
+    return children.filter(function(child) {
+      return child[0] !== "text" || child[1] !== "";
+    });
+  }
 }
 
 start
@@ -9,11 +15,16 @@ start
 
 Children
   = _ children:Child* _ {
-    return children;
+    return trimEmptyText(children);
   }
 
 Child
-  = (Comment/Script/Element/Emphasis/Header/HorizontalRule/BlockQuote/List/Link/Image/Text)
+  = child:(Comment/Script/Element/Emphasis/Header/HorizontalRule/BlockQuote/List/Link/Image/Text/WS) {
+    return child;
+  }
+
+WS
+  = [ \n\t\r] { return ["text", ""] };
 
 Emphasis
   = (Code/Strong/Italic)
@@ -72,7 +83,7 @@ ElementWithoutChildren
   }
 
 Script
-  = "<Script" attributes:Attribute* ">" chars:ScriptCharacter* "</Script>" {
+  = "<Script" attributes:Attribute* ">" _ chars:ScriptCharacter* _ "</Script>" {
     return ["element", "Script", attributes, [["text", chars.join("")]]];
   }
 
@@ -130,7 +141,7 @@ BlockQuote
   }
 
 Header
-  = hashes:("#")+ children:MultilineChildren EOL {
+  = _ hashes:("#")+ children:MultilineChildren EOL {
     return ["element", "h" + hashes.length, [], children];
   }
 
@@ -155,7 +166,7 @@ MultilineText
   }
 
 Text
-  = value:TextCharacter+ {
+  = _ value:TextCharacter+ {
     return ["text", trim(value.join(""))];
   }
 
