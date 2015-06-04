@@ -9,11 +9,38 @@ exports.transpile = function(source, options) {
   return _transpile(parser.parse(source));
 }
 
+function _traverse(expr, iterator) {
+  iterator(expr);
+  expr.forEach(function(expr) {
+    if (typeof expr === "object") _traverse(expr, iterator);
+  });
+}
+
 function _transpile(expr) {
   var buffer = "var React = require('react');" +
-  "module.exports = " + _component(expr);
-  // attach props here
+  "module.exports = "         + _component(expr) +
+  "module.exports.headers = " + _headers(expr);
   return buffer;
+}
+
+function _headers(expr) {
+
+  var headers = {
+    h1: [],
+    h2: [],
+    h3: [],
+    h4: []
+  };
+
+  _traverse(expr, function(expr) {
+
+    var collection;
+    if (expr[0] === "element" && (collection = headers[expr[1]])) {
+      collection.push(expr[3][0][1]);
+    }
+  });
+
+  return JSON.stringify(headers);
 }
 
 function _component(expr) {
@@ -21,7 +48,7 @@ function _component(expr) {
     "render:function() {"  +
       "return " + _nodes(expr) +
     "}" +
-  "})";
+  "});";
 }
 
 function _nodes(expr) {

@@ -92,6 +92,7 @@ describe(__filename + "#", function() {
   });
 
   it("attaches h4s as headings", function() {
-    var Component = _compile("#### h4");
+    var Component = _compile("#### some header");
+    expect(Component.headers.h4[0]).to.be("some header");
   });
 });
