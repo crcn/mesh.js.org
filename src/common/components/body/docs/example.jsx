@@ -1,4 +1,4 @@
-var React = require("React");
+var React = require("react");
 var IDE   = require("common/components/ide");
 
 module.exports = React.createClass({
