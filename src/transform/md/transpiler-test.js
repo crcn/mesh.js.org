@@ -24,9 +24,9 @@ describe(__filename + "#", function() {
   });
 
   it("can transpile text to a react component", function() {
-    var component = React.createElement(_compile("some text"));
+    var component = React.createElement(_compile("some text's"));
     React.render(component, div);
-    expect(div.innerHTML).to.contain("some text");
+    expect(div.innerHTML).to.contain("some text's");
   });
 
   it("can render a registered component", function() {

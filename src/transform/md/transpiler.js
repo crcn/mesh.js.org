@@ -113,20 +113,20 @@ function _exampleElement(expr) {
 
       var content = child[3][0][1];
 
-      var ast = uglify.parse(content, {
-      });
-
-
-      var stream = uglify.OutputStream({ beautify: true });
-      ast.print(stream);
-      var code = stream.toString(); // this is your minified code
+      // var ast = uglify.parse(content, {
+      // });
+      //
+      //
+      // var stream = uglify.OutputStream({ beautify: true });
+      // ast.print(stream);
+      // var code = stream.toString(); // this is your minified code
 
 
       files.push({
         path: child[2].filter(function(attr) {
           return attr[1] === "path";
         }).shift()[2],
-        content: code
+        content: content
       });
     }
   });
@@ -194,7 +194,7 @@ function _attribute(expr) {
 }
 
 function _text(expr) {
-  return "'" + expr[1] + "'";
+  return "'" + expr[1].replace(/'/g,"\\'") + "'";
 }
 
 function _p(expr) {
