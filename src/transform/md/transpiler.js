@@ -1,6 +1,7 @@
 var parser = require("./parser");
 var path   = require("path");
 var fs     = require("fs");
+var uglify = require("uglify-js");
 
 var currentOptions = {};
 
@@ -97,11 +98,23 @@ function _exampleElement(expr) {
 
   expr[3].forEach(function(child) {
     if (child[1] === "Script") {
+
+      var content = child[3][0][1];
+
+      var ast = uglify.parse(content, {
+      });
+
+
+      var stream = uglify.OutputStream({ beautify: true });
+      ast.print(stream);
+      var code = stream.toString(); // this is your minified code
+
+
       files.push({
         path: child[2].filter(function(attr) {
           return attr[1] === "path";
         }).shift()[2],
-        content: child[3][0][1]
+        content: code
       });
     }
   });

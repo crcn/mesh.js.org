@@ -3,6 +3,6 @@ var IDE   = require("common/components/ide");
 
 module.exports = React.createClass({
   render: function() {
-    return <IDE source={this.props.files[0].content} />;
+    return <IDE className="example" source={this.props.files[0].content} />;
   }
 });

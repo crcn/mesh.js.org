@@ -1,6 +1,5 @@
 var express    = require("express");
 var Body       = require("common/components/body");
-var browserify = require("browserify-middleware");
 var React      = require("react");
 var mesh       = require("mesh");
 var path       = require("path");
@@ -21,22 +20,6 @@ module.exports = function(app) {
   console.log(config.get("directories.static"));
 
   server.use(express.static(config.get("directories.static")));
-
-  if (!prod) {
-    server.use("/bundle.js", browserify(path.join(__dirname, "../../browser/index.js"), {
-      extensions: [".jsx", ".md"],
-      debug: true,
-      cache: false,
-      precompile: false,
-      minify: false,
-      gzip: true,
-      transform: [
-        ["reactify", { global: true }],
-        [require("../../transform/md"), { global: true }]
-        ["brfs", { global: true }]
-      ]
-    }));
-  }
 
   less(app, server);
 

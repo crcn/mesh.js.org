@@ -61,6 +61,7 @@
     "pegjs": "^0.8.0",
     "sinon": "^1.14.1",
     "through2": "^0.6.5",
+    "uglify-js": "^2.4.23",
     "vinyl-buffer": "^1.0.0",
     "vinyl-source-stream": "^1.1.0",
     "watchify": "^3.2.1",
