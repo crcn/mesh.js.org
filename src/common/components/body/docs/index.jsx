@@ -7,9 +7,10 @@ var Link       = require("../../link");
 // modules
 // architecture
 var docs = {
-  api      : require("./api.md"),
-  examples : require("./examples.md"),
-  snippets : require("./snippets.md")
+  api          : require("./api.md"),
+  examples     : require("./examples.md"),
+  snippets     : require("./snippets.md"),
+  architecture : require("./architecture.md")
 };
 
 var components = {
