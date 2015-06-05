@@ -420,6 +420,25 @@ bus({ name: "some command" }).on("error", function(error) {
 </Script>
 </Example>
 
+#### bus yields(error, data)
+
+Yields data. Useful for testing.
+
+<Example>
+  <Script path="index.js">  
+var mesh = require("mesh");
+
+var bus = mesh.yields(void 0, ["chunk 1", "chunk 2"]);
+
+bus({ name: "do something"}).on("data", function(data) {
+  console.log("data: ", data);
+}).on("end", function() {
+  console.log("end operation");
+});
+  </Script>
+</Example>
+
+
 
 #### bus noop
 
