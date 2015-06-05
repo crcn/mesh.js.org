@@ -13,7 +13,7 @@ module.exports = React.createClass({
         <Link alias="docs" {...this.props}>
           Documentation
         </Link>
-        <Link alias="examples" {...this.props}>
+        <Link alias="docsCategory" category="examples" {...this.props}>
           Examples
         </Link>
         <a href="https://groups.google.com/forum/#!forum/meshjs">
