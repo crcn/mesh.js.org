@@ -149,7 +149,7 @@ bus(mesh.op("doSomethingElse"));
   </Script>
 </Example>
 
-#### bus stream.tailable(bus[, condition])
+#### bus tailable(bus[, condition])
 
 Makes a bus tailable for operations.
 
