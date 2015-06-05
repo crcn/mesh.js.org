@@ -51,7 +51,7 @@ module.exports = React.createClass({
           <Navigation {...this.props} />
 
           <div className="hook">
-            <p>A featherlight data flow JavaScript library for creating powerful applications</p>
+            <p>A featherlight data flow library for creating powerful applications</p>
             <div className="install-command">
               npm install mesh --save
             </div>
