@@ -22,7 +22,7 @@ module.exports = React.createClass({
   },
   render: function() {
     if (this.state.loading) {
-      return <div className="ide-preview-loading">loading...</div>;
+      return <div className="ide-preview-loading">browserifying...</div>;
     }
     return <div className="ide-preview">
       <ul className="logs">

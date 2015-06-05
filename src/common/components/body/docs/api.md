@@ -448,7 +448,8 @@ No operation bus
 <Example>
   <Script path="index.js">  
 
-var mesh = require("mesh");
+var mesh    = require("mesh");
+var memoize = require("memoizee");
 
 var bus = mesh.noop;
 
@@ -460,3 +461,163 @@ bus({ name: "some command" }).on("data", function(data) {
 
   </Script>
 </Example>
+
+#### bus wait(waitFn, bus)
+
+Waits for `waitFn` to execute before passing operations to `bus`.
+
+
+<Example>
+  <Script path="index.js">  
+
+var mesh    = require("mesh@2.0.3");
+var extend  = require("extend");
+var sift    = require("sift");
+var _       = require("highland");
+var memoize = require("memoizee");
+
+// fake data
+var fixtures = {
+  chains: [
+    {
+      id: "chain1",
+      nextChainId: "chain2"
+    },
+    {
+      id: "chain2",
+      nextChainId: "chain3"
+    },
+    {
+      id: "chain3",
+      nextChainId: "chain4"
+    },
+    {
+      id: "chain4"
+    }
+  ]
+};
+
+// fake data source handler
+var bus = mesh.accept("load", mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+
+  var foundItems = sift(operation.query, fixtures[operation.collection]);
+  if (!foundItems.length) return next(new Error("not found"));
+
+  // simulate network latency
+  setTimeout(next, 500, void 0, foundItems[0]);
+}));
+
+/**
+ * Base model
+ */
+
+function Base(properties) {
+  extend(this, properties);
+
+  // memoize load so it can only be called once
+  var load = memoize(this.reload.bind(this), {
+    async: true
+  });
+
+  // set the load function and return self
+  this.load = function(onLoad) {
+    load(onLoad);
+    return this;
+  }
+}
+
+/**
+ */
+
+extend(Base.prototype, {
+
+  /**
+   * reloads the model from a data source
+   */
+
+  reload: function(onLoad) {
+    if (!onLoad) onLoad = function() { };
+    this
+    .bus({ name: "load" })
+    .on("data", this.onData.bind(this))
+    .once("error", onLoad)
+    .once("end", onLoad.bind(this, void 0, this));
+  },
+
+  /**
+   * set data from the data source as properties
+   * of this model
+   */
+
+  onData: function(data) {
+    extend(this, data);
+  }
+});
+
+/**
+ * Chain model example demonstrating how you
+ * can asynchronously load resources without callbacks
+ */
+
+function Chain(properties) {
+  Base.call(this, properties);
+}
+
+/**
+ * extend the base model
+ */
+
+extend(Chain.prototype, Base.prototype, {
+
+  /**
+   * Get the next chain model
+   */
+
+  getNext: function(onLoad) {
+
+     // return the next chain model immediately, but
+     // wait until THIS model has loaded.
+     return new Chain({
+
+      // wait for this model to load, then attach the proper
+      // query params to the operation so that this model
+      // can load itself
+      bus: mesh.wait(this.load, mesh.attach(function() {
+        return {
+          query: { id: this.nextChainId }
+        };
+      }.bind(this), this.bus))
+    }).load(onLoad);
+  }
+});
+
+// setup the new chain & attach default props that load
+// this chain in
+var chain = new Chain({
+  bus : mesh.attach({ collection: "chains", query: { id: "chain1" } }, bus)
+});
+
+function onChainLoad(err, chain) {
+  if (err) {
+    console.log("error: ", err.message);
+  } else {
+    console.log("loaded chain: ", chain);
+  }
+}
+
+// synchronously get a bunch of chains
+chain
+.load(onChainLoad)
+.getNext(onChainLoad)
+.getNext(onChainLoad)
+.getNext(onChainLoad)
+.getNext(onChainLoad);
+
+
+  </Script>
+</Example>
+
+#### bus timeout(ms, bus)
+
+#### bus retry(count, bus)
