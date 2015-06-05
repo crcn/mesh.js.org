@@ -18,10 +18,21 @@ Children
     return trimEmptyText(children);
   }
 
+MultilineChildren
+= child:InlineChild nextChildren:(_n _t InlineChild)* {
+  return [child].concat(nextChildren.map(function(expression) {
+    return expression[2];
+  }));
+}
+
+InlineElement
+  = (Image/Link/Emphasis/List)
+
+InlineChild
+  = (InlineElement/Text)
+
 Child
-  = child:(Comment/Script/Element/Emphasis/Header/HorizontalRule/BlockQuote/List/Link/Image/Text/WS) {
-    return child;
-  }
+  = (Comment/Script/Element/Header/HorizontalRule/BlockQuote/InlineElement/Paragraph/WS)
 
 WS
   = [ \n\t\r] { return ["text", ""] };
@@ -31,7 +42,7 @@ Emphasis
 
 Code
   = "`" chars:CodeCharacter+ "`" {
-    return ["element", "code", [], [["text", text()]]];
+    return ["element", "code", [], [["text", chars.join("")]]];
   }
 
 CodeCharacter
@@ -41,7 +52,7 @@ CodeCharacter
 
 Strong
   = "**" chars:StrongCharacter+ "**" {
-    return ["element", "strong", [], [["text", text()]]];
+    return ["element", "strong", [], [["text", chars.join("")]]];
   }
 
 StrongCharacter
@@ -51,7 +62,7 @@ StrongCharacter
 
 Italic
   = "*" chars:ItalicCharacter+ "*" {
-    return ["element", "em", [], [["text", text()]]];
+    return ["element", "em", [], [["text", chars.join("")]]];
   }
 
 ItalicCharacter
@@ -112,12 +123,6 @@ CommentCharacter
     return text;
   }
 
-MultilineChildren
-= child:Child nextChildren:(_n _t Child)* {
-  return [child].concat(nextChildren.map(function(expression) {
-    return expression[2];
-  }));
-}
 
 Link
   = "[" label:[^\]]+ "](" href:[^)]+ ")" {
@@ -168,6 +173,11 @@ MultilineText
 Text
   = _ value:TextCharacter+ {
     return ["text", trim(value.join(""))];
+  }
+
+Paragraph
+  = children:InlineChild+ {
+    return ["element", "p", [], children];
   }
 
 TextCharacter

@@ -9,7 +9,7 @@ describe(__filename + "#", function() {
 
   it("can add a route", function() {
     var r = new Router();
-    r.addRoute("home", "/home");
+    r.addRoute("home", "/home", function() {});
   });
 
   it("can can redirect to a route by the alias", function() {
@@ -27,8 +27,8 @@ describe(__filename + "#", function() {
   it("can redirect to a route with params", function() {
     var i = 0;
     var r = new Router();
-    r.addRoute("a", "/a/:a");
-    r.addRoute("b", "/a/:b/:c");
+    r.addRoute("a", "/a/:a", function() {});
+    r.addRoute("b", "/a/:b/:c", function() {});
 
     r.redirect("a", { params: { a: "b" } });
     expect(r.location.pathname).to.be("/a/b");
@@ -38,7 +38,7 @@ describe(__filename + "#", function() {
 
   it("can properly sets the params on the new location", function() {
     var r = new Router();
-    r.addRoute("a", "/a/:b/c");
+    r.addRoute("a", "/a/:b/c", function() {});
     r.redirect("a", { params: { b: "d" }});
     expect(r.location.pathname).to.be("/a/d/c");
     expect(r.location.params.b).to.be("d");
@@ -46,7 +46,7 @@ describe(__filename + "#", function() {
 
   it("can stringify a pathname with query params", function() {
     var r = new Router();
-    r.addRoute("a", "/a/b/c");
+    r.addRoute("a", "/a/b/c", function() {});
     expect(r.getPath("a", {
       query: {
         d: "e"
@@ -56,7 +56,7 @@ describe(__filename + "#", function() {
 
   it("can redirect to a pathame with a query string", function() {
     var r = new Router();
-    r.addRoute("a", "/a");
+    r.addRoute("a", "/a", function() {});
     r.redirect("/a?b=c");
     expect(r.location.query.b).to.be("c");
     expect(r.location.pathname).to.be("/a");

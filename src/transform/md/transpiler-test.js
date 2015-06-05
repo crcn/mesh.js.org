@@ -93,11 +93,11 @@ describe(__filename + "#", function() {
 
   it("attaches h4s as headings", function() {
     var Component = _compile("#### some header");
-    expect(Component.headers.h4[0]).to.be("some header");
+    expect(Component.headers.h4[0].label).to.be("some header");
   });
 
   it("attaches IDs to headers", function() {
-    var component = React.createElement(_compile("#### accept(condition, bus[, ebus])"));
+    var component = React.createElement(_compile("### accept(condition, bus[, ebus])"));
     React.render(component, div);
     expect(div.innerHTML).to.contain("id=\"acceptcondition-bus-ebus\"");
   });

@@ -38,11 +38,19 @@ function _headers(expr) {
 
     var collection;
     if (expr[0] === "element" && (collection = headers[expr[1]])) {
-      collection.push(expr[3][0][1]);
+      collection.push({
+        label: expr[3][0][1],
+        id   : _getElementLink(expr)
+      });
     }
   });
 
   return JSON.stringify(headers) + ";";
+}
+
+
+function _getElementLink(expr) {
+  return _plainText(expr[3]).replace(/\s/g,"-").replace(/[^a-zA-Z0-9-_]/g,"");
 }
 
 function _component(expr) {
@@ -59,16 +67,21 @@ function _nodes(expr) {
 
 function _node(expr) {
   return {
-    element: _element,
-    text   : _p
+    element   : _element,
+    text      : _text
   }[expr[0]](expr);
 }
 
 function _element(expr) {
   return ({
     Example : _exampleElement,
-    Basic   : _basicElement
+    Basic   : _basicElement,
+    h4      : _apiElement
   }[expr[1]] || _basicElement)(expr);
+}
+
+function _apiElement(expr) {
+  return "React.createElement(this.props.components.H4, {id:'" + _getElementLink(expr) + "', state: this.props.state }, [" + expr[3].map(_node).join(",") + "])";
 }
 
 function _exampleElement(expr) {
@@ -78,7 +91,6 @@ function _exampleElement(expr) {
   var files = [];
 
   var attrs = expr[2];
-
 
   expr[2].forEach(function(attr) {
     if (attr[1] === "file") {
@@ -153,17 +165,16 @@ function _basicElement(expr) {
 
   // attach an ID
   if (/h[1-4]/.test(expr[1])) {
-    if (attrBuffer !== "{") attrBuffer += ", ";
-    var id = _plainText(expr[3]).replace(/\s/g,"-").replace(/[^a-zA-Z0-9-_]/g,"");
-    attrBuffer += _attribute(["attribute", "id", id]);
+    attrBuffer += _attribute(["attribute", "id", _getElementLink(expr)]);
   }
 
-  attrBuffer += "}";
 
   if (isRegisteredComponent) {
     // TODO - es6 not in yet
     // attrBuffer = "Object.assign({}, this.props, " + attrBuffer + ")";
   }
+
+  attrBuffer += "}";
 
   buffer += attrBuffer;
 

@@ -11,60 +11,31 @@ module.exports = function(app) {
   app.router.addRoute("docs", "/docs", function(location) {
     location.set("state", {
       pages: {
-        body: "docs"
-      },
-      docs: [
-        {
-          type: "category",
-          value: "api",
-          children: [
-            {
-              type: "h1",
-              value: "bus accept(condition, bus[, ebus])"
-            },
-            {
-              type: "h1",
-              value: "bus reject(condition, bus[, ebus])"
-            },
-            {
-              type: "h1",
-              value: "bus accept(properties, bus)"
-            },
-            {
-              type: "h1",
-              value: "bus parallel([...busses])"
-            }
-          ]
-        },
-        {
-          type: "category",
-          value: "examples",
-          children: [
-            {
-              type: "example",
-              value: "basic example",
-              description: "basic example",
-              files: [{ path: "/index.js", content: "var a;" }]
-            }
-          ]
-        }
-      ]
-    });
-  });
-
-  app.router.addRoute("examples", "/docs", function(location) {
-    location.set("state", {
-      pages: {
-        body: "docs"
+        body: "docs",
+        docs: "api"
       }
     });
   });
 
-  app.router.addRoute("snippets", "/docs", function(location) {
+  app.router.addRoute("docsCategory", "/docs/:category", function(location) {
     location.set("state", {
       pages: {
-        body: "docs"
+        body: "docs",
+        docs: location.params.category
       }
     });
   });
+
+  app.router.addRoute("docsSubcategory", "/docs/:category/:subcategory", function(location) {
+    location.set("state", {
+      pages: {
+        body: "docs",
+        docs: location.params.category,
+        category: location.params.subcategory
+      }
+    });
+  });
+
+  app.router.addRoute("examples", "/docs/examples");
+  app.router.addRoute("snippets", "/docs/snippets");
 }

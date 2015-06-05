@@ -9,6 +9,7 @@ module.exports = Base.extend({
     interceptAnchors(this);
   },
   load: function(state) {
+    this.router.bootstrap();
     this.renderBody(state);
   },
   renderBody: function(state) {

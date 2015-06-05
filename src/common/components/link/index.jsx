@@ -19,11 +19,8 @@ module.exports = React.createClass({
 
   render: function() {
 
-
     var href;
     var className = this.props.className ? this.props.className + " " : "";
-
-
 
     className += "rx-link ";
 
@@ -37,10 +34,12 @@ module.exports = React.createClass({
         query  : extend({}, location.query, this.props.query)
       });
 
+      var selected = this.props.selected != void 0 ? this.props.selected : !!~String(location.pathname).indexOf(path.replace(/\?.*/,""));
+
 
       // should also be selected for stuff like /app-callbacks & /app-callbacks/:guid
       className += cx({
-        selected  : this.props.selected != void 0 ? this.props.selected : !!~String(location.pathname).indexOf(path.replace(/\?.*/,""))
+        selected : selected
       });
 
       href = path;

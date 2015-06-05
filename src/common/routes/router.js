@@ -74,10 +74,8 @@ module.exports = caplet.createModelClass({
    */
 
   bootstrap: function() {
-
-    // redirect
     if (process.browser) {
-      this.redirect("/" + location.hash.replace("#", ""));
+      this.location.set("pathname", location.pathname);
     }
   },
 
@@ -92,8 +90,6 @@ module.exports = caplet.createModelClass({
       }.bind(this));
     }
 
-    if (!handler) handler = function() { };
-
     // convert something like /home/:id/path to /home/(\w+)/
     var pathTester = new RegExp("^" + pathname.replace(/(:[^\/]+)/g, "([^\/]+)") + "$");
     var paramNames = pathname.split("/").filter(function(path) {
@@ -104,6 +100,7 @@ module.exports = caplet.createModelClass({
 
     this._routes.push({
       alias: alias,
+      pathname: pathname,
       pathTester: pathTester,
       getPathname: function(aliasOrPathname, options) {
         if (!options) options = {};
@@ -111,7 +108,7 @@ module.exports = caplet.createModelClass({
         if (!options.params) options.params = {};
 
         // add params
-        if (aliasOrPathname !== alias) {
+        if (aliasOrPathname !== alias && aliasOrPathname.charAt(0) === "/") {
           aliasOrPathname.match(pathTester).slice(1).forEach(function(param, i) {
             _set(options.params, paramNames[i], param);
           });
@@ -181,7 +178,12 @@ module.exports = caplet.createModelClass({
 
     for (var i = 0, n = this._routes.length; i < n; i++) {
       var route = this._routes[i];
-      if (route.test(aliasOrPathname)) return route;
+      if (route.test(aliasOrPathname)) {
+        if (!route.handler) {
+          return this.getRoute(route.pathname);
+        }
+        return route;
+      }
     }
 
     throw new Error("route '" + aliasOrPathname + "' does not exist.");
