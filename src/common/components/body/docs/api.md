@@ -22,6 +22,56 @@ bus({ name: "doSomething" }).on("end", function() {
   </Script>
 </Example>
 
+
+#### bus wrap(handler)
+
+Wraps a function as a bus
+
+<Example>
+  <Script path="index.js">  
+var mesh = require("mesh");
+var bus = mesh.wrap(function(operation, next) {
+  if (operation.returnError) {
+    next(new Error("Whoops! Something went wrong"));
+  } else {
+    next(void 0, "some returned data");
+  }
+});
+
+bus({ returnError: true }).on("error", function(error) {
+  console.log("error: ", error.message);
+});
+
+bus({ }).on("data", function(data) {
+  console.log("data: ", data);
+});
+</Script>
+</Example>
+
+#### bus stream(handler)
+
+Passes a [stream](https://nodejs.org/api/stream.html) to target handler.
+
+<Example>
+  <Script path="index.js">  
+
+var mesh = require("mesh");
+
+var bus = mesh.stream(function(operation, stream) {
+  stream.write({ id: "user1" });
+  stream.write({ id: "user2" });
+  stream.end();
+});
+
+bus({}).on("data", function(data) {
+  console.log("data: ", data);
+}).on("end", function() {
+  console.log("END");
+});
+
+</Script>
+</Example>
+
 #### bus attach(props, bus)
 
 Adds properties to a running `operation`. `props` can be a `function`, or an `object`.
@@ -264,55 +314,6 @@ bus(mesh.op("do something")).on("data", function(message) {
 </Script>
 </Example>
 
-#### bus wrap(handler)
-
-Wraps a function as a bus
-
-<Example>
-  <Script path="index.js">  
-var mesh = require("mesh");
-var bus = mesh.wrap(function(operation, next) {
-  if (operation.returnError) {
-    next(new Error("Whoops! Something went wrong"));
-  } else {
-    next(void 0, "some returned data");
-  }
-});
-
-bus({ returnError: true }).on("error", function(error) {
-  console.log("error: ", error.message);
-});
-
-bus({ }).on("data", function(data) {
-  console.log("data: ", data);
-});
-</Script>
-</Example>
-
-#### bus stream(handler)
-
-Passes a [stream](https://nodejs.org/api/stream.html) to target handler.
-
-<Example>
-  <Script path="index.js">  
-
-var mesh = require("mesh");
-
-var bus = mesh.stream(function(operation, stream) {
-  stream.write({ id: "user1" });
-  stream.write({ id: "user2" });
-  stream.end();
-});
-
-bus({}).on("data", function(data) {
-  console.log("data: ", data);
-}).on("end", function() {
-  console.log("END");
-});
-
-</Script>
-</Example>
-
 #### bus limit(count, bus)
 
 Limits the number of concurrent operations.
@@ -340,8 +341,103 @@ bus({ name: "remove" });
 
 #### bus map(bus, map)
 
+Maps data
+
+<Example>
+  <Script path="index.js">  
+
+var mesh = require("mesh");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  next(void 0, operation.spell);
+});
+
+
+bus = mesh.map(bus, function(operation, data, stream) {
+  console.log("map: ", operation, data);
+  data.split("").forEach(function(character) {
+    stream.write(character);
+  });
+  stream.end();
+});
+
+bus({ spell: "hello" }).on("data", function(character) {
+  console.log("data: ", character);
+});
+
+</Script>
+</Example>
+
 #### bus reduce(bus, reduce)
+
+Reduces data from `bus` into one chunk.
+
+<Example>
+  <Script path="index.js">  
+
+var mesh = require("mesh");
+
+var bus = mesh.stream(function(operation, stream) {
+  stream.write("hello");
+  stream.write("big");
+  stream.end("world");
+});
+
+
+bus = mesh.reduce(bus, function(operation, prev, current) {
+  return [].concat(prev, current).join(" ");
+});
+
+bus({ }).on("data", function(message) {
+  console.log("data: ", message);
+});
+
+</Script>
+</Example>
 
 #### bus catchError(bus, handler)
 
+Catches an error emitted by a bus
+
+<Example>
+  <Script path="index.js">  
+
+var mesh = require("mesh");
+
+var bus = mesh.wrap(function(operation, next) {
+  next(new Error("Whoops, something went wrong!"));
+});
+
+bus = mesh.catchError(bus, function(error) {
+  console.log("caught error: ", error.message);
+});
+
+bus({ name: "some command" }).on("error", function(error) {
+  console.log("emitted error: ", error.message);
+});
+
+</Script>
+</Example>
+
+
 #### bus noop
+
+No operation bus
+
+
+<Example>
+  <Script path="index.js">  
+
+var mesh = require("mesh");
+
+var bus = mesh.noop;
+
+bus({ name: "some command" }).on("data", function(data) {
+  console.log("data - shouldn't be logged!");
+}).on("end", function() {
+  console.log("no operation ended");
+});
+
+  </Script>
+</Example>
