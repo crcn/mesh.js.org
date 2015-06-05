@@ -19,7 +19,7 @@ describe("user-model#", function() {
     user.insert(function() {
       expect(user._id).to.be("user1");
       expect(user.name).to.be("Kung Fury");
-      expect(user.emailAddress).to.be("nun@jitsu.com");
+      expect(user.emailAddress).to.be("nin@jitsu.com");
       complete();
     });
   })
