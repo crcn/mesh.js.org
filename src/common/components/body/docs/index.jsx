@@ -34,7 +34,9 @@ module.exports = React.createClass({
 
       sidebar = sidebar.concat(doc.headers.h4.map(function(subcategory) {
         return <li className="sub-category">
-          <Link alias="docsSubcategory" category={category} subcategory={subcategory.id} {...this.props}>{subcategory.label}</Link>
+          <Link alias="docsSubcategory" category={category} subcategory={subcategory.id} {...this.props}>
+            {subcategory.label.replace(/\(.*?\)/, " ( )")}
+          </Link>
         </li>;
       }.bind(this)))
     }
@@ -45,12 +47,12 @@ module.exports = React.createClass({
           <Navigation {...this.props} />
         </div>
         <div className="row main">
-          <div className="col-sm-3 sidebar">
+          <div className="col-sm-2 sidebar">
             <ul>
               {sidebar}
             </ul>
           </div>
-          <div className="col-sm-9 docs">
+          <div className="col-sm-10 docs">
             {React.createElement(docs[locationState.pages.docs] || docs.api, {
               components: components,
               state: this.props.state
