@@ -90,7 +90,6 @@ gulp.task("bundle", function(complete) {
       b.transform({ global:true  }, 'reactify');
       b.transform({ global: true }, require("./src/transform/md"));
       b.transform({ global: true }, 'brfs');
-
     }
 
     _bundle.

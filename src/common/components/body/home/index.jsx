@@ -112,8 +112,8 @@ module.exports = React.createClass({
               </ul>
               <ul className="col-sm-4">
                 <li>Docs</li>
-                <li><Link alias="docsCategory" category="snippets" {...this.props}>Snippets</Link></li>
-                <li><Link alias="docsCategory" category="examples" {...this.props}>Examples</Link></li>
+                <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/snippets">Snippets</Link></li>
+                <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/examples">Examples</Link></li>
                 <li><Link alias="docs" {...this.props}>API</Link></li>
               </ul>
               <ul className="col-sm-4">
