@@ -4,7 +4,7 @@ Executes an operation where `bus` is the `operation` handler. A node-like [strea
 
 #### operation op(name[, operation])
 
-Creates a new operation. This method is equivalent to `{ name: "operation" }`.
+Creates a new operation. This function is equivalent to `{ name: "operation" }`.
 
 
 <Tabs>
@@ -53,7 +53,7 @@ Creates a new operation. This method is equivalent to `{ name: "operation" }`.
 
 #### bus wrap(handler)
 
-Wraps a function as a bus
+Wraps a function as a bus.
 
 
 <Tabs>
@@ -86,7 +86,7 @@ Wraps a function as a bus
 
 #### bus stream(handler)
 
-Passes a [stream](https://nodejs.org/api/stream.html) to target handler.
+Passes a [stream](https://nodejs.org/api/stream.html) to the target `handler`.
 
 <Example>
   ```javascript
@@ -108,7 +108,7 @@ Passes a [stream](https://nodejs.org/api/stream.html) to target handler.
 
 #### bus attach(props, bus)
 
-Adds properties to a running `operation`. `props` can be a `function`, or an `object`.
+Adds properties to a running `operation`.
 
 
 <Tabs>
@@ -153,7 +153,7 @@ Adds properties to a running `operation`. `props` can be a `function`, or an `ob
 
 #### bus accept(conditon, bus[, ebus])
 
-passes an operation to `bus` if `condition` is **true**.
+Passes an operation to `bus` if `condition` is **true**.
 
 <Tabs>
   <Example title="accept with tester">
@@ -247,7 +247,7 @@ passes an operation to `bus` if `condition` is **true**.
 
 #### bus reject(condition, bus[, ebus])
 
-Similar to `accept` but rejects operations that pass in the condition.
+Similar to `accept` but rejects operations that are **true** in the condition.
 
 #### bus tailable(bus[, condition])
 
@@ -515,7 +515,7 @@ Limits the number of concurrent operations.
 
 #### bus map(bus, map)
 
-Maps data
+Maps data.
 
 <Example>
   ```javascript
@@ -572,7 +572,7 @@ Reduces data from `bus` into one chunk.
 
 #### bus catchError(bus, handler)
 
-Catches an error emitted by a bus
+Catches an error emitted by a bus.
 
 <Example>
   ```javascript
@@ -613,11 +613,9 @@ Yields data. Useful for testing.
   ```
 </Example>
 
-
-
 #### bus noop
 
-No operation bus
+No operation bus.
 
 
 <Example>
@@ -864,7 +862,7 @@ Times out an operation after `ms`.
 
 #### bus retry(count, bus)
 
-Retrys an operation against bus if an error is emitted
+Retrys an operation against bus if an error is emitted.
 
 <Example title="simple example">
   ```javascript
