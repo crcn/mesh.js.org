@@ -8,7 +8,7 @@ var Link       = require("../../link");
 var features = [
   {
     title: "Just a utility",
-    desc : "Mesh provides just a bundle of helpful functions and design patterns that help you build powerful, and explicit message handlers.",
+    desc : "Use it however you want. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible message handlers.",
     source: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
     icon: "settings"
   },
@@ -20,7 +20,7 @@ var features = [
   },
   {
     title: "Testable",
-    desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking & stubbing API calls.",
+    desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking or stubbing API calls.",
     source: fs.readFileSync(__dirname + "/examples/testable.js", "utf8"),
     runnable: false,
     icon: "help-buoy"
@@ -32,11 +32,11 @@ var features = [
     icon: "shuffle"
   },
   {
-    title: "Flexible",
-    desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complex APIs.",
+    title: "Built for APIs",
+    desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complicated service APIs.",
     source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
     runnable: false,
-    icon: "beer"
+    icon: "heart"
   }
 ]
 

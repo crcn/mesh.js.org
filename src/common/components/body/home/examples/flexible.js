@@ -21,6 +21,4 @@ var user = new UserModel({
 });
 
 // POST /api/createUser { name: "Billy" }
-user.insert(function() {
-
-});
+user.insert(function() { });
