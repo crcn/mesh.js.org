@@ -18,21 +18,22 @@ Children
     return trimEmptyText(children);
   }
 
-MultilineChildren
-= child:InlineChild nextChildren:(_n _t InlineChild)* {
-  return [child].concat(nextChildren.map(function(expression) {
-    return expression[2];
-  }));
-}
+InlineChild
+  = (InlineElement/InlineText)
+
+InlineChildren
+  = children:InlineChild* {
+    return children;
+  }
 
 InlineElement
-  = (Image/Link/Emphasis/List)
+  = (Image/Link/Emphasis)
 
-InlineChild
-  = (InlineElement/Text)
+StartChild
+  = (Comment/Script/Element/Header/HorizontalRule/BlockQuote)
 
 Child
-  = (Comment/Script/Element/Header/HorizontalRule/BlockQuote/InlineElement/Paragraph/WS)
+  = (StartChild/InlineElement/List/Paragraph)
 
 WS
   = [ \n\t\r] { return ["text", ""] };
@@ -76,7 +77,9 @@ Comment
   }
 
 Element
-  = ElementWithoutChildren/ElementWithChildren
+  = _ child:(ElementWithoutChildren/ElementWithChildren) _ {
+    return child;
+  }
 
 ElementWithChildren
   = "<" startName:Name attributes:Attribute* ">" children:Children "</" endName:Name ">" {
@@ -141,12 +144,23 @@ HorizontalRule
   }
 
 BlockQuote
-  = ">" _ children:MultilineChildren EOL {
+  = ">" children:MultiInlineChildren {
     return ["blockquote", children];
   }
 
+
+MultiInlineChildren
+  = _ child:InlineChild children:NextLineChild* {
+    return [child].concat(children);
+  }
+
+NextLineChild
+  = _nt _ child:InlineChild {
+    return child;
+  }
+
 Header
-  = _ hashes:("#")+ children:MultilineChildren EOL {
+  = _ hashes:("#")+ _ children:InlineChildren EOL {
     return ["element", "h" + hashes.length, [], children];
   }
 
@@ -156,32 +170,30 @@ List
   }
 
 ListItem
-  = Dash children:MultilineChildren EOL {
+  = Dash _ children:MultiInlineChildren _ {
     return ["element", "li", [], children];
   }
 
 Dash
   = ("-"/"*")
 
-MultilineText
-  = text:Text nextLines:(_n _t Text)* {
-    return ["text", [text[1]].concat(nextLines.map(function(expression) {
-      return expression[2][1];
-    })).join(" ")];
+Text
+  = value:TextCharacter+ {
+    return ["text", value.join("")];
   }
 
-Text
-  = _ value:TextCharacter+ {
-    return ["text", trim(value.join(""))];
+InlineText
+  = value:(!(_n)TextCharacter _nt*)+ {
+    return ["text", text()];
   }
 
 Paragraph
-  = children:InlineChild+ {
+  = children:(InlineElement/Text)+ {
     return ["element", "p", [], children];
   }
 
 TextCharacter
-  = !(Image/Link/Emphasis/"<") value:InlineCharacter {
+  = !(StartChild/InlineElement/"<") value:SourceCharacter {
     return value;
   }
 
@@ -207,6 +219,9 @@ _t
 
 _n
   = [\n\r]
+
+_nt
+  = _n _t
 
 EOL
   = (_n/EOF)

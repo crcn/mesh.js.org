@@ -199,7 +199,7 @@ function _attribute(expr) {
 }
 
 function _text(expr) {
-  return "'" + expr[1].replace(/'/g,"\\'") + "'";
+  return "'" + expr[1].replace(/'/g,"\\'").replace(/[\n\r]/g," ") + "'";
 }
 
 function _p(expr) {

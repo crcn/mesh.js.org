@@ -1,3 +1,7 @@
+#### stream bus(operation)
+
+Executes an operation where `bus` is the `operation` handler. A node-like [stream](https://nodejs.org/api/stream.html) is returned that emits data handled by the `bus`.
+
 #### operation op(name[, operation])
 
 Creates a new operation. This method is equivalent to `{ name: "operation" }`.
