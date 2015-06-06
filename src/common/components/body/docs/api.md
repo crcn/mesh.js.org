@@ -642,6 +642,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
   </Example>
   <Example title="model example">
     ```javascript  
+    //index.js
 
     var mesh    = require("mesh@2.0.3");
     var extend  = require("extend");
