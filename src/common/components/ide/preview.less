@@ -9,9 +9,19 @@
   & ul {
     list-style-type: none;
     padding: 0px;
+    width: 90%;
     & li {
       border-top: 1px solid rgba(0,0,0,0.1);
+      padding-top: 6px;
+      padding-bottom: 6px;
+      &.log {
+        color: #333;
+      }
+      &.error {
+        color: red;
+      }
     }
+
 
     & li:first-child {
       border-top: 0px;

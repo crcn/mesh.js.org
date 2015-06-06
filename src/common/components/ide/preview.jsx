@@ -28,22 +28,32 @@ module.exports = React.createClass({
       <ul className="logs">
         {
           this.state.logs.map(function(log) {
-            return <li>log: {log}</li>;
+            return <li className={log.level}>{log.level}: {log.text}</li>;
           })
         }
       </ul>
     </div>;
   },
   captureLogs: function(console) {
-    console.log = function() {
-      var msg = Array.prototype.slice.call(arguments, 0).map(function(arg) {
+
+    function log(level) {
+      var msg = Array.prototype.slice.call(arguments, 1).map(function(arg) {
         if (typeof arg === "object") return JSON.stringify(arg);
         return arg;
       }).join(" ");
 
       this.setState({
-        logs: this.state.logs.concat(msg)
+        logs: this.state.logs.concat({
+          level: level,
+          text : msg
+        })
       })
-    }.bind(this)
+    }
+
+
+    console.log     = log.bind(this, "log");
+    console.error   = log.bind(this, "error");
+    console.notice  = log.bind(this, "notice");
+    console.warning = log.bind(this, "warning");
   }
 });

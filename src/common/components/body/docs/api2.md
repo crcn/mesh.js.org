@@ -78,7 +78,7 @@ Wraps a function as a bus
     });
 
     bus({}).on("error", function(error) {
-      console.log("error: ", error.message);
+      console.error(error.message);
     });
     ```
   </Example>
@@ -541,7 +541,7 @@ Catches an error emitted by a bus
   });
 
   bus({ name: "some command" }).on("error", function(error) {
-    console.log("emitted error: ", error.message);
+    console.error(error.message);
   });
   ```
 </Example>
@@ -636,7 +636,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     bus = mesh.wait(load, bus);
 
     bus(mesh.op("doSomething")).on("error", function(error) {
-      console.log("error: ", error.message);
+      console.error(error.message);
     });
     ```
   </Example>
@@ -831,7 +831,7 @@ Retrys an operation against bus if an error is emitted
   bus = mesh.retry(5, bus);
 
   bus(mesh.op("doSomething")).on("error", function(error) {
-    console.log("error:", error.message);
+    console.error(error.message);
   });
   ```
 </Example>
