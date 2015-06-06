@@ -86,6 +86,11 @@ function _apiElement(expr) {
 
 function _exampleElement(expr) {
   var buffer = "React.createElement(this.props.components.Example, {";
+
+  var attrs = expr[2].map(_attribute).join(", ");
+  buffer += attrs;
+
+  if (attrs !== "") buffer += ", ";
   buffer += "files:";
 
   var files = [];

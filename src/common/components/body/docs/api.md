@@ -2,51 +2,84 @@
 
 Creates a new operation. This method is equivalent to `{ name: "operation" }`.
 
-<Example>
+
+<Tabs>
+  <Example title="simple">
+    <Script path="index.js">
+
+var mesh   = require("mesh");
+var stream = require("obj-stream");
+
+// create a simple, vanilla bus
+var bus = function(operation) {
+  var s = new stream.Stream();
+  console.log("handle operation", operation);
+  setTimeout(function() {
+    s.end();
+  }, 0);
+  return s;
+}
+
+// execute an operation
+bus(mesh.op("doSomething")).on("end", function() {
+  console.log("ended");
+});
+
+    </Script>
+  </Example>
+
+<Example title="vanilla object">
   <Script path="index.js">
 var mesh = require("mesh");
 
+// use wrap utility so we don't have to create an object
+// stream
 var bus = mesh.wrap(function(operation, next) {
   console.log(operation);
   next();
-});
-
-bus(mesh.op("doSomething")).on("end", function() {
-  console.log("ended");
 });
 
 // or use a vanilla object
 bus({ name: "doSomething" }).on("end", function() {
   console.log("endeded vanilla object");
 });
+
   </Script>
 </Example>
+</Tabs>
 
 
 #### bus wrap(handler)
 
 Wraps a function as a bus
 
-<Example>
-  <Script path="index.js">  
+
+<Tabs>
+<Example title="success handling">
+<Script path="index.js">  
 var mesh = require("mesh");
 var bus = mesh.wrap(function(operation, next) {
-  if (operation.returnError) {
-    next(new Error("Whoops! Something went wrong"));
-  } else {
     next(void 0, "some returned data");
-  }
 });
 
-bus({ returnError: true }).on("error", function(error) {
-  console.log("error: ", error.message);
-});
-
-bus({ }).on("data", function(data) {
+bus({}).on("data", function(data) {
   console.log("data: ", data);
 });
 </Script>
 </Example>
+<Example title="error handling">
+  <Script path="index.js">  
+var mesh = require("mesh");
+var bus = mesh.wrap(function(operation, next) {
+    next(new Error("Whoops! Something went wrong"));
+});
+
+bus({}).on("error", function(error) {
+  console.log("error: ", error.message);
+});
+</Script>
+</Example>
+</Tabs>
 
 #### bus stream(handler)
 
@@ -77,7 +110,8 @@ bus({}).on("data", function(data) {
 Adds properties to a running `operation`. `props` can be a `function`, or an `object`.
 
 
-<Example>
+<Tabs>
+<Example title="props as function">
   <Script path="index.js">
 var mesh = require("mesh");
 
@@ -87,59 +121,77 @@ var bus = mesh.wrap(function(operation, next) {
 });
 
 bus = mesh.attach(function(operation) {
-  if (operation.model) return {
-    query: { id: operation.model.id }
+  return {
+    path: "/users/" + operation.query.id
   }
 }, bus);
 
-function User(id) {
-  this.id = id;
-}
-
-bus(mesh.op("load", { model: new User("user1") }));
+bus(mesh.op("load", { query: { id: "userId" } }));
   </Script>
 </Example>
+<Example title="props as object">
+  <Script path="index.js">
+var mesh = require("mesh");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handled operation: ", operation);
+  next();
+});
+
+bus = mesh.attach({ collection: "users" }, bus);
+
+
+bus(mesh.op("load", { query: { id: "user1" }}));
+  </Script>
+</Example>
+</Tabs>
 
 
 #### bus accept(conditon, bus[, ebus])
 
 passes an operation to `bus` if `condition` is **true**.
 
-<Example>
-  <Script path="index.js">
+<Tabs>
+<Example title="accept with tester">
+<Script path="index.js">
 var mesh = require("mesh");
 
 function testOperation(operation) {
-  return operation.name === "doSomething";
+  return operation.name === "something";
 }
 
 var bus = mesh.accept(testOperation, mesh.wrap(function(operation, next) {
-    console.log("handle doSomething op", operation);
-}), mesh.wrap(function(operation) {
-    console.log("handle doSomething else op", operation);
+  console.log("handle operation: ", operation);
+  next(void 0, { text: "Hello" });
 }));
 
-bus(mesh.op("doSomething"));
-bus(mesh.op("doSomethingElse"));
+bus(mesh.op("something")).on("data", function(data) {
+  console.log("response data: ", data);
+}).on("end", function() {
+  console.log("something operation ended");
+});
 
-  </Script>
+bus(mesh.op("rejected")).on("data", function(data) {
+
+  // this should not be logged
+  console.log("response data: ", data);
+}).on("end", function() {
+  console.log("rejected operation ended");
+});
+
+</Script>
 </Example>
-
-#### bus reject(condition, bus[, ebus])
-
-passes an operation to `bus` if `condition` is **false**.
-
-<Example>
+<Example title="else bus">
   <Script path="index.js">
 var mesh = require("mesh");
 
-function testOperation(operation) {
-  return operation.name === "doSomething";
-}
-
-var bus = mesh.reject(testOperation, mesh.wrap(function(operation, next) {
+var bus = mesh.wrap(function(operation, next) {
     console.log("handle doSomething op", operation);
-}), mesh.wrap(function(operation) {
+    next();
+});
+
+// accept also allows operation names
+var bus = mesh.accept("doSomething", bus, mesh.wrap(function(operation) {
     console.log("handle doSomething else op", operation);
 }));
 
@@ -148,12 +200,56 @@ bus(mesh.op("doSomethingElse"));
 
   </Script>
 </Example>
+<Example title="simple command handler">
+  <Script path="index.js">
+var mesh = require("mesh");
+var sift = require("sift");
+
+function command(query, handler) {
+  return mesh.accept(sift(query), mesh.wrap(handler));
+}
+
+var commands = [
+  command({ name: "insert" }, function(operation, next) {
+    console.log("handle insert", operation);
+    next(void 0, true);
+  }),
+  command({ name: "remove" }, function(operation, next) {
+    console.log("handle remove", operation);
+    next(void 0, true);
+  }),
+  command({ name: "load", multi: true }, function(operation, next) {
+    console.log("handle load multiple", operation);
+    next(void 0, true);
+  }),
+  command({ name: "load" }, function(operation, next) {
+    console.log("handle load single item", operation);
+    next(void 0, true);
+  })
+];
+
+var bus = mesh.fallback(commands);
+
+bus(mesh.op("insert"));
+bus(mesh.op("remove"));
+bus(mesh.op("load"));
+bus(mesh.op("load", { multi: true }));
+
+  </Script>
+</Example>
+</Tabs>
+
+#### bus reject(condition, bus[, ebus])
+
+Similar to `accept` but rejects operations that pass in the condition.
+
 
 #### bus tailable(bus[, condition])
 
 Makes a bus tailable for operations.
 
-<Example>
+<Tabs>
+<Example title="simple">
   <Script path="index.js">
 var mesh = require("mesh");
 
@@ -162,8 +258,29 @@ var bus = mesh.wrap(function(operation, next) {
   next();
 });
 
-bus = mesh.tailable(bus, function(tail, operation) {
-  return tail.query.name === operation.name;
+bus = mesh.tailable(bus);
+
+bus(mesh.op("tail")).on("data", function(operation) {
+  console.log("tailed operation: ", operation);
+});
+
+bus(mesh.op("load"));
+bus(mesh.op("insert"));
+bus(mesh.op("say hello"));
+
+  </Script>
+</Example>
+<Example title="with condition">
+  <Script path="index.js">
+var mesh = require("mesh");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  next();
+});
+
+bus = mesh.tailable(bus, function(operation) {
+    return operation.query.name ===
 });
 
 bus(mesh.op("tail", { query: { name: "insert" }})).on("data", function(operation) {
@@ -176,6 +293,7 @@ bus(mesh.op("say hello"));
 
   </Script>
 </Example>
+</Tabs>
 
 #### bus parallel([busses])
 
@@ -467,7 +585,54 @@ bus({ name: "some command" }).on("data", function(data) {
 Waits for `waitFn` to execute before passing operations to `bus`.
 
 
-<Example>
+<Tabs>
+<Example title="simple example">
+  <Script path="index.js">  
+
+var mesh    = require("mesh@2.0.3");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  next(void 0, next);
+});
+
+function load(next) {
+  console.log("wait...");
+  setTimeout(next, 500);
+}
+
+bus = mesh.wait(load, bus);
+
+bus(mesh.op("doSomething"));
+
+</Script>
+
+</Example>
+<Example title="error example">
+  <Script path="index.js">  
+
+var mesh    = require("mesh@2.0.3");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  next(void 0, next);
+});
+
+function load(next) {
+  console.log("wait...");
+  setTimeout(next, 500, new Error("something went wrong!"));
+}
+
+bus = mesh.wait(load, bus);
+
+bus(mesh.op("doSomething")).on("error", function(error) {
+  console.log("error: ", error.message);
+});
+
+</Script>
+
+</Example>
+<Example title="model example">
   <Script path="index.js">  
 
 var mesh    = require("mesh@2.0.3");
@@ -617,7 +782,53 @@ chain
 
   </Script>
 </Example>
+</Tabs>
 
 #### bus timeout(ms, bus)
 
+Times out an operation after `ms`.
+
+
+<Example title="simple example">
+  <Script path="index.js">  
+
+var mesh    = require("mesh@2.0.3");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  setTimeout(next, 1000);
+});
+
+bus = mesh.timeout(100, bus);
+
+bus(mesh.op("doSomething")).on("error", function(error) {
+  console.log("error:", error.message);
+});
+
+</Script>
+
+</Example>
+
 #### bus retry(count, bus)
+
+Retrys an operation against bus if an error is emitted
+
+<Example title="simple example">
+  <Script path="index.js">  
+
+var mesh    = require("mesh@2.0.3");
+
+var bus = mesh.wrap(function(operation, next) {
+  console.log("handle operation: ", operation);
+  setTimeout(next, 100, new Error("something went wrong"));
+});
+
+bus = mesh.retry(5, bus);
+
+bus(mesh.op("doSomething")).on("error", function(error) {
+  console.log("error:", error.message);
+});
+
+</Script>
+
+</Example>

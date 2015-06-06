@@ -15,7 +15,8 @@ var docs = {
 
 var components = {
   Example : require("./example"),
-  H4      : require("./h4")
+  H4      : require("./h4"),
+  Tabs    : require("../../tabs")
 };
 
 module.exports = React.createClass({

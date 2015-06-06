@@ -18,16 +18,18 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       preview: false,
-      content: this.props.source
+      content: this.props.source,
+      _editorId: "editor-" + (_ref++)
     }
-  },
-  componentDidMount: function() {
-
   },
   toggleExpansion: function() {
     this.setState({
       expanded: !this.state.expanded
     });
+  },
+  componentWillReceiveProps: function(props) {
+    this.state.content = props.source;
+    this.state.preview = false;
   },
   showPreview: function() {
     this.setState({
@@ -48,7 +50,7 @@ module.exports = React.createClass({
         onChange={this.onContentChange}
         value={this.state.content}
         mode="java"
-        name={ "editor-" + (_ref++) }
+        name={ this.state._editorId }
         theme="clouds"
         width="100%"
         maxLines={Infinity}
@@ -72,7 +74,7 @@ module.exports = React.createClass({
         </ul>
 
         <div>
-          { this.props.runnable !== false ? <button className="btn ptn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
+          { this.props.runnable !== false ? <button className="btn btn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
           { sections.content }
         </div>
 
