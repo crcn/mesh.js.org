@@ -33,7 +33,7 @@ var features = [
   },
   {
     title: "Built for APIs",
-    desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complicated service APIs.",
+    desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complicated services.",
     source: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
     runnable: false,
     icon: "heart"
