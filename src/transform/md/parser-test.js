@@ -144,17 +144,17 @@ describe(__filename + "#", function() {
 
   describe("emphasis", function() {
     it("can parse `code` blocks", function() {
-      var ast = parser.parse(" hello `tick` ");
+      var ast = parser.parse("hello `tick` ");
       expect(_stringify(ast)).to.be("elementptexthello elementcodetextticktext ");
     });
 
     it("can parse **strong** blocks", function() {
-      var ast = parser.parse(" hello **strong**");
+      var ast = parser.parse("hello **strong**");
       expect(_stringify(ast)).to.be("elementptexthello elementstrongtextstrong");
     });
 
     it("can parse *em* blocks", function() {
-      var ast = parser.parse(" hello *em*");
+      var ast = parser.parse("hello *em*");
       expect(_stringify(ast)).to.be("elementptexthello elementemtextem");
     });
   });
@@ -181,7 +181,7 @@ describe(__filename + "#", function() {
     });
 
     it("can parse a script tag", function() {
-      var ast = parser.parse("<Script path=\"test\">var abc; abc < 5;</Script>");
+      var ast = parser.parse("  ````javascript\n//test  var abc; abc < 5;```");
       expect(_stringify(ast)).to.be("elementScriptattributepathtesttextvar abc; abc < 5;");
     });
 

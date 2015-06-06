@@ -14,7 +14,7 @@ start
   = Children
 
 Children
-  = _ children:Child* _ {
+  = children:Child* {
     return trimEmptyText(children);
   }
 
@@ -97,12 +97,27 @@ ElementWithoutChildren
   }
 
 Script
-  = "<Script" attributes:Attribute* ">" _ chars:ScriptCharacter* _ "</Script>" {
-    return ["element", "Script", attributes, [["text", chars.join("")]]];
+  = _ ScriptTicks scriptType:Word _s "\n" _ "//" _ path:Path chars:ScriptCharacter* ScriptTicks {
+    var source = chars.join("");
+    var lines  = source.split("\n");
+    var firstLine = lines.filter(function(line) {
+      return /\w/.test(line);
+    })[0];
+    var spaces    = firstLine.match(/^(\s+)/);
+    spaces = spaces ? spaces[1] : ""
+
+    source = lines.map(function(line) {
+      return line.replace(new RegExp("^\\s{" + spaces.length + "}"), "");
+    }).join("\n").replace(/^[\n\r\s]+/, "");
+
+    return ["element", "Script", [["attribute", "path", path]], [["text", source]]];
   }
 
+ScriptTicks
+  = "```" "`"*
+
 ScriptCharacter
-  = !("</Script>") char:SourceCharacter {
+  = !(ScriptTicks) char:SourceCharacter {
     return text();
   }
 
@@ -205,6 +220,11 @@ InlineCharacter
 
 Word
   = chars:[a-zA-Z]+ { return chars.join(""); }
+
+Path
+  = (Word/"."/"/")+ {
+    return text();
+  }
 
 Name
   = chars:[a-zA-Z0-9-]+ { return chars.join(""); }

@@ -114,18 +114,10 @@ function _exampleElement(expr) {
   });
 
   expr[3].forEach(function(child) {
+
     if (child[1] === "Script") {
 
       var content = child[3][0][1];
-
-      // var ast = uglify.parse(content, {
-      // });
-      //
-      //
-      // var stream = uglify.OutputStream({ beautify: true });
-      // ast.print(stream);
-      // var code = stream.toString(); // this is your minified code
-
 
       files.push({
         path: child[2].filter(function(attr) {

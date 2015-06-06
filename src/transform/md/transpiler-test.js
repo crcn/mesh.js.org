@@ -68,9 +68,9 @@ describe(__filename + "#", function() {
 
     var source =
     "<Example>" +
-      "<Script path=\"index.js\">" +
+      "```javascript\n//index.js\n" +
         "var abc;" +
-      "</Script>" +
+      "```" +
     "</Example>";
 
     var component = React.createElement(_compile(source), {
