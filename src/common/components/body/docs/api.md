@@ -249,7 +249,6 @@ passes an operation to `bus` if `condition` is **true**.
 
 Similar to `accept` but rejects operations that pass in the condition.
 
-
 #### bus tailable(bus[, condition])
 
 Makes a bus tailable for operations.
@@ -300,7 +299,56 @@ Makes a bus tailable for operations.
     bus(mesh.op("say hello"));
     ```
   </Example>
+  <Example title="realtime demo">
+    ```javascript
+    //index.js
+    var mesh   = require("mesh");
+    var io     = require("mesh-socket.io");
+
+    var bus = mesh.stream(function(operation, stream) {
+      console.log("handle ", operation);
+      stream.end({
+        text: "Hello " + operation.name
+      });
+    });
+
+    bus = mesh.tailable(bus);
+
+    bus(mesh.op("tail")).pipe(mesh.open(io({ channel: "operation" }, bus)));
+
+    bus({ name: prompt("What's your name?") }).on("data", function(data) {
+      console.log(data.text);
+    });
+    ```
+  </Example>
 </Tabs>
+
+#### stream mesh.open(bus)
+
+Opens up a bus for operations to be written to.
+
+<Example>
+```javascript
+//index.js
+var mesh = require("mesh");
+
+var bus = mesh.stream(function(operation, stream) {
+  console.log("handle operation: ", operation);
+  stream.write("data");
+  stream.write("blah");
+  stream.end();
+});
+
+var opStream = mesh.open(bus);
+
+opStream.on("data", function(data) {
+  console.log("chunk ", data);
+});
+
+opStream.write(mesh.op("insert"));
+opStream.write(mesh.op("someCommand"));
+```
+</Example>
 
 #### bus parallel([busses])
 
