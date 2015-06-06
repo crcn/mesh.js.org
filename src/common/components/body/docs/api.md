@@ -72,6 +72,8 @@ Wraps a function as a bus.
   </Example>
   <Example title="error handling">
     ```javascript
+    //index.js
+    
     var mesh = require("mesh");
     var bus = mesh.wrap(function(operation, next) {
         next(new Error("Whoops! Something went wrong"));
