@@ -287,8 +287,8 @@ Makes a bus tailable for operations.
       next();
     });
 
-    bus = mesh.tailable(bus, function(operation) {
-        return operation.query.name ===
+    bus = mesh.tailable(bus, function(tail, operation) {
+        return tail.query.name === operation.name;
     });
 
     bus(mesh.op("tail", { query: { name: "insert" }})).on("data", function(operation) {
