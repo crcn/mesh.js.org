@@ -46,12 +46,12 @@ module.exports = React.createClass({
           <Navigation {...this.props} />
         </div>
         <div className="row main">
-          <div className="col-sm-2 sidebar">
+          <div className="col-sm-2 sidebar hidden-xs">
             <ul>
               {sidebar}
             </ul>
           </div>
-          <div className="col-sm-10 docs">
+          <div className="col-sm-10 col-xs-12 docs">
             {React.createElement(docs[locationState.pages.docs] || docs.api, {
               components: components,
               state: this.props.state

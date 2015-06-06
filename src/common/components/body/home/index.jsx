@@ -67,7 +67,7 @@ module.exports = React.createClass({
                <strong>&nbsp;Server-side and client-side.</strong>
             </div>
             <div className="col-sm-6">
-              <img className="diagram" src="/images/home/elevator-diagram.png" />
+              <img className="diagram hidden-xs" src="/images/home/elevator-diagram.png" />
             </div>
           </div>
         </div>
@@ -90,7 +90,7 @@ module.exports = React.createClass({
           }
         </div>
 
-        <div className="row footer">
+        <div className="row footer hidden-xs">
           <div className="col-sm-4">
             <div className="logo">
               <a href="http://github.com/mojo-js">
