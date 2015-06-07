@@ -23,6 +23,11 @@ module.exports = React.createClass({
 
     var locationState = this.props.state;
 
+    var files = [
+      { path: "index.js" },
+      { path: "test.js" }
+    ]
+
     for (var category in docs) {
       var doc = docs[category];
       sidebar.push(
@@ -33,9 +38,20 @@ module.exports = React.createClass({
 
       sidebar = sidebar.concat(doc.headers.h4.map(function(subcategory) {
         return <li className="sub-category">
+
           <Link alias="docsSubcategory" category={category} subcategory={subcategory.id} {...this.props}>
             {subcategory.label.replace(/\(.*?\)/, " ( )")}
           </Link>
+
+          {
+            locationState.pages.category === subcategory.id && false ?
+            <ul className="files"> {(subcategory.files || files).map(function(file, i) {
+              return <li key={i}>
+                {file.path}
+              </li>
+            })}</ul>
+            : void 0
+          }
         </li>;
       }.bind(this)))
     }
