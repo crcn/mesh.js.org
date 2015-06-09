@@ -34,7 +34,7 @@ bus     = cache(bus, {
   bust   : function(operation) {
     return /POST|UPDATE|DELETE/.test(operation.method) ? {
       path: operation.path
-    }, void 0
+    } : void 0;
   }
 });
 
