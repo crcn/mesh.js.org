@@ -1,7 +1,5 @@
-This snippet [caches](http://en.wikipedia.org/wiki/Memoization) operations. It's entirely customizable, and interoperable
-with many mesh adapters including [mesh-mongodb](https://github.com/mojo-js/mesh-mongodb), [mesh-local-storage](https://github.com/mojo-js/mesh-local-storage), [mesh-memory](https://github.com/mojo-js/mesh-memory), [mesh-loki](https://github.com/mojo-js/mesh-mongodb), and [mesh-http](https://github.com/mojo-js/mesh-http).
-
-This snippet is useful if you're looking to memoize operation calls to any remote data source.
+This snippet caches operations. It's entirely customizable, and interoperable
+with many adapters including [mesh-mongodb](https://github.com/mojo-js/mesh-mongodb), [mesh-local-storage](https://github.com/mojo-js/mesh-local-storage), [mesh-memory](https://github.com/mojo-js/mesh-memory), [mesh-loki](https://github.com/mojo-js/mesh-mongodb), and [mesh-http](https://github.com/mojo-js/mesh-http).
 
 Usage:
 
