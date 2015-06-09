@@ -24,7 +24,7 @@ bus     = cache(bus, {
    */
 
   cache  : function(operation) {
-    return operation.method === "POST";
+    return operation.method === "GET";
   },
 
   /**
