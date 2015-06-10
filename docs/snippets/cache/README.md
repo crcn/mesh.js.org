@@ -5,7 +5,7 @@ Usage:
 
 ```javascript
 var cache   = require("./cache");
-var storage = require("mesh-local-storage");
+// var storage = require("mesh-local-storage");
 var storage = require("mesh-memory");
 var http    = require("mesh-http");
 
