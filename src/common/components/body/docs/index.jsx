@@ -11,8 +11,8 @@ var path       = require("path");
 // architecture
 var docs = {
   "core"     : require("./md/core.md"),
-  "balance"  : require("./md/balance.md"),
-  "examples" : require("./md/examples.md")
+  "balance"  : require("./md/balance.md")
+  // "examples" : require("./md/examples.md")
 };
 
 var pages = docs;

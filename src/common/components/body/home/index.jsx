@@ -29,14 +29,14 @@ var features = [
     icon: "help-buoy"
   },
   {
-    path: "/index.js",
+    path: "index.js",
     title: "Interoperable",
     desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
     content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
     icon: "shuffle"
   },
   {
-    path: "/index.js",
+    path: "index.js",
     title: "Built for APIs",
     desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complicated services.",
     content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
@@ -117,9 +117,9 @@ module.exports = React.createClass({
               </ul>
               <ul className="col-sm-4">
                 <li>Docs</li>
-                <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/snippets">Snippets</Link></li>
-                <li><Link alias="docsCategory" category="examples" {...this.props}>Examples</Link></li>
-                <li><Link alias="docs" {...this.props}>API</Link></li>
+                <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/examples">Examples</Link></li>
+                <li><Link alias="docsCategory" category="core" {...this.props}>Core API</Link></li>
+                <li><Link alias="docsCategory" category="balance" {...this.props}>Load Balancing API</Link></li>
               </ul>
               <ul className="col-sm-4">
                 <li>Connect</li>
