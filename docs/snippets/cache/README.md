@@ -5,7 +5,7 @@ Usage:
 
 ```javascript
 var cache   = require("./cache");
-var storage = require("mesh-local-storage");
+// var storage = require("mesh-local-storage");
 var storage = require("mesh-memory");
 var http    = require("mesh-http");
 
@@ -24,7 +24,7 @@ bus     = cache(bus, {
    */
 
   cache  : function(operation) {
-    return operation.method === "POST";
+    return operation.method === "GET";
   },
 
   /**
@@ -34,7 +34,7 @@ bus     = cache(bus, {
   bust   : function(operation) {
     return /POST|UPDATE|DELETE/.test(operation.method) ? {
       path: operation.path
-    }, void 0
+    } : void 0;
   }
 });
 
