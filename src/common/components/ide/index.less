@@ -85,8 +85,16 @@
     height: 100%;
     list-style-type: none;
     font-size: 12px;
+    word-wrap: break-word;
     background-color: @blue-almost-white;
     float: left;
     border-right: 1px solid @blue;
+
+    & li {
+      line-height: 20px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 }

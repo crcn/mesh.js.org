@@ -1,4 +1,7 @@
-var React = require("react");
-var Main  = require("./components/main");
+var React     = require("react");
+var Main      = require("./components/main");
+var createBus = require("./bus");
 
-React.render(React.createElement(Main, void 0, {}), preview.element);
+var bus = createBus();
+
+React.render(React.createElement(Main, { bus: bus }), preview.element);

@@ -72,7 +72,8 @@ module.exports = React.createClass({
     if (this.props.files.length > 1) {
       sidebar = <ul className="file-sidebar col col-sm-2">
         {this.props.files.map(function(file) {
-          return <li><a href="#" onClick={this.setFile.bind(this, file)}>{file.path}</a></li>
+          var label = file.path;
+          return <li><a href="#" onClick={this.setFile.bind(this, file)}>{label}</a></li>
         }.bind(this))}
       </ul>;
     }
