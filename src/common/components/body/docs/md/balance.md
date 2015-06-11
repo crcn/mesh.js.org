@@ -2,7 +2,7 @@ Various load balancing algorithms.
 
 Installation: `npm install mesh-balance --save`
 
-#### balance.rotate(workers)
+#### bus rotate(workers)
 
 Rotates the busses. Round-robin style.
 
@@ -25,7 +25,7 @@ for (var i = 10; i--;) bus({ name: "doSomething" });
 ```
 </Example>
 
-#### balance.least(workers)
+#### bus least(workers)
 
 Runs operations against the bus with the fewest running operations.
 
@@ -48,7 +48,7 @@ for (var i = 10; i--;) bus({ name: "doSomething" });
 ```
 </Example>
 
-#### balance.random(workers)
+#### bus random(workers)
 
 Runs operations against a random bus.
 
