@@ -11,8 +11,6 @@ module.exports = function() {
     return /insert|remove|update/.test(operation.name);
   });
 
-  var obus = bus;
-
   bus = attachInsertId(bus);
 
   bus = aliases({
