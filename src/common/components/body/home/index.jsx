@@ -7,21 +7,21 @@ var Link       = require("../../link");
 
 var features = [
   {
-    path: "index.js",
+    path: "/index.js",
     title: "Just a utility",
     desc : "Use it however you want. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible message handlers.",
     content: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
     icon: "settings"
   },
   {
-    path: "index.js",
+    path: "/index.js",
     title: "Decoupled",
     desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, highly testable, and isn’t locked into any particular service.",
     content: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8"),
     icon: "unlocked"
   },
   {
-    path: "index.js",
+    path: "/index.js",
     title: "Testable",
     desc: "Write highly testable code that is as resilient, and decoupled as your application code. No more mocking or stubbing API calls.",
     content: fs.readFileSync(__dirname + "/examples/testable.js", "utf8"),
@@ -29,14 +29,14 @@ var features = [
     icon: "help-buoy"
   },
   {
-    path: "index.js",
+    path: "/index.js",
     title: "Interoperable",
     desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
     content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
     icon: "shuffle"
   },
   {
-    path: "index.js",
+    path: "/index.js",
     title: "Built for APIs",
     desc: "Mesh doesn't make any assumptions about your application. Use it to rangle even the most complicated services.",
     content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
@@ -49,7 +49,7 @@ var features = [
 module.exports = React.createClass({
   render: function() {
     return (
-      <div>
+      <div className="home">
 
         <div className="row header">
 

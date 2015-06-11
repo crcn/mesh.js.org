@@ -6,7 +6,7 @@ var Docs     = require("./docs");
 module.exports = React.createClass({
   render: function() {
     return (
-      <div className="container home">
+      <div className="container body">
         {
           {
             home     : <Home {...this.props} />,
