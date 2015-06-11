@@ -38,14 +38,22 @@
 
       & li.sub-category {
         font-size: 14px;
-        padding-left: 16px;
-        line-height: 25px;
-        &:before {
-          content: "- ";
+
+        & a {
+          padding-left: 16px;
+          line-height: 25px;
+          &:before {
+            content: "- ";
+          }
+          & .selected {
+            color: @blue;
+          }
         }
-        & .selected {
-          color: @blue;
-        }
+      }
+
+      & ul.files {
+        background-color: #788BAE;
+        padding-left: 25px;
       }
     }
   }

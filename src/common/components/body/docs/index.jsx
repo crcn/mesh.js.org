@@ -1,14 +1,22 @@
 var React      = require("react");
 var Navigation = require("../../navigation");
 var Link       = require("../../link");
+var extend     = require("xtend/mutable");
 
 // examples
 // snippets
 // modules
 // architecture
 var docs = {
-  api          : require("./api.md")
+  api : require("./api.md")
 };
+
+var examples = {
+  react: {}
+};
+
+var pages = extend({}, docs, examples);
+
 
 var components = {
   Example : require("./example"),
@@ -28,6 +36,7 @@ module.exports = React.createClass({
       { path: "test.js" }
     ]
 
+    // markdown examples
     for (var category in docs) {
       var doc = docs[category];
       sidebar.push(
@@ -36,24 +45,30 @@ module.exports = React.createClass({
         </li>
       );
 
-      sidebar = sidebar.concat(doc.headers.h4.map(function(subcategory) {
+      sidebar = sidebar.concat(doc.categories.map(function(subcategory) {
         return <li className="sub-category">
-
           <Link alias="docsSubcategory" category={category} subcategory={subcategory.id} {...this.props}>
             {subcategory.label.replace(/\(.*?\)/, " ( )")}
           </Link>
-
-          {
-            locationState.pages.category === subcategory.id && false ?
-            <ul className="files"> {(subcategory.files || files).map(function(file, i) {
-              return <li key={i}>
-                {file.path}
-              </li>
-            })}</ul>
-            : void 0
-          }
         </li>;
       }.bind(this)))
+    }
+
+    // examples
+    sidebar.push(
+      <li className="category">
+        Examples
+      </li>
+    );
+
+    for (var name in examples) {
+      sidebar.push(
+        <li className="sub-category">
+          <Link alias="docsSubcategory" category="examples" subcategory={name} {...this.props}>
+            {name}
+          </Link>
+        </li>
+      );
     }
 
     return (
@@ -68,7 +83,7 @@ module.exports = React.createClass({
             </ul>
           </div>
           <div className="col-sm-10 col-xs-12 docs">
-            {React.createElement(docs[locationState.pages.docs] || docs.api, {
+            {React.createElement(pages[locationState.pages.docs] || pages.api, {
               components: components,
               state: this.props.state
             })}

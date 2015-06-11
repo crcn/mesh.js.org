@@ -93,7 +93,7 @@ describe(__filename + "#", function() {
 
   it("attaches h4s as headings", function() {
     var Component = _compile("#### some header");
-    expect(Component.headers.h4[0].label).to.be("some header");
+    expect(Component.categories[0].label).to.be("some header");
   });
 
   it("attaches IDs to headers", function() {

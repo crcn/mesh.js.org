@@ -21,24 +21,19 @@ function _transpile(expr) {
   // _trim(expr);
   var buffer = "var React = require('react');" +
   "module.exports = "         + _component(expr) +
-  "module.exports.headers = " + _headers(expr);
+  "module.exports.categories = " + _headers(expr);
   return buffer;
 }
 
 function _headers(expr) {
 
-  var headers = {
-    h1: [],
-    h2: [],
-    h3: [],
-    h4: []
-  };
+  var headers = [];
 
   _traverse(expr, function(expr) {
 
     var collection;
-    if (expr[0] === "element" && (collection = headers[expr[1]])) {
-      collection.push({
+    if (expr[0] === "element" && /h\d{1}/.test(expr[1])) {
+      headers.push({
         label: expr[3][0][1],
         id   : _getElementLink(expr)
       });
