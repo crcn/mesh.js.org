@@ -7,7 +7,6 @@ var NoComp = React.createClass({
   }
 });
 
-
 var _ref = 0;
 
 var AceEditor = process.browser ? require("react-ace") : NoComp;
@@ -18,7 +17,7 @@ module.exports = React.createClass({
   getInitialState: function() {
     return {
       preview: false,
-      content: this.props.source,
+      currentFile: this.props.files[0],
       _editorId: "editor-" + (_ref++)
     }
   },
@@ -28,7 +27,7 @@ module.exports = React.createClass({
     });
   },
   componentWillReceiveProps: function(props) {
-    this.state.content = props.source;
+    this.state.currentFile = props.files[0];
     this.state.preview = false;
   },
   showPreview: function() {
@@ -37,18 +36,27 @@ module.exports = React.createClass({
     });
   },
   onContentChange: function(content) {
-    this.state.content = content;
+    // console.log(content, this.state.currentFile);
+    this.state.currentFile.content = content;
+
+    // console.log(this.prop)
+  },
+  setFile: function(file, event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.setState({ currentFile: file });
   },
   render: function() {
+
 
     var sections = {};
 
     if (this.state.preview) {
-      sections.content = <Preview content={this.state.content} />;
+      sections.content = <Preview files={this.props.files} />;
     } else {
       sections.content = <AceEditor
         onChange={this.onContentChange}
-        value={this.state.content}
+        value={this.state.currentFile.content}
         mode="java"
         name={ this.state._editorId }
         theme="clouds"
@@ -59,6 +67,15 @@ module.exports = React.createClass({
 
     }
 
+    var sidebar;
+
+    if (this.props.files.length > 1) {
+      sidebar = <ul className="file-sidebar col col-sm-2">
+        {this.props.files.map(function(file) {
+          return <li><a href="#" onClick={this.setFile.bind(this, file)}>{file.path}</a></li>
+        }.bind(this))}
+      </ul>;
+    }
 
     return (
       <div className={cx({
@@ -73,11 +90,14 @@ module.exports = React.createClass({
           <li onClick={this.toggleExpansion}></li>
         </ul>
 
-        <div>
-          { this.props.runnable !== false ? <button className="btn btn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
-          { sections.content }
+        <div className="row inner-content">
+            {sidebar}
+            <div className={"col editor col-sm-" + (sidebar ? 10 : 12 )}>
+              { sections.content }
+            </div>
         </div>
 
+          { this.props.runnable !== false ? <button className="btn btn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
       </div>
     );
   }

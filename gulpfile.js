@@ -80,7 +80,7 @@ gulp.task("bundle", function(complete) {
     if (!_bundle) {
 
       var b = _bundle = browserify("./src/browser/index.js", extend({}, watchify.args, {
-        extensions: [".jsx", ".md"],
+        extensions: [".jsx", ".md", ".example"],
         global: true
       }));
 
@@ -88,6 +88,7 @@ gulp.task("bundle", function(complete) {
 
 
       b.transform({ global:true  }, 'reactify');
+      b.transform({ global: true }, require("./src/transform/example"));
       b.transform({ global: true }, require("./src/transform/md"));
       b.transform({ global: true }, 'brfs');
     }

@@ -10,6 +10,15 @@ detective = require("detective");
 
 
 module.exports = function(files, useCompiler, complete) {
+
+  // clone it
+  files = files.map(function(file) {
+    return {
+      path: file.path,
+      content: file.content
+    };
+  });
+
   if (typeof useCompiler === "function") {
     complete = useCompiler;
     useCompiler = true;

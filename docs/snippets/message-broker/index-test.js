@@ -109,7 +109,7 @@ describe(__filename + "#", function() {
   });
 
   describe("fastest#", function() {
-    it("can pick the fastest bus", function(next) {
+    xit("can pick the fastest bus", function(next) {
       var bus = broker(workers, weights);
       for (var i = 10; i--;) bus({ delay: true, dist: "fastest" });
       bus({ delay: true, dist: "fastest" }).on("end", function() {

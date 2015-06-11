@@ -10,7 +10,7 @@ Creates a new operation. This function is equivalent to `{ name: "operation" }`.
 <Tabs>
   <Example title="simple">
     ```javascript  
-      //index.js
+      ///index.js
       var mesh   = require("mesh");
       var stream = require("obj-stream");
 
@@ -32,7 +32,7 @@ Creates a new operation. This function is equivalent to `{ name: "operation" }`.
   </Example>
   <Example title="vanilla object">
     ```javascript
-      //index.js
+      ///index.js
       var mesh = require("mesh");
 
       // use wrap utility so we don't have to create an object
@@ -59,7 +59,7 @@ Wraps a function as a bus.
 <Tabs>
   <Example title="success handling">
     ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
     var bus = mesh.wrap(function(operation, next) {
         next(void 0, "some returned data");
@@ -72,8 +72,8 @@ Wraps a function as a bus.
   </Example>
   <Example title="error handling">
     ```javascript
-    //index.js
-    
+    ///index.js
+
     var mesh = require("mesh");
     var bus = mesh.wrap(function(operation, next) {
         next(new Error("Whoops! Something went wrong"));
@@ -92,7 +92,7 @@ Passes a [stream](https://nodejs.org/api/stream.html) to the target `handler`.
 
 <Example>
   ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
     var bus = mesh.stream(function(operation, stream) {
       stream.write({ id: "user1" });
@@ -116,7 +116,7 @@ Adds properties to a running `operation`.
 <Tabs>
   <Example title="props as function">
     ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
@@ -135,7 +135,7 @@ Adds properties to a running `operation`.
   </Example>
   <Example title="props as object">
     ```javascript
-    //index.js
+    ///index.js
 
     var mesh = require("mesh");
 
@@ -160,7 +160,7 @@ Passes an operation to `bus` if `condition` is **true**.
 <Tabs>
   <Example title="accept with tester">
     ```javascript
-      //index.js
+      ///index.js
       var mesh = require("mesh");
 
       function testOperation(operation) {
@@ -189,7 +189,7 @@ Passes an operation to `bus` if `condition` is **true**.
   </Example>
   <Example title="else bus">
     ```javascript
-      //index.js
+      ///index.js
 
       var mesh = require("mesh");
 
@@ -210,7 +210,7 @@ Passes an operation to `bus` if `condition` is **true**.
   </Example>
   <Example title="simple command handler">
     ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
     var sift = require("sift");
 
@@ -258,7 +258,7 @@ Makes a bus tailable for operations.
 <Tabs>
   <Example title="simple">
     ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
@@ -280,7 +280,7 @@ Makes a bus tailable for operations.
   </Example>
   <Example title="with condition">
     ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
@@ -303,7 +303,7 @@ Makes a bus tailable for operations.
   </Example>
   <Example title="realtime demo">
     ```javascript
-    //index.js
+    ///index.js
     var mesh   = require("mesh");
     var io     = require("mesh-socket.io");
 
@@ -331,7 +331,7 @@ Opens up a bus for operations to be written to.
 
 <Example>
 ```javascript
-//index.js
+///index.js
 var mesh = require("mesh");
 
 var bus = mesh.stream(function(operation, stream) {
@@ -358,7 +358,7 @@ Runs busses in parallel.
 
 <Example>
   ```javascript
-  //index.js
+  ///index.js
   var mesh = require("mesh");
 
   var busses = [
@@ -390,7 +390,7 @@ Runs busses in sequence.
 
 <Example>
   ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var busses = [
@@ -420,7 +420,7 @@ Runs busses in sequence until data is emitted.
 
 <Example>
   ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var busses = [
@@ -459,7 +459,7 @@ Runs all busses in parallel until one bus emits data.
 
 <Example>
   ```javascript
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var busses = [
@@ -497,7 +497,7 @@ Limits the number of concurrent operations.
 
 <Example>
   ```javascript  
-    //index.js
+    ///index.js
     var mesh = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
@@ -521,7 +521,7 @@ Maps data.
 
 <Example>
   ```javascript
-  //index.js
+  ///index.js
 
   var mesh = require("mesh");
 
@@ -552,7 +552,7 @@ Reduces data from `bus` into one chunk.
 
 <Example>
   ```javascript
-  //index.js
+  ///index.js
   var mesh = require("mesh");
 
   var bus = mesh.stream(function(operation, stream) {
@@ -578,7 +578,7 @@ Catches an error emitted by a bus.
 
 <Example>
   ```javascript
-  //index.js
+  ///index.js
 
   var mesh = require("mesh");
 
@@ -602,7 +602,7 @@ Yields data. Useful for testing.
 
 <Example>
   ```javascript  
-  //index.js
+  ///index.js
   var mesh = require("mesh");
 
   var bus = mesh.yields(void 0, ["chunk 1", "chunk 2"]);
@@ -622,7 +622,7 @@ No operation bus.
 
 <Example>
   ```javascript
-  //index.js  
+  ///index.js  
 
   var mesh    = require("mesh");
   var memoize = require("memoizee");
@@ -646,7 +646,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
 <Tabs>
   <Example title="simple example">
     ```javascript
-    //index.js
+    ///index.js
 
     var mesh    = require("mesh@2.0.3");
 
@@ -667,7 +667,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
   </Example>
   <Example title="error example">
     ```javascript
-    //index.js
+    ///index.js
 
     var mesh    = require("mesh@2.0.3");
 
@@ -690,7 +690,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
   </Example>
   <Example title="model example">
     ```javascript  
-    //index.js
+    ///index.js
 
     var mesh    = require("mesh@2.0.3");
     var extend  = require("extend");
@@ -846,7 +846,7 @@ Times out an operation after `ms`.
 
 <Example title="simple example">
   ```javascript
-  //index.js
+  ///index.js
   var mesh    = require("mesh@2.0.3");
 
   var bus = mesh.wrap(function(operation, next) {
@@ -868,7 +868,7 @@ Retrys an operation against bus if an error is emitted.
 
 <Example title="simple example">
   ```javascript
-  //index.js
+  ///index.js
 
   var mesh    = require("mesh@2.0.3");
 

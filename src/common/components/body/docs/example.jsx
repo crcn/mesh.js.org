@@ -1,8 +1,8 @@
 var React = require("react");
-var IDE   = require("common/components/ide");
+var IDE   = require("../../ide");
 
 module.exports = React.createClass({
   render: function() {
-    return <IDE className="example" showGutter={false} source={this.props.files[0].content} />;
+    return <IDE {...this.props} files={this.props.files} className="example" showGutter={false} />;
   }
 });

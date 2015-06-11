@@ -2,21 +2,19 @@ var React      = require("react");
 var Navigation = require("../../navigation");
 var Link       = require("../../link");
 var extend     = require("xtend/mutable");
+var fs         = require("fs");
+var path       = require("path");
 
 // examples
 // snippets
 // modules
 // architecture
 var docs = {
-  api : require("./api.md")
+  "api"      : require("./md/core.md"),
+  "examples" : require("./md/examples.md")
 };
 
-var examples = {
-  react: {}
-};
-
-var pages = extend({}, docs, examples);
-
+var pages = docs;
 
 var components = {
   Example : require("./example"),
@@ -30,11 +28,6 @@ module.exports = React.createClass({
     var sidebar = [];
 
     var locationState = this.props.state;
-
-    var files = [
-      { path: "index.js" },
-      { path: "test.js" }
-    ]
 
     // markdown examples
     for (var category in docs) {
@@ -52,23 +45,6 @@ module.exports = React.createClass({
           </Link>
         </li>;
       }.bind(this)))
-    }
-
-    // examples
-    sidebar.push(
-      <li className="category">
-        Examples
-      </li>
-    );
-
-    for (var name in examples) {
-      sidebar.push(
-        <li className="sub-category">
-          <Link alias="docsSubcategory" category="examples" subcategory={name} {...this.props}>
-            {name}
-          </Link>
-        </li>
-      );
     }
 
     return (

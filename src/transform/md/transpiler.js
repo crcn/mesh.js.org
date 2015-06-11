@@ -1,11 +1,13 @@
-var parser = require("./parser");
-var path   = require("path");
-var fs     = require("fs");
-var uglify = require("uglify-js");
+var parser       = require("./parser");
+var path         = require("path");
+var fs           = require("fs");
+var uglify       = require("uglify-js");
+var _findAllDeps = require("../example/findAllDeps");
 
 var currentOptions = {};
 
 exports.transpile = function(source, options) {
+  _eid = 0;
   currentOptions = options || { cwd: process.cwd() };
   return _transpile(parser.parse(source));
 }
@@ -79,6 +81,9 @@ function _apiElement(expr) {
   return "React.createElement(this.props.components.H4, {id:'" + _getElementLink(expr) + "', state: this.props.state }, [" + expr[3].map(_node).join(",") + "])";
 }
 
+
+var _eid = 0;
+
 function _exampleElement(expr) {
   var buffer = "React.createElement(this.props.components.Example, {";
 
@@ -99,12 +104,7 @@ function _exampleElement(expr) {
 
       var directory = attr[2];
 
-      files = fs.readdirSync(path.join(currentOptions.cwd, directory)).filter(function(basename) {
-        return !/^\./.test(basename);
-      }).map(function(basename) {
-        var filePath = path.join(currentOptions.cwd, directory, basename);
-        return _file(filePath, basename === "index.js");
-      });
+      files = _findAllDeps(path.join(currentOptions.cwd, directory, "index.js"));
     }
   });
 
@@ -123,7 +123,9 @@ function _exampleElement(expr) {
     }
   });
 
-  buffer += JSON.stringify(files);
+  var ref = "example" + (_eid++);
+
+  buffer += "this._" + ref + " || (this._" + ref + "=" + JSON.stringify(files) + ")"
 
   return buffer + "})";
 }
