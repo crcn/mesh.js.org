@@ -10,7 +10,7 @@ var path       = require("path");
 // modules
 // architecture
 var docs = {
-  "api"      : require("./md/core.md"),
+  "core"     : require("./md/core.md"),
   "balance"  : require("./md/balance.md"),
   "examples" : require("./md/examples.md")
 };
@@ -60,7 +60,7 @@ module.exports = React.createClass({
             </ul>
           </div>
           <div className="col-sm-10 col-xs-12 docs">
-            {React.createElement(pages[locationState.pages.docs] || pages.api, {
+            {React.createElement(pages[locationState.pages.docs] || pages.core, {
               components: components,
               state: this.props.state
             })}
