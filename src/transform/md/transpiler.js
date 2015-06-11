@@ -47,7 +47,7 @@ function _headers(expr) {
 
 
 function _getElementLink(expr) {
-  return _plainText(expr[3]).replace(/\s/g,"-").replace(/[^a-zA-Z0-9-_]/g,"");
+  return _plainText(expr[3]).replace(/\s/g,"-").replace(/[^a-zA-Z0-9-_]/g,"").toLowerCase();
 }
 
 function _component(expr) {
