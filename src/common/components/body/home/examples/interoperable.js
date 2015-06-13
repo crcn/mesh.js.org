@@ -1,17 +1,26 @@
-var mesh   = require("mesh");
-var io     = require("mesh-socket.io");
+var mesh    = require("mesh");
+var storage = require("mesh-memory");
+var io      = require("mesh-socket.io");
 
-var bus = mesh.stream(function(operation, stream) {
-  console.log("handle ", operation);
-  stream.end({
-    text: "Hello " + operation.name
-  });
-});
+// storage. This can be anything- mongodb, memory, etc.
+var bus = storage();
 
+// allows the app to receive all operations executed on DB.
 bus = mesh.tailable(bus);
 
-bus(mesh.op("tail")).on("data", io({ channel: "operation" }, bus));
+// make the bus realtime with socket.io
+bus = mesh.parallel(bus, io({ channel: "operation" }, bus));
 
-bus({ name: prompt("What's your name?") }).on("data", function(data) {
-  console.log(data.text);
+// tail for all local & remote operations
+bus(mesh.op("tail"))
+.on("data", function(data) {
+  console.log("new message: ", data);
+});
+
+bus({
+  name: "insert",
+  collection: "messages",
+  data: {
+    text: prompt("Type a message!")
+  }
 });

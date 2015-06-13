@@ -2,23 +2,20 @@ var mesh = require("mesh");
 var sift = require("sift");
 var http = require("mesh-http");
 
-var bus = http({ prefix: "/api" });
+var bus = http();
 
+// map CRUD operation to proper API request
 bus = mesh.accept(
-  sift({ collection: "users", name: "insert" }),
-  mesh.attach(function(operation) {
-    return {
-      pathname: "/createUser",
-      method: "POST"
-      data: operation.data
-    }
-  }, bus)
+
+  // mongodb query utility for operations
+  sift({ name: "insert", collection: "users" }),
+
+  // attach these properties to a running op
+  mesh.attach({ url: "/register", method: "POST" }, bus),
+
+  // else bus if sift() fails
+  bus
 );
 
-var user = new UserModel({
-  name: "Billy",
-  bus: mesh.attach({ collection: "users" }, bus)
-});
-
-// POST /api/createUser { name: "Billy" }
-user.insert(function() { });
+// POST /register { name: "blarg" }
+bus({ collection: "users", name: "insert", data: { name: "blarg" } });
