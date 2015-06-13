@@ -31,7 +31,7 @@ var features = [
   {
     path: "index.js",
     title: "Interoperable",
-    desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
+    desc: "Write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are easy to build.",
     content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
     icon: "shuffle"
   }
