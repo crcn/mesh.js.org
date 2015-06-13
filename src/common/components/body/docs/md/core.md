@@ -1,3 +1,6 @@
+These docs assume that you're familiar with [node streams](https://github.com/substack/stream-handbook). 
+
+
 #### stream bus(operation)
 
 Executes an operation where `bus` is the `operation` handler. A node-like [stream](https://nodejs.org/api/stream.html) is returned that emits data handled by the `bus`.
