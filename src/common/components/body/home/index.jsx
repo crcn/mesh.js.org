@@ -34,7 +34,8 @@ var features = [
     desc: "Easily write code that’s interoperable with other services. Features such as offline-mode, rollbacks, and realtime data are a cinch to build.",
     content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
     icon: "shuffle"
-  },
+  }
+  /*,
   {
     path: "index.js",
     title: "Built for APIs",
@@ -42,7 +43,7 @@ var features = [
     content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
     runnable: false,
     icon: "heart"
-  }
+  }*/
 ]
 
 
