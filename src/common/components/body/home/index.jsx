@@ -9,33 +9,63 @@ var features = [
   {
     path: "/index.js",
     title: "Just a utility",
-    desc : "Use it however you want. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers.",
+    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers.",
     content: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
     icon: "settings"
   },
   {
     path: "/index.js",
     title: "Decoupled",
-    desc: "Mesh helps decouple your application from data sources. Easily write code that’s isomorphic, testable, and isn’t locked into any particular service.",
+    desc: "Mesh helps decouple your application from data sources. Write code that’s isomorphic, and isn’t locked into any particular service.",
     content: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8"),
     icon: "unlocked"
   },
   {
     path: "/index.js",
     title: "Interoperable",
-    desc: "Mesh makes it incredibly easy to make data sources interoperable with one another. Connect services together to build powerful features such as rollbacks, offline-mode, realtime data, and more.",
+    desc: "Connect services together to build powerful features such as rollbacks, offline-mode, realtime data, and more.",
     content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
     icon: "shuffle"
   },
   {
     path: "/index.js",
+    title: "Testable",
+    desc: "Easily write unit tests that fake complex interactions between services such as mongodb, and socket.io.",
+    // desc: "mesh makes it easy to write testable",
+    content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
+    runnable: false,
+    icon: "beaker"
+  },
+  {
+    path: "/index.js",
+    title: "Extensible",
+    desc: "Mesh comes with an array of adapters such as mongodb, socket.io, webrtc, local storage, and pubnub.",
+    content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
+    runnable: false,
+    icon: "outlet"
+  },
+  {
+    path: "/index.js",
     title: "Built for APIs",
-    desc: "Mesh doesn't make any assumptions about your application. Easily write adapters for your API and unlock the ability to interoperate with other mesh plugins.",
+    desc: "Easily write adapters for your API and unlock the ability to interoperate with other mesh plugins.",
     content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
     runnable: false,
     icon: "heart"
   }
 ];
+
+var examples = [
+
+];
+
+function _chop(array, size) {
+  var ret = Array.apply(void 0, new Array(Math.ceil(array.length / size))).map(function(v, i) {
+    var start = i * size;
+    return array.slice(start, start + size);
+  });
+
+  return ret;
+}
 
 module.exports = React.createClass({
   render: function() {
@@ -69,6 +99,34 @@ module.exports = React.createClass({
         </div>
 
         <div className="row features">
+          <div className="content">
+            {
+              _chop(features, 3).map(function(row) {
+                return <div className="row feature">
+                  {
+                    row.map(function(column) {
+                      return <div className={"feature col-sm-" + (12 / row.length)}>
+                        <div className="title"><i className={"ion-" + column.icon}></i>{column.title}</div>
+                        <p>{column.desc}</p>
+                      </div>;
+                    })
+                  }
+                </div>;
+              })
+            }
+
+
+            <div className="row examples">
+              <h2>What can you build with Mesh?</h2>
+              <hr />
+            </div>
+          </div>
+
+
+        </div>
+
+
+        <div className="row hide features">
           {
             features.map(function(feature, i) {
               return <div className="row feature" key={i}>

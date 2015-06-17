@@ -11,7 +11,7 @@ module.exports = React.createClass({
     return {
       loading: true,
       logs: []
-    }
+    };
   },
   onBundle: function(err, exports) {
     if (err) console.error(err);
@@ -51,9 +51,8 @@ module.exports = React.createClass({
           level: level,
           text : msg
         })
-      })
+      });
     }
-
 
     console.log     = log.bind(this, "log");
     console.error   = log.bind(this, "error");

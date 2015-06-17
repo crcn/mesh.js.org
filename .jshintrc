@@ -1,0 +1,16 @@
+{
+    "node"     : true,
+    "bitwise"  : false,
+    "eqnull"   : true,
+    "browser"  : true,
+    "undef"    : true,
+    "eqeqeq"   : false,
+    "noarg"    : true,
+    "mocha"    : true,
+    "evil"     : true,
+    "laxbreak" : true,
+    "globals"  : {
+    	"window" : false,
+    	"$"      : false
+    }
+}

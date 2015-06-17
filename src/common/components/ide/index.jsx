@@ -19,7 +19,7 @@ module.exports = React.createClass({
       preview: false,
       currentFile: this.props.files[0],
       _editorId: "editor-" + (_ref++)
-    }
+    };
   },
   toggleExpansion: function() {
     this.setState({
@@ -48,7 +48,6 @@ module.exports = React.createClass({
   },
   render: function() {
 
-
     var sections = {};
 
     if (this.state.preview) {
@@ -63,8 +62,7 @@ module.exports = React.createClass({
         width="100%"
         maxLines={Infinity}
         highlightActiveLine={false}
-        {...this.props} />
-
+        {...this.props} />;
     }
 
     var sidebar;
@@ -73,7 +71,7 @@ module.exports = React.createClass({
       sidebar = <ul className="file-sidebar col col-sm-2">
         {this.props.files.map(function(file) {
           var label = file.path;
-          return <li><a href="#" onClick={this.setFile.bind(this, file)}>{label}</a></li>
+          return <li><a href="#" onClick={this.setFile.bind(this, file)}>{label}</a></li>;
         }.bind(this))}
       </ul>;
     }
@@ -93,12 +91,16 @@ module.exports = React.createClass({
 
         <div className="row inner-content">
             {sidebar}
-            <div className={"col editor col-sm-" + (sidebar ? 10 : 12 )}>
+            <div className={"col editor col-sm-" + (sidebar ? 10 : 12)}>
               { sections.content }
             </div>
         </div>
 
-          { this.props.runnable !== false ? <button className="btn btn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> : void 0 }
+        {
+          this.props.runnable !== false ?
+          <button className="btn btn-primary preview-button" onClick={this.showPreview}>{this.state.preview ? "show code" : "show preview"}</button> :
+          void 0
+        }
       </div>
     );
   }

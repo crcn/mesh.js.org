@@ -1,6 +1,7 @@
 .home {
 
 
+
   & .example {
     max-height: 400px;
     overflow: scroll;
@@ -75,11 +76,40 @@
   & .features {
     background-color: @blue-almost-white;
     padding-top: 60px;
+    padding-bottom: 60px;
+
+    & .row {
+      margin-bottom: 30px;
+    }
+  }
+
+
+  & .examples {
+
+    text-align: center;
+
+    & h2, hr {
+      color: @blue-dark;
+    }
+    hr {
+      border-top-color: rgba(0,0,0,0.1);
+      position: relative;
+      top: -45px;
+    }
+
+    & h2 {
+      font-weight: 100;
+      text-align: center;
+      position:relative;
+      z-index: 1;
+      background-color: @blue-almost-white;
+      display:inline-block;
+      padding: 0px 15px;
+    }
   }
 
   & .feature {
     color: @blue-dark;
-    margin-bottom: 30px;
     & .title {
       font-size: 28px;
       & i {

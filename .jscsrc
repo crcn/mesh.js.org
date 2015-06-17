@@ -1,0 +1,15 @@
+{
+	  "preset": "google",
+    "requireParenthesesAroundIIFE": true,
+    "maximumLineLength": 200,
+    "validateLineBreaks": "LF",
+    "validateIndentation": 2,
+    "validateQuoteMarks": "\"",
+
+    "disallowKeywords": ["with"],
+    "disallowSpacesInsideObjectBrackets": null,
+    "disallowImplicitTypeConversion": ["string"],
+    "requireCurlyBraces": [],
+
+    "safeContextKeyword": "self"
+}
