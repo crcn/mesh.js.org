@@ -11,6 +11,7 @@
   & .header {
     height: 60%;
     min-height: 500px;
+    overflow: hidden;
     position: relative;
     .background-image(linear-gradient(left, @blue-light, @blue));
 
@@ -50,9 +51,15 @@
     & .ide {
       width: 50%;
       height: 400px;
-      margin: 0px auto;
-      position: relative;
-      top: 100px;
+      transform:translateX(50%);
+      position: absolute;
+      bottom: -200px;
+      text-align: left;
+      background-color: #FFF;
+
+      & .inner-content {
+        padding-right: 0px;
+      }
     }
 
 
@@ -78,6 +85,17 @@
     padding-top: 60px;
     padding-bottom: 60px;
 
+    &.little {
+      background-color: #D0EBF9;
+    }
+    
+    &.main {
+      // padding-bottom: 0px;
+      & .feature {
+        margin-bottom: 0px;
+      }
+    }
+
     & .row {
       margin-bottom: 30px;
     }
@@ -87,6 +105,10 @@
   & .examples {
 
     text-align: center;
+
+    & .example {
+      text-align: left;
+    }
 
     & h2, hr {
       color: @blue-dark;

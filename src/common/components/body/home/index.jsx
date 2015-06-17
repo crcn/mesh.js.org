@@ -8,10 +8,10 @@ var Link       = require("../../link");
 var features = [
   {
     path: "/index.js",
-    title: "Just a utility",
-    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers.",
+    title: "Lightweight",
+    desc : "Powerful and lightweight. Mesh is only 5kb gzipped in the browser.",
     content: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
-    icon: "settings"
+    icon: "leaf"
   },
   {
     path: "/index.js",
@@ -54,8 +54,19 @@ var features = [
   }
 ];
 
-var examples = [
+var mainExampleFile = {
+  path: "/index.js",
+  content: fs.readFileSync(__dirname + "/examples/main.js", "utf8"),
+}
 
+var examples = [
+  {
+    path: "/index.js",
+    title: "Just a utility",
+    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers.",
+    content: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
+    icon: "settings"
+  }
 ];
 
 function _chop(array, size) {
@@ -69,6 +80,9 @@ function _chop(array, size) {
 
 module.exports = React.createClass({
   render: function() {
+
+    var currentExample = examples[0];
+
     return (
       <div className="home">
 
@@ -82,6 +96,7 @@ module.exports = React.createClass({
               npm install mesh --save
             </div>
           </div>
+
 
           <SocialBar {...this.props} />
         </div>
@@ -98,7 +113,25 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <div className="row features">
+        <div className="row features main">
+          {
+            examples.map(function(feature, i) {
+              return <div className="row feature" key={i}>
+                <div className="content">
+                  <div className="col-sm-4">
+                    <div className="title"><i className={"ion-" + feature.icon}></i>{feature.title}</div>
+                    <p>{feature.desc}</p>
+                  </div>
+                  <div className="col-sm-8">
+                    <IDE className="example" readOnly={false} showGutter={false} files={[feature]} runnable={feature.runnable} />
+                  </div>
+                </div>
+              </div>;
+            })
+          }
+        </div>
+
+        <div className="row features little">
           <div className="content">
             {
               _chop(features, 3).map(function(row) {
@@ -114,35 +147,9 @@ module.exports = React.createClass({
                 </div>;
               })
             }
-
-
-            <div className="row examples">
-              <h2>What can you build with Mesh?</h2>
-              <hr />
-            </div>
           </div>
-
-
         </div>
 
-
-        <div className="row hide features">
-          {
-            features.map(function(feature, i) {
-              return <div className="row feature" key={i}>
-                <div className="content">
-                  <div className="col-sm-4">
-                    <div className="title"><i className={"ion-" + feature.icon}></i>{feature.title}</div>
-                    <p>{feature.desc}</p>
-                  </div>
-                  <div className="col-sm-8">
-                    <IDE className="example" readOnly={false} showGutter={false} files={[feature]} runnable={feature.runnable} />
-                  </div>
-                </div>
-              </div>;
-            })
-          }
-        </div>
 
         <div className="row footer hidden-xs">
           <div className="col-sm-4">
