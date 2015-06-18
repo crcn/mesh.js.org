@@ -1,3 +1,5 @@
+/** oh jasus don't look at this **/
+
 .home {
 
 
@@ -12,6 +14,10 @@
 
   & .example {
     overflow: scroll;
+    min-height: 402px;
+    & .inner-content {
+      margin-bottom: 0px;
+    }
   }
 
   & .cta-examples {
@@ -67,20 +73,6 @@
       }
     }
 
-    & .ide {
-      width: 50%;
-      height: 400px;
-      transform:translateX(50%);
-      position: absolute;
-      bottom: -200px;
-      text-align: left;
-      background-color: #FFF;
-
-      & .inner-content {
-        padding-right: 0px;
-      }
-    }
-
 
   }
 
@@ -105,6 +97,7 @@
     padding-bottom: 60px;
 
     &.little {
+      padding-top: 30px;
       & hr {
         margin-bottom: 70px;
       }
@@ -119,7 +112,7 @@
       }
     }
 
-    & .row {
+    & .row.feature {
       margin-bottom: 30px;
     }
   }

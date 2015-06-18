@@ -45,57 +45,23 @@ var features = [
   },
   {
     title: "Works with APIs",
-    desc: "Easily write adapters for your service API and unlock the ability to interoperate with other mesh plugins.",
+    desc: "Easily write adapters for your service API and unlock the ability to interoperate with other mesh <a href='https://www.npmjs.com/search?q=meshjs'>plugins</a>.",
     icon: "heart"
   }
 ]
 
-var features2 = [
+var plugins = [
   {
-    path: "/index.js",
-    title: "Lightweight",
-    desc : "Powerful and lightweight. Mesh is only 5kb gzipped in the browser.",
-    content: fs.readFileSync(__dirname + "/examples/just-a-utility.js", "utf8"),
-    icon: "leaf"
+    name: "socket.io"
   },
   {
-    path: "/index.js",
-    title: "Decoupled",
-    desc: "Mesh helps decouple your application from data sources. Write code that’s isomorphic, and isn’t locked into any particular service.",
-    content: fs.readFileSync(__dirname + "/examples/decoupled.js", "utf8"),
-    icon: "unlocked"
+    name: "Mongodb"
   },
   {
-    path: "/index.js",
-    title: "Interoperable",
-    desc: "Connect services together to build powerful features such as rollbacks, offline-mode, realtime data, and more.",
-    content: fs.readFileSync(__dirname + "/examples/interoperable.js", "utf8"),
-    icon: "shuffle"
+    name: "local storage"
   },
   {
-    path: "/index.js",
-    title: "Testable",
-    desc: "Easily write unit tests that fake complex interactions between services such as mongodb, and socket.io.",
-    // desc: "mesh makes it easy to write testable",
-    content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
-    runnable: false,
-    icon: "beaker"
-  },
-  {
-    path: "/index.js",
-    title: "Extensible",
-    desc: "Mesh comes with an array of adapters such as mongodb, socket.io, webrtc, local storage, and pubnub.",
-    content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
-    runnable: false,
-    icon: "outlet"
-  },
-  {
-    path: "/index.js",
-    title: "Built for APIs",
-    desc: "Easily write adapters for your API and unlock the ability to interoperate with other mesh plugins.",
-    content: fs.readFileSync(__dirname + "/examples/flexible.js", "utf8"),
-    runnable: false,
-    icon: "heart"
+    name: "loki"
   }
 ];
 
@@ -186,7 +152,9 @@ module.exports = React.createClass({
                     row.map(function(column) {
                       return <div className={"feature col-sm-" + (12 / row.length)}>
                         <div className="title"><i className={"ion-" + column.icon}></i>{column.title}</div>
-                        <p>{column.desc}</p>
+                        <p dangerouslySetInnerHTML={{
+                            __html: column.desc
+                        }}></p>
                       </div>;
                     })
                   }
