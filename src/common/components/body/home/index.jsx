@@ -25,7 +25,8 @@ var features = [
   // todo - and more (with a link)
   {
     title: "Decoupled",
-    desc : "Write code that's decoupled from data sources including Mongodb, and PubNub. No more service vendor lock.",
+    // desc : "Write code that's decoupled from data sources including Mongodb, and PubNub. No more service vendor lock.",
+    desc : "Easily swap out services such as Mongodb & PubNub. No more vendor lock in.",
     icon: "unlocked"
   },
   {
