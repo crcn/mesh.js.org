@@ -74,7 +74,7 @@ var examples = [
   {
     path: "/index.js",
     title: "Just a utility",
-    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - mesh should be complimentary to your application stack.",
+    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - mesh should be complimentary to your existing application stack.",
     content: fs.readFileSync(__dirname + "/examples/main.js", "utf8"),
     icon: "settings"
   }
