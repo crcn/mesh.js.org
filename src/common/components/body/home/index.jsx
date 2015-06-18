@@ -6,7 +6,7 @@ var Navigation = require("../../navigation");
 var Link       = require("../../link");
 
 /*
-- Lightweight
+- Lightweight *
 - Extensible
 - Streamable
 - Compatible/Interoperable
@@ -16,6 +16,41 @@ var Link       = require("../../link");
 */
 
 var features = [
+  {
+    title: "Lightweight",
+    desc : "Powerful and lightweight. Mesh is only 5kb gzipped in the browser.",
+    icon: "leaf"
+  },
+
+  // todo - and more (with a link)
+  {
+    title: "Decoupled",
+    desc : "Write code that's decoupled from data sources including Mongodb, and PubNub. No more service vendor lock.",
+    icon: "unlocked"
+  },
+  {
+    title: "Interoperable",
+    desc : "Connect services together such as socket.io, and local storage to build complex features such as realtime data, offline mode, and more.",
+    icon: "shuffle"
+  },
+  {
+    title: "Stream-based",
+    desc : "Mesh uses node-like streams, and is compatible with other stream-based libraries such as HighlandJS.",
+    icon: "social-nodejs"
+  },
+  {
+    title: "Testable",
+    desc : "Mesh makes service level code easy to test. Just swap out the service adapter for a fake one. No more stubs.",
+    icon: "beaker"
+  },
+  {
+    title: "Works with APIs",
+    desc: "Easily write adapters for your service API and unlock the ability to interoperate with other mesh plugins.",
+    icon: "heart"
+  }
+]
+
+var features2 = [
   {
     path: "/index.js",
     title: "Lightweight",
@@ -73,7 +108,7 @@ var examples = [
   {
     path: "/index.js",
     title: "Just a utility",
-    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers.",
+    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. There's nothing opinionated about it that would get in your way.",
     content: fs.readFileSync(__dirname + "/examples/main.js", "utf8"),
     icon: "settings"
   }
@@ -107,7 +142,6 @@ module.exports = React.createClass({
             </div>
           </div>
 
-
           <SocialBar {...this.props} />
         </div>
 
@@ -139,10 +173,12 @@ module.exports = React.createClass({
               </div>;
             })
           }
+
         </div>
 
         <div className="row features little">
           <div className="content">
+            <hr />
             {
               _chop(features, 3).map(function(row) {
                 return <div className="row feature">
@@ -158,6 +194,10 @@ module.exports = React.createClass({
               })
             }
           </div>
+        </div>
+
+        <div className="row cta-examples">
+          Checkout some <a href="//github.com/mojo-js/mesh.js/tree/master/examples">examples</a> of what you can build with Mesh.
         </div>
 
 

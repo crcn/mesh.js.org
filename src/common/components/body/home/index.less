@@ -2,8 +2,28 @@
 
 
 
+  & h2, hr {
+    color: @blue-dark;
+  }
+
+  hr {
+    border-top-color: rgba(0,0,0,0.1);
+  }
+
   & .example {
     overflow: scroll;
+  }
+
+  & .cta-examples {
+    background-color: @blue-darker;
+    opacity: 0.9;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    & a {
+      color: @blue;
+    }
   }
 
 
@@ -85,11 +105,15 @@
     padding-bottom: 60px;
 
     &.little {
-      background-color: #D0EBF9;
+      & hr {
+        margin-bottom: 70px;
+      }
+      // margin-top: 70px;
+      // background-color: #D0EBF9;
     }
 
     &.main {
-      // padding-bottom: 0px;
+      padding-bottom: 0px;
       & .feature {
         margin-bottom: 0px;
       }
@@ -109,9 +133,6 @@
       text-align: left;
     }
 
-    & h2, hr {
-      color: @blue-dark;
-    }
     hr {
       border-top-color: rgba(0,0,0,0.1);
       position: relative;
