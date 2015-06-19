@@ -1,13 +1,13 @@
 Mesh doesn't have any base classes, utilities, or other abstractions to help you create specific adapters, so
-you'll need to follow a few patterns to ensure that whatever adapter you write is pretty interchangeable, and interoperable with other plugins. <br />
+you'll need to follow a few patterns to ensure that whatever adapter you write are interchangeable, and interoperable with other plugins. <br />
 
-Before you begin writing adapters, be sure to install the `test suite` associated with them. For database adapters specifically, you can do so by running: `npm install mesh-store-test-cases`. <br />
+Before you begin writing adapters, install the `test suite` associated with them. For database adapters specifically, that command is: `npm install mesh-store-test-cases`. <br />
 
-Below are a few operations you'll need to implement.
+Below are a few operations you'll need to implement for database adapters.
 
 #### insert
 
-Inserts one or many items in a collection. Here are some cases that need to work:
+Inserts one or many items in a collection. Here are a few cases that need to work:
 
 <Example runnable="false">
   ```javascript
