@@ -75,7 +75,7 @@ var examples = [
   {
     path: "/index.js",
     title: "Just a utility",
-    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - mesh should be complimentary to your existing application stack.",
+    desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.",
     content: fs.readFileSync(__dirname + "/examples/main.js", "utf8"),
     icon: "settings"
   }
@@ -195,6 +195,8 @@ module.exports = React.createClass({
                 <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/examples">Examples</Link></li>
                 <li><Link alias="docsCategory" category="core" {...this.props}>Core API</Link></li>
                 <li><Link alias="docsCategory" category="balance" {...this.props}>Load Balancing API</Link></li>
+                <li><Link alias="docsCategory" category="database-adapters" {...this.props}>Writing Database Adapters</Link></li>
+                <li><Link href="https://github.com/mojo-js/mesh.js/tree/master/extra">Extra Utilities</Link></li>
               </ul>
               <ul className="col-sm-4">
                 <li>Connect</li>

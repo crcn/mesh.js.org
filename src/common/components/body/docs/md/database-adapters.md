@@ -4,7 +4,7 @@ Before you begin writing adapters, install the `test suite` associated with them
 
 Below are a few operations you'll need to implement for database adapters.
 
-#### insert
+#### insert operation
 
 Inserts one or many items in a collection. Here are a few cases that need to work:
 
@@ -22,14 +22,14 @@ Inserts one or many items in a collection. Here are a few cases that need to wor
   ```
 </Example>
 
-#### remove
+#### remove operation
 
 Removes one or many items from a collection.
 
-#### update
+#### update operation
 
 Updates one or many items in a collection.
 
-#### load
+#### load operation
 
 Loads one or many items in a collection.
