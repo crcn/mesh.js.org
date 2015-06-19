@@ -10,9 +10,9 @@ var path       = require("path");
 // modules
 // architecture
 var docs = {
-  "core"     : require("./md/core.md"),
-  "balance"  : require("./md/balance.md")
-  // "examples" : require("./md/examples.md")
+  "core"              : require("./md/core.md"),
+  "balance"           : require("./md/balance.md"),
+  "database-adapters" : require("./md/database-adapters.md")
 };
 
 var pages = docs;
@@ -35,7 +35,7 @@ module.exports = React.createClass({
       var doc = docs[category];
       sidebar.push(
         <li className="category">
-          <Link alias="docsCategory" category={category} {...this.props}>{category}</Link>
+          <Link alias="docsCategory" category={category} {...this.props}>{category.replace(/-/g," ")}</Link>
         </li>
       );
 
