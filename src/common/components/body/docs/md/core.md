@@ -357,7 +357,7 @@ opStream.write(mesh.op("someCommand"));
 
 #### bus parallel([busses])
 
-Runs busses in parallel.
+Runs operations against any number of busses in parallel, and merges their responses into one stream.
 
 <Example>
   ```javascript
@@ -388,7 +388,7 @@ Runs busses in parallel.
 
 #### bus sequence([busses])
 
-Runs busses in sequence.
+Similar to `parallel`, but executes operations against any number of busses in sequence. I.e: each listed bus waits for the previous bus to `end` before executing operations. 
 
 
 <Example>
