@@ -51,8 +51,8 @@ describe(__filename + "#", function() {
           render: function() {
             var files = this.props.files;
             expect(files.length).to.be(2);
-            expect(files[0].path).to.be("dep.js");
-            expect(files[1].path).to.be("index.js");
+            expect(files[0].path).to.be("/index.js");
+            expect(files[1].path).to.be("/dep.js");
             return React.createElement("span", void 0, "example");
           }
         })

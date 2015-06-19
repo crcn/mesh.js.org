@@ -1,29 +1,27 @@
 Mesh doesn't have any base classes, utilities, or other abstractions to help you create specific adapters, so
-you'll need to follow a few patterns to ensure that whatever adapter you write is pretty interchangeable, and interoperable with other plugins.
+you'll need to follow a few patterns to ensure that whatever adapter you write is pretty interchangeable, and interoperable with other plugins. <br />
 
-Before you begin writing adapters, be sure to install the `test suite` associated with them. For database adapters specifically, you can do so by running:
+Before you begin writing adapters, be sure to install the `test suite` associated with them. For database adapters specifically, you can do so by running: `npm install mesh-store-test-cases`. <br />
 
-```
-npm install mesh-store-test-cases
-```
-
-Below are a few operations you'll need to implement
+Below are a few operations you'll need to implement.
 
 #### insert
 
 Inserts one or many items in a collection. Here are some cases that need to work:
 
-```javascript
+<Example runnable="false">
+  ```javascript
+  ///index.js
+  // inserting one item into the people collection
+  customBus({ name: "insert", collection: "people", data: { name: "Jeff" } });
 
-// inserting one item into the people collection
-customBus({ name: "insert", collection: "people", data: { name: "Jeff" } });
-
-// inserting multiple items in people collection
-customBus({ name: "insert", collection: "people", data: [
-  { name: "Frank" },
-  { name: "Sarah" }
-});
-```
+  // inserting multiple items in people collection
+  customBus({ name: "insert", collection: "people", data: [
+    { name: "Frank" },
+    { name: "Sarah" }
+  });
+  ```
+</Example>
 
 #### remove
 

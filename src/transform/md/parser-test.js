@@ -189,5 +189,10 @@ describe(__filename + "#", function() {
       var ast = parser.parse("<a></a> <b></b>");
       expect(_stringify(ast)).to.be("elementaelementb");
     });
+
+    it("can have inline brs", function() {
+      var ast = parser.parse("abcde <br />");
+      expect(_stringify(ast)).to.be("elementptextabcdeelementbr");
+    });
   });
 });

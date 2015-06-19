@@ -92,7 +92,7 @@ ElementWithChildren
   }
 
 ElementWithoutChildren
-  = "<" startName:Name attributes:Attribute* "/>" {
+  = "<" startName:Name _ attributes:Attribute* _ "/>" {
     return ["element", startName, attributes, []];
   }
 
