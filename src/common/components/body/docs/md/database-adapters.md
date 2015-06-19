@@ -2,7 +2,7 @@ Mesh doesn't have base classes or other abstractions to help you create adapters
 
 Before you begin writing adapters, install the `test suite` associated with them. For database adapters specifically, that command is: `npm install mesh-store-test-cases`. <br />
 
-Below are a few operations you'll need to implement.
+Below are a few operations you'll need to implement in order for `mesh-store-test-cases` to pass.
 
 #### insert operation
 
