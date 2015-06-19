@@ -1,8 +1,8 @@
-Mesh doesn't have any base classes or other abstractions to help you create adapters. You'll need to follow a few patterns to ensure that whatever adapter you write are interchangeable, and interoperable with other plugins. <br />
+Mesh doesn't have base classes or other abstractions to help you create adapters. You'll need to follow a few patterns to ensure that whatever adapter you write are interchangeable, and interoperable with other plugins. <br />
 
 Before you begin writing adapters, install the `test suite` associated with them. For database adapters specifically, that command is: `npm install mesh-store-test-cases`. <br />
 
-Below are a few operations you'll need to implement for database adapters.
+Below are a few operations you'll need to implement.
 
 #### insert operation
 
