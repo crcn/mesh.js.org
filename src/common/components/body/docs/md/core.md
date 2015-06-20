@@ -1,11 +1,11 @@
-These docs assume that you're familiar with [node streams](https://github.com/substack/stream-handbook). 
+These docs assume that you're familiar with [node streams](https://github.com/substack/stream-handbook).
 
 
 #### stream bus(operation)
 
 Executes an operation where `bus` is the `operation` handler. A node-like [stream](https://nodejs.org/api/stream.html) is returned that emits data handled by the `bus`.
 
-#### operation op(name[, operation])
+#### operation op(name[, properties])
 
 Creates a new operation. This function is equivalent to `{ name: "operation" }`.
 
@@ -256,7 +256,7 @@ Similar to `accept` but rejects operations that are **true** in the condition.
 
 #### bus tailable(bus[, condition])
 
-Makes a bus tailable for operations.
+Makes a bus tailable for operations. This is a useful function is you're looking to synchronize data in multiple places within your application.
 
 <Tabs>
   <Example title="simple">
@@ -326,6 +326,86 @@ Makes a bus tailable for operations.
     });
     ```
   </Example>
+  <Example title="sync data">
+    ```javascript
+    ///index.js
+    var mesh   = require("mesh");
+    var memory = require("mesh-memory");
+    var sift   = require("sift");
+    var extend = require("extend");
+
+    var bus = memory();
+    bus     = mesh.tailable(bus, function(tail, operation) {
+      // use sift to enable mongodb-like queries
+      return sift(tail.query)(operation);
+    });
+
+    // limit the number of ops. Skip tail since it's left open
+    bus     = mesh.reject("tail", mesh.limit(1, bus), bus);
+
+    function Person(properties) {
+      this.setProperties(properties);
+
+      // tail for any updates on this model
+      this._tail = this.bus({ name: "tail", query: {
+        name: "update",
+        data: { id: this.id }
+      }}).on("data", function(operation) {
+        this.setProperties(operation.data);
+      }.bind(this));
+    }
+
+    extend(Person.prototype, {
+      insert: function() {
+        return this.bus({ name: "insert", data: this.toJSON() });
+      },
+      update: function() {
+        return this.bus({ name: "update", data: this.toJSON() });
+      },
+      load: function() {
+        return this.bus({ name: "load", query: {
+          id: this.id
+        }}).on("data", this.setProperties.bind(this));
+      },
+      setProperties: function(data) {
+        extend(this, data);
+      },
+      toJSON: function() {
+        return {
+          id   : this.id,
+          name : this.name
+        }
+      },
+      dispose: function() {
+        this._tail.end(); // stop watching the tail
+      }
+    });
+
+    var pbus = mesh.attach({ collection: "people" }, bus);
+
+    var p1 = new Person({ id: 1, name: "Jeff", bus: pbus })
+    var p2 = new Person({ id: 1, bus: pbus });
+    var p3 = new Person({ id: 1, bus: pbus })
+
+    p1.insert();
+    p2.load();
+
+    p3.load().once("end", function() {
+      console.log("loaded people:");
+      console.log("p1:  ", p1);
+      console.log("p2: ", p2);
+      console.log("p3: ", p3);
+    });
+
+    p3.name = "Joe";
+    p3.update().once("end", function() {
+      console.log("updated people:");
+      console.log("p1:  ", p1);
+      console.log("p2: ", p2);
+      console.log("p3: ", p3);
+    });
+    ```
+  </Example>
 </Tabs>
 
 #### stream mesh.open(bus)
@@ -388,7 +468,7 @@ Runs operations against any number of busses in parallel, and merges their respo
 
 #### bus sequence([busses])
 
-Similar to `parallel`, but executes operations against any number of busses in sequence. I.e: each listed bus waits for the previous bus to `end` before executing operations. 
+Similar to `parallel`, but executes operations against any number of busses in sequence. I.e: each listed bus waits for the previous bus to `end` before executing operations.
 
 
 <Example>

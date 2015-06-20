@@ -27,7 +27,7 @@ The [database test suite](https://github.com/mojo-js/mesh.js/tree/master/test-ca
 
 #### insert operation
 
-Inserts one or many items in a collection.
+Inserts one or many items in a collection. Each inserted item is streamed back as `data`.
 
 <br />Syntax: `{ name: "insert", collection: collectionName, data: ObjectOrArray }`
 
@@ -90,7 +90,7 @@ Updates one or many items in a collection.
 
 #### load operation
 
-Loads one or many items in a collection.
+Loads one or many items from a collection. Each item found is streamed back as `data`.
 
 <br />Syntax: `{ name: "load", collection: collectionName, multi: Boolean, query: Object }`
 
