@@ -947,7 +947,7 @@ Times out an operation after `ms`.
 
 #### bus retry(count, bus)
 
-Retrys an operation against bus if an error is emitted.
+Retries an operation against bus if an error is emitted.
 
 <Example title="simple example">
   ```javascript
