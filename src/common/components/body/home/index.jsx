@@ -46,7 +46,7 @@ var features = [
   },
   {
     title: "Works with APIs",
-    desc: "Easily write adapters for your service API and unlock the ability to interoperate with other mesh <a href='https://www.npmjs.com/search?q=meshjs'>plugins</a>.",
+    desc: "Easily <a href='/docs/database-adapters'>write adapters</a> for your service API and unlock the ability to interoperate with other mesh <a href='https://www.npmjs.com/search?q=meshjs'>plugins</a>.",
     icon: "heart"
   }
 ]
