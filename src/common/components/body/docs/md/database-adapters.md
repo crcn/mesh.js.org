@@ -25,13 +25,13 @@ The [database test suite](https://github.com/mojo-js/mesh.js/tree/master/test-ca
   ```
 </Example>
 
-
-
 #### insert operation
 
 Inserts one or many items in a collection.
 
-<br /> Cases that need to work:
+<br />Syntax: `{ name: "insert", collection: collectionName, data: ObjectOrArray }`
+
+<br /> Cases:
 <Example runnable="false">
   ```javascript
   ///index.js
@@ -54,7 +54,9 @@ Inserts one or many items in a collection.
 
 Removes one or many items from a collection.
 
-<br /> Cases that need to work:
+<br />Syntax: `{ name: "remove", collection: collectionName, multi: Boolean, query: Object }`
+
+<br /> Cases:
 <Example runnable="false">
   ```javascript
   ///index.js
@@ -71,7 +73,9 @@ Removes one or many items from a collection.
 
 Updates one or many items in a collection.
 
-<br /> Cases that need to work:
+<br />Syntax: `{ name: "update", collection: collectionName, multi: Boolean, query: Object, data: Object }`
+
+<br /> Cases:
 <Example runnable="false">
   ```javascript
   ///index.js
@@ -88,7 +92,9 @@ Updates one or many items in a collection.
 
 Loads one or many items in a collection.
 
-<br /> Cases that need to work:
+<br />Syntax: `{ name: "load", collection: collectionName, multi: Boolean, query: Object }`
+
+<br /> Cases:
 <Example runnable="false">
   ```javascript
   ///index.js
