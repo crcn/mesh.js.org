@@ -731,7 +731,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     ```javascript
     ///index.js
 
-    var mesh    = require("mesh@2.0.3");
+    var mesh    = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
       console.log("handle operation: ", operation);
@@ -752,7 +752,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     ```javascript
     ///index.js
 
-    var mesh    = require("mesh@2.0.3");
+    var mesh    = require("mesh");
 
     var bus = mesh.wrap(function(operation, next) {
       console.log("handle operation: ", operation);
@@ -775,7 +775,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     ```javascript  
     ///index.js
 
-    var mesh    = require("mesh@2.0.3");
+    var mesh    = require("mesh");
     var extend  = require("extend");
     var sift    = require("sift");
     var _       = require("highland");
@@ -930,7 +930,7 @@ Times out an operation after `ms`.
 <Example title="simple example">
   ```javascript
   ///index.js
-  var mesh    = require("mesh@2.0.3");
+  var mesh    = require("mesh");
 
   var bus = mesh.wrap(function(operation, next) {
     console.log("handle operation: ", operation);
@@ -953,7 +953,7 @@ Retries an operation against bus if an error is emitted.
   ```javascript
   ///index.js
 
-  var mesh    = require("mesh@2.0.3");
+  var mesh    = require("mesh");
 
   var bus = mesh.wrap(function(operation, next) {
     console.log("handle operation: ", operation);
