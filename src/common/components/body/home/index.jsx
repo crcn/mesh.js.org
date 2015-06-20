@@ -75,6 +75,7 @@ var examples = [
   {
     path: "/index.js",
     title: "Just a utility",
+    runnable: false,
     desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.",
     content: fs.readFileSync(__dirname + "/examples/main.js", "utf8"),
     icon: "settings"
@@ -134,7 +135,7 @@ module.exports = React.createClass({
                     <p>{feature.desc}</p>
                   </div>
                   <div className="col-sm-8">
-                    <IDE className="example" readOnly={true} showGutter={false} files={[feature]} runnable={feature.false} />
+                    <IDE className="example" readOnly={true} showGutter={false} files={[feature]} runnable={feature.runnable} />
                   </div>
                 </div>
               </div>;
