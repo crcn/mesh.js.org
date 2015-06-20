@@ -8,7 +8,5 @@ require.extensions[".md"] = function(module, filename) {
     cwd: path.dirname(filename)
   });
 
-  console.log(transpiled);
-
   return module._compile(transpiled, filename);
 };
