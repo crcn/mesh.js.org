@@ -204,7 +204,6 @@ module.exports = React.createClass({
                 <li><a href="http://twitter.com/mojoframework">Twitter</a></li>
                 <li><a href="https://groups.google.com/forum/#!forum/meshjs">Google group</a></li>
                 <li><a href="https://gitter.im/mojo-js/mesh.js">Chat</a></li>
-                <li>API</li>
               </ul>
             </div>
           </div>
