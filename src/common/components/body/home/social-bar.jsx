@@ -7,7 +7,7 @@ module.exports = React.createClass({
 
     $.ajax({
       dataType: "jsonp",
-      url: "https://cdn.api.twitter.com/1/urls/count.json?url=http://meshjs.com",
+      url: "https://cdn.api.twitter.com/1/urls/count.json?url=http://mesh.mojojs.com",
       success: function(data) {
         this.setState({ followerCount: data.count });
       }.bind(this)
@@ -30,7 +30,7 @@ module.exports = React.createClass({
       followerCount: void 0,
       watcherCount: void 0,
       forkCount: void 0,
-      tweetMessage: "Meshjs.js - featherlight JavaScript message bus for creating sophisticated applications http://meshjs.com #meshjs"
+      tweetMessage: "Mesh.js - data synchronization library http://mesh.mojojs.com #meshjs"
     };
   },
   render: function() {
