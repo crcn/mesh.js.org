@@ -30,6 +30,7 @@ module.exports = function(app) {
         "<script src=\"//use.typekit.net/fjj0nzz.js\"></script>" +
         "<script src=\"https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js\"></script>" +
         "<script>try{Typekit.load();}catch(e){}</script>" +
+        "<title>" + content.state.title + "</title>" + 
       "</head>" +
       "<body>" +
         "<div id=\"app\">" + content.body + "</div>" +

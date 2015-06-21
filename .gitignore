@@ -1,6 +1,7 @@
 .DS_Store
 node_modules
 coverage
+npm-*
 static/bundle.js
 static/bundle.css
 
