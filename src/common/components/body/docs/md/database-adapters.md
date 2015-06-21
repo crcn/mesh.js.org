@@ -1,8 +1,4 @@
-Mesh comes with various database adapters that share the same `CRUD` operations. The current list includes:
-
-- [mongodb](https://github.com/mojo-js/mesh-mongodb)
-- [lokidb](https://github.com/mojo-js/mesh-loki)
-- [memory](https://github.com/mojo-js/mesh-memory)
+Mesh comes with various database adapters that share the same `CRUD` operations. The current list is on the [main mesh.js README page](https://github.com/mojo-js/mesh.js). <br />
 
 If you're looking to build a custom DB adapter, You'll need to use the [database test suite](https://github.com/mojo-js/mesh.js/tree/master/test-cases) to ensure that whatever you write is interoperable with other plugins.
 
