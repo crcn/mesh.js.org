@@ -1,29 +1,12 @@
-Mesh doesn't have base classes or other abstractions to help you create adapters. You'll need to follow a few patterns to ensure that whatever you write is interoperable with other plugins. <br />
+Mesh comes with various database adapters that share the same `CRUD` operations. The current list includes:
 
-The [database test suite](https://github.com/mojo-js/mesh.js/tree/master/test-cases) was generalized and should work with just about any testing framework. Here's an example of how you might use it with [mocha](http://mochajs.org/):
+- [mongodb](https://github.com/mojo-js/mesh-mongodb)
+- [lokidb](https://github.com/mojo-js/mesh-loki)
+- [memory](https://github.com/mojo-js/mesh-memory)
 
-<Example runnable="false">
-  ```javascript
-  ///index.js
-  var createDBCases = require("mesh/test-cases/database");
-  var memory        = require("mesh-memory");
+If you're looking to build a custom DB adapter, You'll need to use the [database test suite](https://github.com/mojo-js/mesh.js/tree/master/test-cases) to ensure that whatever you write is interoperable with other plugins.
 
-  describe("in-memory-adapter#", function() {
-
-    // createCases(createBus)
-    // creates the cases
-    var cases = createDBCases(function(options) {
-      return memory(options);
-    });
-
-    for (var name in cases) {
-
-      // register the case with mocha
-      it(name, cases[name]);
-    }
-  });
-  ```
-</Example>
+Below are a set of operations you can use with database adapters.
 
 #### insert operation
 
