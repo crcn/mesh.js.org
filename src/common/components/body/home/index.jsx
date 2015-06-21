@@ -41,7 +41,7 @@ var features = [
   },
   {
     title: "Testable",
-    desc : "Mesh makes testing service level code easy. Just swap out the service adapter for a fake one.",
+    desc : "Mesh makes easy to test service level code. Just swap out the service adapter for a fake one.",
     icon: "beaker"
   },
   {
