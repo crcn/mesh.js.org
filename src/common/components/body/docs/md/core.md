@@ -113,7 +113,7 @@ Passes a [stream](https://nodejs.org/api/stream.html) to the target `handler`.
 
 #### bus attach(props, bus)
 
-Adds properties to a running `operation`.
+Overrides properties on a running operation.
 
 
 <Tabs>
@@ -155,6 +155,9 @@ Adds properties to a running `operation`.
   </Example>
 </Tabs>
 
+#### bus defaults(props, bus)
+
+Sets default properties on an operation if they don't exist.
 
 #### bus accept(conditon, bus[, ebus])
 
@@ -775,7 +778,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     ```javascript  
     ///index.js
 
-    var mesh    = require("mesh");
+    var mesh    = require("mesh@4.0.6");
     var extend  = require("extend");
     var sift    = require("sift");
     var _       = require("highland");
@@ -888,7 +891,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
           // wait for this model to load, then attach the proper
           // query params to the operation so that this model
           // can load itself
-          bus: mesh.wait(this.load, mesh.attach(function() {
+          bus: mesh.wait(this.load, mesh.defaults(function() {
             return {
               query: { id: this.nextChainId }
             };
@@ -900,7 +903,7 @@ Waits for `waitFn` to execute before passing operations to `bus`.
     // setup the new chain & attach default props that load
     // this chain in
     var chain = new Chain({
-      bus : mesh.attach({ collection: "chains", query: { id: "chain1" } }, bus)
+      bus : mesh.defaults({ collection: "chains", query: { id: "chain1" } }, bus)
     });
 
     function onChainLoad(err, chain) {
