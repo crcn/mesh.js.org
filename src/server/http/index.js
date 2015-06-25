@@ -35,7 +35,8 @@ module.exports = function(app) {
       "<body>" +
         "<div id=\"app\">" + content.body + "</div>" +
       "</body>" +
-      "<script type=\"text/javascript\" src=\"/bundle.js\"></script>" +
+      "<script src=\"/bundle.js\"></script>" +
+      "<script src=\"//cdn.optimizely.com/js/3135500165.js\"></script>" +
       "<script type=\"text/javascript\">" +
         "app.load(" + JSON.stringify(content.state) + ")" +
       "</script>" +
