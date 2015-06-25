@@ -116,7 +116,7 @@ module.exports = React.createClass({
         <div className="row elevator">
           <div className="content">
             <div className="col-sm-6">
-              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates <strong>all</strong> remote, or local communication for your application.
+              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates remote, and local communication for your application.
                <strong>&nbsp;Server-side and client-side.</strong>
             </div>
             <div className="col-sm-6">
