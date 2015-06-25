@@ -39,7 +39,7 @@ module.exports = React.createClass({
         <ul className="social-buttons ionic col-sm-12">
           <li>
             <a href="https://github.com/mojo-js/mesh.js" target="_blank">
-              <i className="ion-social-github"></i> <span id="gh-stargazers"></span> {this.state.watcherCount} watchers
+              <i className="ion-social-github"></i> <span id="gh-stargazers"></span> {this.state.watcherCount} stars
             </a>
           </li>
           <li>
