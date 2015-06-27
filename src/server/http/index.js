@@ -45,10 +45,16 @@ module.exports = function(app) {
     "</html>";
   }
 
+  var _cache = {};
+
   server.use(function(req, res, next) {
 
     var path = req.path;
     var json = false;
+
+    if (_cache[path]) {
+      return res.send(_cache[path]);
+    }
 
     if (json = !!~path.indexOf(".json")) {
       path = path.replace(".json", "");
@@ -68,7 +74,7 @@ module.exports = function(app) {
 
     var component = React.createElement(Body, { state: state, app: app });
 
-    res.send(html({
+    res.send(_cache[path] = html({
       body: React.renderToString(component),
       state: state
     }));
