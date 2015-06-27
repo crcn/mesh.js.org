@@ -17,13 +17,22 @@ module.exports = React.createClass({
       dataType: "jsonp",
       url: "https://api.github.com/repos/mojo-js/mesh.js",
       success: function(data) {
-        console.log(data);
         this.setState({
           watcherCount : data.data.watchers,
           forkCount    : data.data.forks
         });
       }.bind(this)
     });
+
+    $.ajax({
+      dataType: "jsonp",
+      url: "https://api.facebook.com/method/links.getStats?urls=mesh.mojojs.com&format=json",
+      success: function(data) {
+        this.setState({
+          fbShareCount : data[0].share_count
+        });
+      }.bind(this)
+    })
   },
   getInitialState: function() {
     return {
@@ -50,6 +59,11 @@ module.exports = React.createClass({
           <li>
             <a href={"https://twitter.com/intent/tweet?text=" + encodeURIComponent(this.state.tweetMessage) } target="_blank">
               <i className="ion-social-twitter"></i> <span id="tw-followers">{this.state.followerCount} tweets</span>
+            </a>
+          </li>
+          <li>
+            <a href={"http://www.facebook.com/sharer.php?s=100&p[title]="+encodeURIComponent("MeshJS - data synchronization library")+"&p[url]=mesh.mojojs.com&p[summary]="+encodeURIComponent("A universal, streamable interface for synchronizing data")+"&p[images][0]=http://mojo.meshjs.com/images/home/logo-shot.png"} target="_blank">
+              <i className="ion-social-facebook"></i> <span id="tw-followers">{this.state.fbShareCount} shares</span>
             </a>
           </li>
         </ul>
