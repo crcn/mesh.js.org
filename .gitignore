@@ -1,7 +1,7 @@
 .DS_Store
-node_modules
-coverage
-npm-*
-static/bundle.js
-static/bundle.css
-
+Thumbs.db
+db.json
+*.log
+node_modules/
+public/
+.deploy*/

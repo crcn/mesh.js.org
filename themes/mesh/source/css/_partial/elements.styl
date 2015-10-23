@@ -1,0 +1,47 @@
+.body {
+  width: 100%;
+  font-size: 18px;
+  margin: 0px;
+  overflow-x: hidden;
+}
+
+pre, code {
+  background-color: white;
+}
+
+pre {
+  border: 2px solid $blue;
+}
+
+.content {
+  max-width: 1024px;
+  margin: 0px auto;
+}
+
+.btn-primary {
+  color: #FFF;
+  background-color: $blue;
+  border: 0px;
+}
+
+.social-bar {
+  position: absolute;
+  bottom: 0px;
+  background-color: rgba(0,0,0,0.1);
+  width: 100%;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  & ul {
+    padding: 0px;
+    padding-left: 15px;
+    list-style-type: none;
+    margin: 0px;
+    & li {
+      display: inline-block;
+      margin-right: 50px;
+      & a {
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+}
