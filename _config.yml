@@ -68,7 +68,7 @@ pagination_dir: page
 ## Docs: http://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:crcn/crcn.io.git
+  repo: git@github.com:crcn/meshjs.com.git
   branch: gh-pages
   message: deploy
 
