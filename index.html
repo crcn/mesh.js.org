@@ -14,28 +14,27 @@
   </head>
   <body>
     <div id="app"><div class="container body"><div class="home"><div class="row header"><div class="rx-navigation"><span href="/" class="logo">Mesh</span><div class="links"><a href="//github.com/crcn/mesh.js/tree/docs">Documentation</a><a href="https://github.com/mojo-js/mesh.js/tree/master/examples" target="_blank" rel="external">Examples</a><a href="https://groups.google.com/forum/#!forum/meshjs" target="_blank" rel="external">Support</a><a href="https://www.npmjs.com/search?q=meshjs" target="_blank" rel="external">Plugins</a><a href="http://github.com/mojo-js/mesh.js" target="_blank" rel="external">GitHub</a></div></div><div class="hook"><p>A universal, streamable interface for synchronizing data</p><div class="install-command">npm install mesh --save</div></div></div><div class="row elevator"><div class="content"><div class="col-sm-6">Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates remote, and local communication for your application.<strong> Server-side and client-side.</strong></div><div class="col-sm-6"><img class="diagram hidden-xs" src="/images/home/elevator-diagram.png"></div></div></div><div class="row features main"><div class="row feature"><div class="content"><div class="col-sm-4"><div class="title"><i class="ion-settings"></i>Just a utility</div><p>Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.</p></div><div class="col-sm-8"><pre><code>
-<span class="hljs-keyword">var</span> mesh             = <span class="hljs-built_in">require</span>(<span class="hljs-string">"mesh"</span>);
-<span class="hljs-keyword">var</span> createStorageBus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"mesh-local-storage"</span>);
+<span class="hljs-keyword">import</span> { ParallelBus } <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh"</span>;
+<span class="hljs-keyword">import</span> MeshLocalStorageDbBus <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh-local-storage-db-bus"</span>;
+<span class="hljs-keyword">import</span> MeshSocketIoBus <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh-socket-io-bus"</span>;
 
 <span class="hljs-comment">// use any one of these database adapters. They all handle</span>
 <span class="hljs-comment">// the same CRUD operations</span>
 <span class="hljs-comment">// var storage = require("mesh-memory");</span>
 <span class="hljs-comment">// var storage = require("mesh-loki");</span>
-<span class="hljs-keyword">var</span> createRealtimeBus = <span class="hljs-built_in">require</span>(<span class="hljs-string">"mesh-socket.io"</span>);
-
-<span class="hljs-keyword">var</span> storageBus = createStorageBus();
+<span class="hljs-keyword">var</span> storageBus = MeshLocalStorageDbBus.create();
 
 <span class="hljs-comment">// persist all operations to socket.io &amp; any operations from socket.io</span>
 <span class="hljs-comment">// back to local storage.</span>
-<span class="hljs-keyword">var</span> mergedBus = mesh.parallel(
+<span class="hljs-keyword">var</span> mainBus = ParallelBus.create([
   storageBus,
-  createRealtimeBus({ channel: <span class="hljs-string">"operations"</span> }, storageBus)
-);
+  MeshSocketIoBus.create({ channel: <span class="hljs-string">"operations"</span> }, storageBus)
+]);
 
 <span class="hljs-comment">// insert data. Persists to local storage, and gets</span>
 <span class="hljs-comment">// broadcasted to all connected clients.</span>
-mergedBus({
-  name : <span class="hljs-string">"insert"</span>,
+mainBus.execute({
+  action : <span class="hljs-string">"insert"</span>,
   collection : <span class="hljs-string">"messages"</span>
   data : { text: <span class="hljs-string">"hello world"</span> }
 });
