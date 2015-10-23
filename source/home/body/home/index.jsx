@@ -72,28 +72,27 @@ var examples = [
     runnable: false,
     desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.",
     content: `
-var mesh             = require("mesh");
-var createStorageBus = require("mesh-local-storage");
+import { ParallelBus } from "mesh";
+import MeshLocalStorageDbBus from "mesh-local-storage-db-bus";
+import MeshSocketIoBus from "mesh-socket-io-bus";
 
 // use any one of these database adapters. They all handle
 // the same CRUD operations
 // var storage = require("mesh-memory");
 // var storage = require("mesh-loki");
-var createRealtimeBus = require("mesh-socket.io");
-
-var storageBus = createStorageBus();
+var storageBus = MeshLocalStorageDbBus.create();
 
 // persist all operations to socket.io & any operations from socket.io
 // back to local storage.
-var mergedBus = mesh.parallel(
+var mainBus = ParallelBus.create([
   storageBus,
-  createRealtimeBus({ channel: "operations" }, storageBus)
-);
+  MeshSocketIoBus.create({ channel: "operations" }, storageBus)
+]);
 
 // insert data. Persists to local storage, and gets
 // broadcasted to all connected clients.
-mergedBus({
-  name : "insert",
+mainBus.execute({
+  action : "insert",
   collection : "messages"
   data : { text: "hello world" }
 });
