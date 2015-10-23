@@ -1,0 +1,227 @@
+/** oh jasus don't look at this **/
+
+.home {
+
+
+
+  & h2, hr {
+    color: @blue-dark;
+  }
+
+  hr {
+    border-top-color: rgba(0,0,0,0.1);
+  }
+
+  & .example {
+    overflow: scroll;
+    min-height: 402px;
+    & .inner-content {
+      margin-bottom: 0px;
+    }
+  }
+
+  & .cta-examples {
+    background-color: @blue-darker;
+    opacity: 0.9;
+    color: rgba(255,255,255,1);
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    & a {
+      color: @blue;
+    }
+  }
+
+
+  & .header {
+    height: 60%;
+    min-height: 500px;
+    overflow: hidden;
+    position: relative;
+    .background-image(linear-gradient(left, @blue-light, @blue));
+
+    & .hook {
+      /*z-index: 1024;*/
+      color: white;
+      width: 600px;
+      opacity: 0.9;
+      margin: 0px auto;
+      position: relative;
+      text-align: center;
+      top: 30%;
+      transform: translateY(-50%);
+      & h1 {
+        font-size: 72px;
+        font-weight: 300;
+        background-image: url(/images/scribble.svg);
+        background-position-x: 60px;
+        background-repeat: no-repeat;
+      }
+
+      & p {
+        font-size: 30px;
+      }
+
+      & .install-command {
+        border: 1px solid rgba(255,255,255,0.7);
+        .border-radius(5px);
+        padding: 15px;
+        background-color: rgba(0,0,0,0.1);
+        width: 50%;
+        margin: 0px auto;
+        margin-top: 15px;
+      }
+    }
+
+
+  }
+
+  & .elevator {
+    padding-top: 40px;
+    padding-bottom: 40px;
+    color: white;
+    background-color: @blue-dark;
+
+
+    & .diagram {
+      width: 100%;
+      position: absolute;
+      max-width: 450px;
+      transform: translateY(-25%);
+    }
+  }
+
+  & .features {
+    background-color: @blue-almost-white;
+    padding-top: 60px;
+    padding-bottom: 60px;
+
+    &.little {
+      padding-top: 30px;
+      & hr {
+        margin-bottom: 70px;
+      }
+      // margin-top: 70px;
+      // background-color: #D0EBF9;
+    }
+
+    &.main {
+      padding-bottom: 0px;
+      & .feature {
+        margin-bottom: 0px;
+      }
+    }
+
+    & .row.feature {
+      margin-bottom: 30px;
+    }
+  }
+
+
+  & .examples {
+
+    text-align: center;
+
+    & .example {
+      text-align: left;
+    }
+
+    hr {
+      border-top-color: rgba(0,0,0,0.1);
+      position: relative;
+      top: -45px;
+    }
+
+    & h2 {
+      font-weight: 100;
+      text-align: center;
+      position:relative;
+      z-index: 1;
+      background-color: @blue-almost-white;
+      display:inline-block;
+      padding: 0px 15px;
+    }
+  }
+
+  & .feature {
+    color: @blue-dark;
+    & .title {
+      font-size: 28px;
+      & i {
+        font-size: 24px;
+        padding-right: 10px;
+      }
+    }
+    & p {
+
+    }
+  }
+
+  & .extensions {
+    padding: 15px;
+    color: rgba(255,255,255,0.9);
+    display: none;
+    background-color: @blue-dark;
+    & .title {
+      font-size: 28px;
+      font-weight: bold;
+      margin-bottom: 15px;
+    }
+
+    & .view-more {
+      margin-top: 15px;
+      color: @blue;
+      font-weight: bold;
+    }
+  }
+
+
+
+  & .footer {
+    line-height: 25px;
+    background-color: @blue-dark;
+    padding: 30px;
+    color: rgba(255,255,255,0.9);
+    font-size: 16px;
+    padding: 60px;
+
+    & .navigation {
+      padding: 0px;
+
+      & ul {
+        list-style-type: none;
+
+        & li {
+          opacity: 0.7;
+        }
+
+        & li:first-child {
+          font-size: 20px;
+          margin-bottom: 8px;
+          opacity: 1;
+        }
+
+      }
+
+      & a {
+        color: white;
+      }
+    }
+
+    & .copyright {
+      opacity: 0.7;
+      & a {
+        color: @blue;
+      }
+    }
+
+    & .logo {
+      opacity: 0.7;
+      margin-bottom: 15px;
+      display: inline-block;
+      & img {
+        height: 40px;
+      }
+    }
+  }
+}

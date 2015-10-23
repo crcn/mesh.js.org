@@ -1,0 +1,89 @@
+<h1 id="Rainbow">Rainbow</h1><p>Rainbow is a code syntax highlighting library written in Javascript.</p>
+<p>It was designed to be lightweight (1.4kb), easy to use, and extendable.</p>
+<p>It is completely themable via CSS.</p>
+<p>If you would like to donate to help support Rainbow development use <a href="https://www.gittip.com/ccampbell">Gittip</a>.</p>
+<h2 id="Quick_Start">Quick Start</h2><ol>
+<li><p>Include some markup for code you want to be highlighted:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="title">pre</span>&gt;</span><span class="tag">&lt;<span class="title">code</span> <span class="attribute">data-language</span>=<span class="value">"python"</span>&gt;</span>def openFile(path):
+    file = open(path, "r")
+    content = file.read()
+    file.close()
+    return content<span class="tag">&lt;/<span class="title">code</span>&gt;</span><span class="tag">&lt;/<span class="title">pre</span>&gt;</span>
+</code></pre>
+</li>
+<li><p>Include a CSS theme file in the <code>&lt;head&gt;</code>:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="title">link</span> <span class="attribute">href</span>=<span class="value">"/assets/css/theme.css"</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">type</span>=<span class="value">"text/css"</span>&gt;</span>
+</code></pre>
+</li>
+<li><p>Include rainbow.js and whatever languages you want before the closing <code>&lt;/body&gt;</code>:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/assets/js/rainbow.min.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/assets/js/language/generic.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+<span class="tag">&lt;<span class="title">script</span> <span class="attribute">src</span>=<span class="value">"/assets/js/language/python.js"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre>
+</li>
+</ol>
+<h2 id="Extending_Rainbow">Extending Rainbow</h2><p>If you have a language specific pattern that you want highlighted, but it does not exist in the language syntax rules you can add a rule on your page.</p>
+<p>Let’s say for example you want to reference PHP’s apc functions.<br>You can include the php language then in the markup on your page add:</p>
+<pre><code class="html"><span class="tag">&lt;<span class="title">script</span>&gt;</span><span class="javascript">
+    Rainbow.extend(<span class="string">'php'</span>, [
+        {
+            <span class="string">'matches'</span>: {
+                <span class="number">1</span>: <span class="string">'support.function'</span>
+            },
+            <span class="string">'pattern'</span>: <span class="regexp">/\b(apc_(store|fetch|add|inc))(?=\()/g</span>
+        }
+    ]);
+</span><span class="tag">&lt;/<span class="title">script</span>&gt;</span>
+</code></pre>
+<h2 id="Supported_Languages">Supported Languages</h2><p>Currently supported languages are:</p>
+<ul>
+<li>C</li>
+<li>C#</li>
+<li>Coffeescript</li>
+<li>CSS</li>
+<li>D</li>
+<li>Go</li>
+<li>Haskell</li>
+<li>HTML</li>
+<li>Java</li>
+<li>Javascript</li>
+<li>Lua</li>
+<li>PHP</li>
+<li>Python</li>
+<li>R</li>
+<li>Ruby</li>
+<li>Scheme</li>
+<li>Shell</li>
+<li>Smalltalk</li>
+</ul>
+<h2 id="Building">Building</h2><p>Rainbow gets minified with the closure compiler. You can install it on OS X via Homebrew:</p>
+<pre><code><span class="keyword">brew </span>install closure-compiler
+</code></pre><p>To build a minified version of your changes, you can run the compile script:</p>
+<pre><code>.<span class="regexp">/util/</span><span class="keyword">compile</span>.py --core
+</code></pre><p>In case the compiler cannot be found (which is the case if you installed via Homebrew),<br>you will have to specify the path to the compiler.jar (see <code>brew info closure-compiler</code>) -<br>here’s an example:</p>
+<pre><code>CLOSURE_COMPILER=<span class="regexp">/usr/</span>local<span class="regexp">/Cellar/</span>closure-compiler<span class="regexp">/20120710/</span>libexec<span class="regexp">/build/</span>compiler.jar util<span class="regexp">/compile.py --core</span>
+</code></pre><p>If you want to build a custom version, list the languages you would like to include as<br>command line arguments:</p>
+<pre><code>util/compile<span class="class">.py</span> ruby javascript
+</code></pre><h2 id="Tests">Tests</h2><p>Unit tests run via <a href="http://visionmedia.github.io/mocha" target="_blank">mocha</a>.</p>
+<h3 id="Running_in_browser">Running in browser</h3><p>Download the repo and go to <code>tests/rainbow.html</code> in your browser.</p>
+<h3 id="Running_with_Grunt_and_PhantomJS">Running with Grunt and PhantomJS</h3><ol>
+<li><p>Install grunt-cli</p>
+<pre><code class="bash">npm install -g grunt-cli
+</code></pre>
+</li>
+<li><p>Install npm packages</p>
+<pre><code class="bash"><span class="built_in">cd</span> /path/to/repo
+npm install
+</code></pre>
+</li>
+<li><p>Run tests</p>
+<pre><code class="bash">grunt mocha
+</code></pre>
+</li>
+</ol>
+<h2 id="More_Info">More Info</h2><p>If you are looking for line number support you can try one of the following:</p>
+<ul>
+<li><a href="https://github.com/Blender3D/rainbow.linenumbers.js">https://github.com/Blender3D/rainbow.linenumbers.js</a></li>
+<li><a href="https://github.com/Sjeiti/rainbow.linenumbers">https://github.com/Sjeiti/rainbow.linenumbers</a></li>
+</ul>
+<p>You can check out additional documentation and build custom packages at <a href="http://rainbowco.de">rainbowco.de</a>.</p>
