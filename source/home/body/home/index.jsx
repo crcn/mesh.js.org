@@ -14,27 +14,29 @@ var Link       = require("../../link");
 - Testable
 */
 
+// Mesh is an abstraction layer for all local & remote communication. Easily build
+// sophisticated features such as offline-mode, rollbacks and more. Decouple your apps
+// from data sources, amekin
 var features = [
   {
     title: "Lightweight",
-    desc : "Powerful and lightweight. Mesh is only 5kb gzipped in the browser.",
+    desc : "Powerful and lightweight. Mesh is only 3kb gzipped in the browser.",
     icon: "leaf"
   },
 
   // todo - and more (with a link)
   {
     title: "Decoupled",
-    // desc : "Write code that's decoupled from data sources including Mongodb, and PubNub. No more service vendor lock.",
     desc : "Easily swap out services such as Mongodb & PubNub. No more vendor lock in.",
     icon: "unlocked"
   },
   {
     title: "Interoperable",
-    desc : "Connect services together such as socket.io, and local storage to build complex features such as realtime data, offline mode, and more.",
+    desc : "Connect services together such as socket.io, and local storage to build complex features such as realtime data, rollbacks, offline mode, and more.",
     icon: "shuffle"
   },
   {
-    title: "Stream-based",
+    title: "es6 ready",
     desc : "Mesh uses node-like streams, and is compatible with other stream-based libraries such as HighlandJS.",
     icon: "social-nodejs"
   },
@@ -47,6 +49,19 @@ var features = [
     title: "Works with APIs",
     desc: "Easily <a href='/docs/database-adapters'>write adapters</a> for your <a href='https://github.com/crcn/mesh.js/tree/master/examples/api'>service API</a> and unlock the ability to interoperate with other mesh <a href='https://www.npmjs.com/search?q=meshjs'>plugins</a>.",
     icon: "heart"
+  }
+];
+
+var features = [
+  {
+    title : "Lightweight",
+    desc  : "Mesh is only 3kb gzipped in the browser",
+    icon  : "leaf"
+  },
+  {
+    title : "Unopinionated",
+    desc  : "",
+    icon  : "leaf"
   }
 ]
 
@@ -95,6 +110,8 @@ mainBus.execute({
   action : "insert",
   collection : "messages"
   data : { text: "hello world" }
+}).then(function() {
+  // do stuff
 });
     `,
     icon: "settings"
@@ -121,7 +138,7 @@ module.exports = React.createClass({
           <Navigation {...this.props} />
 
           <div className="hook">
-            <p>A universal, streamable interface for synchronizing data</p>
+            <p>A JavaScript message bus library creating powerful features</p>
             <div className="install-command">
               npm install mesh --save
             </div>
@@ -131,7 +148,7 @@ module.exports = React.createClass({
         <div className="row elevator">
           <div className="content">
             <div className="col-sm-6">
-              Mesh gives you the utilities needed to build a sophisticated messaging layer that facilitates remote, and local communication for your application.
+              Mesh is a library that gives you the utilities needed to build a sophisticated messaging layer that facilitates remote, and local communication for your application.
                <strong>&nbsp;Server-side and client-side.</strong>
             </div>
             <div className="col-sm-6">
