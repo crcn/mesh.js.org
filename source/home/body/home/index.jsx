@@ -31,11 +31,6 @@ var features = [
     icon: "unlocked"
   },
   {
-    title: "Interoperable",
-    desc : "Connect services together such as socket.io, and local storage to build complex features such as realtime data, rollbacks, offline mode, and more.",
-    icon: "shuffle"
-  },
-  {
     title: "es6 ready",
     desc : "Mesh uses node-like streams, and is compatible with other stream-based libraries such as HighlandJS.",
     icon: "social-nodejs"
@@ -52,16 +47,29 @@ var features = [
   }
 ];
 
+
+/*
+
+Lightweight, flexible,
+
+*/
+
 var features = [
   {
-    title : "Lightweight",
-    desc  : "Mesh is only 3kb gzipped in the browser",
-    icon  : "leaf"
+    title: "Flexible",
+    desc : "Mesh is entirely unopinionated. Use it to bring sanity to even the most complicated APIs.",
+    icon: "shuffle"
   },
   {
-    title : "Unopinionated",
-    desc  : "",
-    icon  : "leaf"
+    title: "Adaptable",
+    // desc : "Mesh makes it easy to write apps that work with any database, any API. Write highly testable code that runs on any platform",
+    desc : "Write highly testable apps that work with any database, any API. No more vendor lock-in.",
+    icon: "unlocked"
+  },
+  {
+    title: "Modular",
+    desc : "Write complex features with ease. Connect services together such as socket.io, and local storage to build things such as realtime data, rollbacks, offline mode, and more.",
+    icon: "social-buffer"
   }
 ]
 
