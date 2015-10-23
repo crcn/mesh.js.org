@@ -57,7 +57,7 @@ Lightweight, flexible,
 var features = [
   {
     title: "Flexible",
-    desc : "Mesh is entirely unopinionated. Use it to bring sanity to even the most complicated APIs.",
+    desc : "Mesh is unopinionated. Use it to bring sanity to even the most complicated APIs.",
     icon: "shuffle"
   },
   {
