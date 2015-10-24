@@ -13,13 +13,13 @@ module.exports = React.createClass({
         <a href="//github.com/crcn/mesh.js/tree/docs">
           Documentation
         </a>
-        <a href="https://github.com/mojo-js/mesh.js/tree/master/examples">
+        <a className="hidden" href="https://github.com/mojo-js/mesh.js/tree/master/examples">
           Examples
         </a>
         <a href="https://groups.google.com/forum/#!forum/meshjs">
           Support
         </a>
-        <a href="https://www.npmjs.com/search?q=meshjs">
+        <a className="hidden" href="https://www.npmjs.com/search?q=meshjs">
           Plugins
         </a>
         <a href="http://github.com/mojo-js/mesh.js">

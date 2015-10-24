@@ -204,7 +204,7 @@ module.exports = React.createClass({
           </div>
         </div>
 
-        <div className="row cta-examples">
+        <div className="row cta-examples hidden">
           Checkout some <a href="//github.com/crcn/mesh.js/tree/master/examples">examples</a> of what you can build with Mesh.
         </div>
 
@@ -222,13 +222,13 @@ module.exports = React.createClass({
               <ul className="col-sm-4">
                 <li>Downloads</li>
                 <li><a href="https://raw.githubusercontent.com/crcn/mesh.js/master/dist/mesh.min.js">browser bundle</a></li>
-                <li><a href="https://www.npmjs.com/search?q=meshjs">Plugins</a></li>
+                <li><a className="hidden" href="https://www.npmjs.com/search?q=meshjs">Plugins</a></li>
               </ul>
               <ul className="col-sm-4">
                 <li>Docs</li>
-                <li><a href="https://github.com/crcn/mesh.js/tree/master/examples">Examples</a></li>
+                <li><a className="hidden" href="https://github.com/crcn/mesh.js/tree/master/examples">Examples</a></li>
                 <li><a href="//github.com/crcn/mesh.js/tree/master/docs/api" category="core" {...this.props}>Core API</a></li>
-                <li><a href="//github.com/crcn/mesh.js/tree/master/extra">Other docs</a></li>
+                <li><a className="hidden" href="//github.com/crcn/mesh.js/tree/master/extra">Other docs</a></li>
               </ul>
               <ul className="col-sm-4">
                 <li>Connect</li>
