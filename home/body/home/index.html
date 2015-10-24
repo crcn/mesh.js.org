@@ -14,21 +14,16 @@
   </head>
   <body>
     <div id="app"><div class="home"><div class="row header"><div class="rx-navigation"><span href="/" class="logo">Mesh</span><div class="links"><a href="//github.com/crcn/mesh.js/tree/master/docs">Documentation</a><a class="hidden" href="https://github.com/mojo-js/mesh.js/tree/master/examples" target="_blank" rel="external">Examples</a><a href="https://groups.google.com/forum/#!forum/meshjs" target="_blank" rel="external">Support</a><a class="hidden" href="https://www.npmjs.com/search?q=meshjs" target="_blank" rel="external">Plugins</a><a href="http://github.com/mojo-js/mesh.js" target="_blank" rel="external">GitHub</a></div></div><div class="hook"><p>A JavaScript message bus library creating powerful features</p><div class="install-command">npm install mesh --save</div></div></div><div class="row elevator"><div class="content"><div class="col-sm-6">Mesh is a library that gives you the utilities needed to build a sophisticated messaging layer that facilitates remote, and local communication for your application.<strong> Server-side and client-side.</strong></div><div class="col-sm-6"><img class="diagram hidden-xs" src="/images/home/elevator-diagram.png"></div></div></div><div class="row features main"><div class="row feature"><div class="content"><div class="col-sm-4"><div class="title"><i class="ion-settings"></i>Just a utility</div><p>Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.</p></div><div class="col-sm-8"><pre><code>
-<span class="hljs-keyword">import</span> { ParallelBus } <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh"</span>;
-<span class="hljs-keyword">import</span> MeshLocalStorageDbBus <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh-local-storage-db-bus"</span>;
-<span class="hljs-keyword">import</span> MeshSocketIoBus <span class="hljs-keyword">from</span> <span class="hljs-string">"mesh-socket-io-bus"</span>;
-
 <span class="hljs-comment">// use any one of these database adapters. They all handle</span>
 <span class="hljs-comment">// the same CRUD operations</span>
-<span class="hljs-comment">// var storage = require("mesh-memory");</span>
-<span class="hljs-comment">// var storage = require("mesh-loki");</span>
-<span class="hljs-keyword">var</span> storageBus = MeshLocalStorageDbBus.create();
+<span class="hljs-comment">// var storage = FakeStorageBus.create();</span>
+<span class="hljs-keyword">var</span> storageBus = LocalStorageDbBus.create();
 
 <span class="hljs-comment">// persist all operations to socket.io &amp; any operations from socket.io</span>
 <span class="hljs-comment">// back to local storage.</span>
 <span class="hljs-keyword">var</span> mainBus = ParallelBus.create([
   storageBus,
-  MeshSocketIoBus.create({ channel: <span class="hljs-string">"operations"</span> }, storageBus)
+  SocketIoBus.create({ channel: <span class="hljs-string">"operations"</span> }, storageBus)
 ]);
 
 <span class="hljs-comment">// insert data. Persists to local storage, and gets</span>
@@ -37,8 +32,8 @@ mainBus.execute({
   action : <span class="hljs-string">"insert"</span>,
   collection : <span class="hljs-string">"messages"</span>
   data : { text: <span class="hljs-string">"hello world"</span> }
-}).then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
-  <span class="hljs-comment">// do stuff</span>
+}).readAll().then(<span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params"></span>) </span>{
+  <span class="hljs-comment">// handle response</span>
 });
     </code></pre></div></div></div></div><div class="row features little"><div class="content"><hr><div class="row feature"><div class="feature col-sm-4"><div class="title"><i class="ion-shuffle"></i>Flexible</div><p>Mesh is unopinionated. Use it to bring sanity to even the most complicated APIs.</p></div><div class="feature col-sm-4"><div class="title"><i class="ion-unlocked"></i>Adaptable</div><p>Write highly testable apps that work with any database, any API. No more vendor lock-in.</p></div><div class="feature col-sm-4"><div class="title"><i class="ion-social-buffer"></i>Modular</div><p>Write complex features with ease. Connect services together such as socket.io, and local storage to build things such as realtime data, rollbacks, offline mode, and more.</p></div></div></div></div><div class="row cta-examples hidden">Checkout some <a href="//github.com/crcn/mesh.js/tree/master/examples">examples</a> of what you can build with Mesh.</div><div class="row footer hidden-xs"><div class="col-sm-4"><div class="copyright"><div>Code licensed under <a href="https://github.com/crcn/mesh.js/blob/master/MIT-LICENSE.txt" target="_blank" rel="external">MIT</a></div>Designed &amp; developed by <a href="//crcn.io">Craig Condon</a></div></div><div class="col-sm-8"><div class="row navigation"><ul class="col-sm-4"><li>Downloads</li><li><a href="https://raw.githubusercontent.com/crcn/mesh.js/master/dist/mesh.min.js" target="_blank" rel="external">browser bundle</a></li><li><a class="hidden" href="https://www.npmjs.com/search?q=meshjs" target="_blank" rel="external">Plugins</a></li></ul><ul class="col-sm-4"><li>Docs</li><li><a class="hidden" href="https://github.com/crcn/mesh.js/tree/master/examples" target="_blank" rel="external">Examples</a></li><li><a href="//github.com/crcn/mesh.js/tree/master/docs">Core API</a></li><li><a class="hidden" href="//github.com/crcn/mesh.js/tree/master/extra">Other docs</a></li></ul><ul class="col-sm-4"><li>Connect</li><li><a href="http://github.com/crcn/mesh.js" target="_blank" rel="external">GitHub</a></li><li><a href="http://twitter.com/mojoframework" target="_blank" rel="external">Twitter</a></li><li><a href="https://groups.google.com/forum/#!forum/meshjs" target="_blank" rel="external">Google group</a></li><li><a href="https://gitter.im/crcn/mesh.js" target="_blank" rel="external">Chat</a></li></ul></div></div></div></div>
 </div>
