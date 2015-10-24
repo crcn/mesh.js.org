@@ -10,7 +10,7 @@ module.exports = React.createClass({
       </span>
 
       <div className="links">
-        <a href="//github.com/crcn/mesh.js/tree/docs">
+        <a href="//github.com/crcn/mesh.js/tree/master/docs">
           Documentation
         </a>
         <a className="hidden" href="https://github.com/mojo-js/mesh.js/tree/master/examples">

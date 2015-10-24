@@ -227,7 +227,7 @@ module.exports = React.createClass({
               <ul className="col-sm-4">
                 <li>Docs</li>
                 <li><a className="hidden" href="https://github.com/crcn/mesh.js/tree/master/examples">Examples</a></li>
-                <li><a href="//github.com/crcn/mesh.js/tree/master/docs/api" category="core" {...this.props}>Core API</a></li>
+                <li><a href="//github.com/crcn/mesh.js/tree/master/docs" category="core" {...this.props}>Core API</a></li>
                 <li><a className="hidden" href="//github.com/crcn/mesh.js/tree/master/extra">Other docs</a></li>
               </ul>
               <ul className="col-sm-4">
