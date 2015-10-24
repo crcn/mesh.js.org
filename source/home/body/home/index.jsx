@@ -95,8 +95,6 @@ var examples = [
     runnable: false,
     desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.",
     content: `
-// use any one of these database adapters. They all handle
-// the same CRUD operations
 // var storage = FakeStorageBus.create();
 var storageBus = LocalStorageDbBus.create();
 
