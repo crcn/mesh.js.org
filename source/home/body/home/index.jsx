@@ -96,7 +96,7 @@ var examples = [
     desc : "Think of it like underscore for data. Mesh is just a bundle of helpful functions that make it easy to write explicit and flexible data handlers. Use it with any framework on any platform - Mesh should be complimentary to your existing application stack.",
     content: `
 // var storage = FakeStorageBus.create();
-var storageBus = LocalStorageDbBus.create();
+var storageBus = LocalStorageDsBus.create();
 
 // persist all operations to socket.io & any operations from socket.io
 // back to local storage.
