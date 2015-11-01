@@ -226,7 +226,6 @@ module.exports = React.createClass({
               <ul className="col-sm-4">
                 <li>Connect</li>
                 <li><a href="http://github.com/crcn/mesh.js">GitHub</a></li>
-                <li><a href="http://twitter.com/mojoframework">Twitter</a></li>
                 <li><a href="https://groups.google.com/forum/#!forum/meshjs">Google group</a></li>
                 <li><a href="https://gitter.im/crcn/mesh.js">Chat</a></li>
               </ul>
